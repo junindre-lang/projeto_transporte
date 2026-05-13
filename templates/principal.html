@@ -2,29 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>transito federa</title>
+    <title>logar</title>
     <link rel="stylesheet" href="../static/css/principal.css">
 </head>
 <body>
     <div class="topo">
-        <h1>expresso federal</h1>
+        <h1>EXPRESSO FEDERAL</h1>
     </div>
-    <div class="menu">
-        <div class="botao">
-            <a href="/cadastrar-se">cadastrar-se</a>
-        </div>
-        <div class="botao">
-             <a href="/entrar"> entrar</a>
-        </div>
-    </div>
-    <div class="conteudo">
-        <form action="/listar" method="post">
-            <input type="text">
-            <button>pesquisar</button>
-            <!--inserir lista  parta buscar um horário específico-->
-            <!--lista com os horários e onibus disponiveis -->
+    <div class="login">
+        <form action="/logar" method="post">
+          <h2>LOGIN</h2><br><br>
+          <input type="text" name="mat" placeholder="Matrícula"><br><br>
+          <input type="text" name="senha" placeholder="Senha"><br><br><br>
+          <button type="submit"> logar </button><br><br>
+          <a>você já tem conta?</a>
+          <a href="../templates/cadastro.html">crie sua conta</a>
         </form>
     </div>
-
 </body>
 </html>

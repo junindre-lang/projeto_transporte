@@ -1,0 +1,44 @@
+
+.topo{
+    background-color:#50B63F;
+    color: white;
+    text-align: center;
+    height: 80px;
+    border-radius: 8px;
+    padding-top: 15px;
+    padding-left:41%;
+    justify-content: space-between;
+    display:flex;
+    align-items: center;
+}
+.menu{
+    display:flex;
+    gap:10px;
+    padding-right: 10px;
+}
+
+.botao{
+    background-color:white;
+    border: 1px solid black;
+    border-radius: 5px;
+    width:100px;
+    height:20px;
+    padding-top:5px;
+    text-align: center;
+
+}
+.botao a{
+    text-decoration:none;
+    color: black;
+}
+.conteudo{
+    display:flex;
+    border: 1px solid #00FF7F;
+    border-radius: 5px;
+    width:400px;
+    height:200px;
+    padding-top:5px;
+    text-align: center;
+
+
+}

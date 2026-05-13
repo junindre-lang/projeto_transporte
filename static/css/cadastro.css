@@ -1,0 +1,46 @@
+body{
+    background-color:#555;
+}
+.topo{
+    background-color:#eee;
+    color: black;
+    text-align: center;
+    height: 80px;
+    border-radius: 8px;
+    padding-top: 15px;
+    padding-left:41%;
+    justify-content: space-between;
+    display:flex;
+    align-items: center;
+}
+.dados{
+    border: 1px solid black;
+    background-color:#eee;
+    border-radius:8px;
+    display:flex;
+    height:500px;
+    width:350px;
+    margin-top: 20px;
+    justify-content: center;
+    margin-left: 40%;
+    padding-top: 50px;
+    text-align: center;
+}
+
+.dados input{
+    background-color:;
+    height:8%;
+    border: 1px solid black;
+    border-radius:6px;
+    text-align:center;
+}
+
+.dados button{
+    background-color:#5cb85c;
+    height:8%;
+    border: 1px solid black;
+    border-radius:6px;
+    width:100%;
+    text-align:center;
+    color: white;
+}

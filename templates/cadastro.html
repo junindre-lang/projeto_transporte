@@ -6,15 +6,20 @@
     <link rel="stylesheet" href="../static/css/cadastro.css">
 </head>
 <body>
+    <div class="topo">
+        <h1>EXPRESSO FEDERAL</h1>
+    </div>
     <div class="dados">
         <form action="/cadastrar" method="post">
-            <label>nome do aluno</label><br>
-            <input type="text"><br>
-            <label>matricula</label>
-            <input type="text"><br>
-            <label> senha </label><br>
-            <input type="text"><br><br>
-            <button type="submit">cadastrar</button>
+            <h2>CADASTRO</h2><br>
+            <input type="text" placeholder="digite seu nome:"><br><br>
+            <input type="text" placeholder="digite seu email:"><br><br>
+            <input type="text" placeholder="digite a sua matricula:"><br><br>
+            <input type="text" placeholder="crie sua senha"><br><br>
+            <input type="password" placeholder="confirme a senha:"><br><br>
+            <button type="submit">cadastrar</button><br><br>
+            <a>você já tem uma conta?</a>
+            <a href="../templates/principal.html">entrar</a>
         </form>
     </div>
 
