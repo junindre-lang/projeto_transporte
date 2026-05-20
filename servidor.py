@@ -1,5 +1,6 @@
 from flask import *
-
+from Blueprints.bp_admin import admin
+from modelos.admin import Admin
 from Blueprints.bp_aluno import aluno
 from modelos.usuario import Usuario
 
@@ -49,5 +50,23 @@ def login():
 @app.route('/cadastrolink')
 def cadastrolink():
     return render_template('cadastro.html')
+
+@app.route('/logarlink')
+def logarlink():
+    return render_template('principal.html')
+
+@app.route('/login_adm')
+def login_adm():
+    login = request.form.get('matricula')
+    senha = request.form.get('senha')
+
+    if senha == '123':
+        texto = 'bem vindo Sales!'
+        return render_template('admin.html', msg=texto)
+    else:
+        texto = 'admin não encontrado'
+        return render_template('login_adm.html', msg = texto)
+
 if __name__ == '__main__':
-    app.run()
+        app.run()
+

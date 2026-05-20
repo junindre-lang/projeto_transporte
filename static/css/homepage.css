@@ -1,44 +1,152 @@
+/* Reset Geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
 
-.topo{
-    background-color:#50B63F;
+/* O body organiza a sidebar e o conteúdo lado a lado */
+body {
+    display: flex;
+    height: 100vh;
+    background-color: #4a4a4a;
+    overflow: hidden;
+}
+
+/* --- SIDEBAR CORRIGIDA NO CANTO --- */
+.sidebar {
+    width: 260px;
+    height: 100%;
+    background-color: #222222;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+    flex-shrink: 0; /* Impede a sidebar de espremer */
+}
+
+.sidebar-brand {
+    padding: 20px;
+}
+
+.sidebar-brand h1 {
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.search-box {
+    position: relative;
+    margin: 0 15px 15px 15px;
+    border-bottom: 1px solid #444444;
+    padding-bottom: 6px;
+}
+
+.search-box i {
+    position: absolute;
+    left: 0;
+    top: 5px;
+    color: #777777;
+    font-size: 0.9rem;
+}
+
+.search-box input {
+    width: 100%;
+    background: none;
+    border: none;
+    padding-left: 22px;
+    color: #ffffff;
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.sidebar-menu {
+    list-style: none;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #dddddd;
+    text-decoration: none;
+    padding: 13px 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #2a2a2a;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar-menu a i {
+    font-size: 1rem;
+    width: 20px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.sidebar-menu a:hover {
+    background-color: #2a2a2a;
+    color: #ffffff;
+}
+
+.sidebar-menu a.active {
+    background-color: #1a1a1a;
+    color: #ffffff;
+    border-left: 4px solid #00ff88;
+}
+
+.sidebar-footer {
+    border-top: 1px solid #2a2a2a;
+}
+
+.sidebar-footer a.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ff4d4d;
+    text-decoration: none;
+    padding: 13px 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.sidebar-footer a.logout-btn i {
+    color: #ff4d4d;
+}
+
+.sidebar-footer a.logout-btn:hover {
+    background-color: rgba(255, 77, 77, 0.1);
+}
+
+/* --- ÁREA DO CONTEÚDO PRINCIPAL (Centraliza o Nome no Meio) --- */
+.main-content {
+    flex-grow: 1; /* Ocupa todo o resto da tela */
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center;     /* Centraliza verticalmente */
+    height: 100%;
+}
+
+.titulo {
+    background-color: #4a4a4a;
     color: white;
     text-align: center;
     height: 80px;
     border-radius: 8px;
     padding-top: 15px;
-    padding-left:41%;
+    padding-left: 41%;
     justify-content: space-between;
-    display:flex;
+    display: flex;
     align-items: center;
-}
-.menu{
-    display:flex;
-    gap:10px;
-    padding-right: 10px;
-}
 
-.botao{
-    background-color:white;
-    border: 1px solid black;
-    border-radius: 5px;
-    width:100px;
-    height:20px;
-    padding-top:5px;
-    text-align: center;
-
-}
-.botao a{
-    text-decoration:none;
-    color: black;
-}
-.conteudo{
-    display:flex;
-    border: 1px solid #00FF7F;
-    border-radius: 5px;
-    width:400px;
-    height:200px;
-    padding-top:5px;
-    text-align: center;
-
-
+    /* Adicione apenas estas 4 linhas abaixo */
+    position: absolute;
+    top: 0;
+    left: 260px; /* Alinha logo após o fim da sua sidebar */
+    right: 0;
 }

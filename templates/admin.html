@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/css/admin.css">
+</head>
+<body>
+    <form action="admin" method="post">
+        <div class="sidebar">
+            <div class="sidebar-brand">
+                <h1>EXPRESSO</h1>
+            </div>
+
+            <div class="search-box">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Buscar no menu...">
+            </div>
+
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
+                <li><a href="#"><i class="fa-solid fa-route"></i> ROTAS</a></li>
+                <li><a href="#"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
+                <li><a href="#"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
+                <li><a href="#"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
+                <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
+            </ul>
+
+            <div class="sidebar-footer">
+                <a href="/logar" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
+            </div>
+        </div>
+
+        <div class="main-content">
+
+            <div class="titulo">
+                <h1>PAINEL DO ADMINISTRADOR</h1>
+            </div>
+
+            <div class="cards-container">
+                <div class="card">
+                    <i class="fa-solid fa-user-plus icon-card"></i>
+                    <h3>Cadastrar Motorista</h3>
+                    <p>Adicione novos motoristas ao sistema.</p>
+                    <button class="btn-acao">Acessar</button>
+                </div>
+
+                <div class="card">
+                    <i class="fa-solid fa-clock icon-card"></i>
+                    <h3>Cadastrar Horários</h3>
+                    <p>Gerencie as tabelas de horários das viagens.</p>
+                    <button class="btn-acao">Acessar</button>
+                </div>
+
+                <div class="card">
+                    <i class="fa-solid fa-magnifying-glass-location icon-card"></i>
+                    <h3>Consultar Rotas</h3>
+                    <p>Visualize e edite as rotas de transporte.</p>
+                    <button class="btn-acao">Acessar</button>
+                </div>
+
+                <div class="card">
+                    <i class="fa-solid fa-truck-front icon-card"></i>
+                    <h3>Cadastrar Veículos</h3>
+                    <p>Adicione ônibus, vans ou carros à frota.</p>
+                    <button class="btn-acao">Acessar</button>
+                </div>
+            </div>
+
+            <div class="secao-viagens">
+                <h2>Solicitações de Viagens Pendentes</h2>
+
+                <table class="tabela-viagens">
+                    <thead>
+                        <tr>
+                            <th>Motorista</th>
+                            <th>Rota</th>
+                            <th>Data/Horário</th>
+                            <th>Veículo</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Carlos Silva</td>
+                            <td>Linha Central - Campus</td>
+                            <td>21/05/2026 - 07:30</td>
+                            <td>Ônibus 01</td>
+                            <td>
+                                <button class="btn-deferir">Deferir</button>
+                                <button class="btn-indeferir">Indeferir</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Marcos Souza</td>
+                            <td>Expresso Noturno</td>
+                            <td>22/05/2026 - 19:00</td>
+                            <td>Van 04</td>
+                            <td>
+                                <button class="btn-deferir">Deferir</button>
+                                <button class="btn-indeferir">Indeferir</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </form>
+</body>
+</html>

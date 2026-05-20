@@ -6,26 +6,45 @@
     <link rel="stylesheet" href="../static/css/homepage.css">
 </head>
 <body>
-    <div class="topo">
-        <h1>EXPRESSO FEDERAL</h1>
-        <div class="menu">
-            <div class="botao">
-                <a href="/cadastrar-se">cadastrar-se</a>
-            </div>
-            <div class="botao">
-                 <a href="/entrar"> entrar</a>
-            </div>
+    <form action="/menu_adm" method="post">
+      <div class="sidebar">
+        <div class="sidebar-brand">
+            <h1>MENU</h1>
         </div>
-    </div>
-    <div class="conteudo">
-        <form action="/listar" method="get">
-            <input type="text" name="busca" placeholder="para onde você vai?">
-            <button type="submit">pesquisar</button>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar no menu...">
+        </div>
 
-            <!--inserir lista  parta buscar um horário específico-->
-            <!--lista com os horários e onibus disponiveis -->
-        </form>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#" class="active"><i class="fa-solid fa-house"></i> INÍCIO</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-route"></i> ROTAS</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-users"></i> MOTORISTAS</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-bus"></i> VEÍCULOS</a>
+            </li>
+            <li>
+                <a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a>
+            </li>
+        </ul>
 
-    </div>
+        <div class="sidebar-footer">
+            <a href="/logarlink" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
+        </div>
+        <div class="titulo">
+            <h1>EXPRESSO FEDERAL</h1>
+        </div>
+
+
+</div>
 </body>
 </html>
