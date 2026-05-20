@@ -1,5 +1,7 @@
 from flask import *
+
 from Blueprints.bp_aluno import aluno
+from modelos.usuario import Usuario
 
 usuarios = []
 
@@ -9,9 +11,25 @@ app.register_blueprint(aluno, url_prefix='/')
 
 @app.route('/')
 def inicial():
-    render_template('principal.html')
+    return render_template('principal.html')
 
-@app.route('/logar', methods=['POST'])
+@app.route('/cadastrar', methods=['GET','POST'])
+def cadastro():
+    nome = request.form.get('nome')
+    email = request.form.get('email')
+    matri = request.form.get('matri')
+    senha = request.form.get('sen')
+    senha1 = request.form.get('sen1')
+    if senha != senha1:
+        return render_template('cadastro.html', msg='As senhas não coincidem!')
+    else:
+        novo_user = Usuario(nome=nome, matricula=matri, email=email, senha=senha, senha1=senha1)
+        usuarios.append(novo_user)
+        texto = 'aluno cadastrado com sucesso!'
+        return render_template('principal.html', msg=texto)
+
+
+@app.route('/logar', methods=['GET','POST'])
 def login():
     login = request.form.get('mat')
     senha = request.form.get('senha')
@@ -26,5 +44,10 @@ def login():
         texto = 'matrícula ou senha incorretos'
         return render_template('principal.html' , msg = texto)
 
+
+
+@app.route('/cadastrolink')
+def cadastrolink():
+    return render_template('cadastro.html')
 if __name__ == '__main__':
     app.run()
