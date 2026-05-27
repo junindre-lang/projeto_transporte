@@ -1,12 +1,21 @@
 from flask import *
 from Blueprints.bp_aluno import aluno
-from modelos.usuario import Usuario
+from modelosDB.servidoresDB import *
+from flask_sqlalchemy import SQLAlchemy
+from DAOs.servidor_DAO import ServidorDAO
 
-usuarios = []
+
 
 app = Flask(__name__)
 app.register_blueprint(aluno, url_prefix='/')
 
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meubanco.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+db = SQLAlchemy(app)
+
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def inicial():
@@ -19,29 +28,33 @@ def cadastro():
     matri = request.form.get('matri')
     senha = request.form.get('sen')
     senha1 = request.form.get('sen1')
+
     if senha != senha1:
         return render_template('cadastro.html', msg='As senhas não coincidem!')
     else:
-        novo_user = Usuario(nome=nome, matricula=matri, email=email, senha=senha, senha1=senha1)
-        usuarios.append(novo_user)
+        ServidorDAO.salvar(matricula=matri, senha=senha1)
         texto = 'aluno cadastrado com sucesso!'
         return render_template('principal.html', msg=texto)
 
 
 @app.route('/logar', methods=['GET','POST'])
 def login():
-    login = request.form.get('mat')
-    senha = request.form.get('senha')
-    logado = False
-    for u in usuarios:
-        if login == u.get_matricula() and senha == u.get_senha():
-            logado = True
-            break
-    if logado:
-        return render_template('homepage.html')
-    else:
-        texto = 'matrícula ou senha incorretos'
-        return render_template('principal.html' , msg = texto)
+
+    if request.method == 'POST':
+        login = request.form.get('mat')
+        senha = request.form.get('senha')
+
+        servidor = ServidorDAO.autenticar(matricula=login, senha=senha)
+
+        if not servidor:
+            return render_template('principal.html')
+
+        if not servidor.aprovado:
+            return render_template('principal.html')
+
+        return render_template('')
+
+
 
 
 
