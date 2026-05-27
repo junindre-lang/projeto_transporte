@@ -43,8 +43,6 @@ def login():
         texto = 'matrícula ou senha incorretos'
         return render_template('principal.html' , msg = texto)
 
-
-
 @app.route('/cadastrolink')
 def cadastrolink():
     return render_template('cadastro.html')
@@ -53,17 +51,22 @@ def cadastrolink():
 def logarlink():
     return render_template('principal.html')
 
-@app.route('/login_adm')
+@app.route('/login_adm', methods= ['POST', 'GET'])
 def login_adm():
-    login = request.form.get('matricula')
+    login = request.form.get('mat')
     senha = request.form.get('senha')
 
-    if senha == '123' and login == 'sales':
+    if login == 'sales' and senha == '123':
         texto = 'bem vindo Sales!'
         return render_template('admin.html', msg=texto)
     else:
         texto = 'admin não encontrado'
         return render_template('login_adm.html', msg = texto)
+
+@app.route('/logarlink_adm')
+def logarlink_adm():
+    return render_template('login_adm.html')
+
 
 if __name__ == '__main__':
         app.run(debug=True)
