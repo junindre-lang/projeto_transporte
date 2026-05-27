@@ -1,6 +1,4 @@
 from flask import *
-from Blueprints.bp_admin import admin
-from modelos.admin import Admin
 from Blueprints.bp_aluno import aluno
 from modelos.usuario import Usuario
 
@@ -60,7 +58,7 @@ def login_adm():
     login = request.form.get('matricula')
     senha = request.form.get('senha')
 
-    if senha == '123':
+    if senha == '123' and login == 'sales':
         texto = 'bem vindo Sales!'
         return render_template('admin.html', msg=texto)
     else:
@@ -68,5 +66,5 @@ def login_adm():
         return render_template('login_adm.html', msg = texto)
 
 if __name__ == '__main__':
-        app.run()
+        app.run(debug=True)
 
