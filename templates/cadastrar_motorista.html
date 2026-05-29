@@ -2,11 +2,12 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Servidores Cadastrados</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Motoristas Cadastrados - Expresso</title>
+
+    <link rel="stylesheet" href="../static/css/cadastrar_motorista.css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/servidores.css') }}">
-    <link rel="stylesheet" href="../static/css/serv.css">
 </head>
 <body>
 
@@ -24,8 +25,8 @@
             <li><a href="/pag_admin"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
             <li><a href="#"><i class="fa-solid fa-route"></i> ROTAS</a></li>
             <li><a href="#"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
-            <li><a href="/lista_servidores" class="active"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
-            <li><a href="/cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
+            <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
+            <li><a href="/lista_motoristas" class="active"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
             <li><a href="cad_veiculos"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
             <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
         </ul>
@@ -38,47 +39,46 @@
     <div class="main-content">
         <div class="titulo">
             <h1>PAINEL DO ADMINISTRADOR</h1>
-            <p style="color: #888;">Gerenciamento de Servidores do Sistema</p>
+            <p>Gerenciamento de Condutores da Frota</p>
         </div>
 
-        <div class="secao-servidores">
+        <div class="secao-motoristas">
             <div class="topo-secao">
-                <h2>Servidores Cadastrados</h2>
-                <button class="btn-cadastrar-novo"><i class="fa-solid fa-plus"></i> Novo Servidor</button>
+                <h2>Motoristas Cadastrados</h2>
+                <button class="btn-novo-motorista"><i class="fa-solid fa-user-plus"></i> Novo Motorista</button>
             </div>
 
-            <table class="tabela-servidores">
+            <table class="tabela-motoristas">
                 <thead>
                     <tr>
                         <th>Matrícula</th>
-                        <th>Nome do Servidor</th>
-                        <th>Cargo / Função</th>
-                        <th>Status</th>
+                        <th>Nome Completo</th>
+                        <th>Nº CNH</th>
+                        <th>Categoria</th>
+                        <th>Validade CNH</th>
                         <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {% if servidores %}
-                        {% for servidor in servidores %}
+                    {% if motoristas %}
+                        {% for motorista in motoristas %}
                         <tr>
-                            <td>{{ servidor.matricula }}</td>
-                            <td>{{ servidor.nome }}</td>
-                            <td>{{ servidor.cargo }}</td>
+                            <td>{{ motorista.matricula }}</td>
+                            <td>{{ motorista.nome }}</td>
+                            <td>{{ motorista.cnh }}</td>
+                            <td><span class="badge-categoria">{{ motorista.categoria }}</span></td>
+                            <td>{{ motorista.validade_cnh }}</td>
                             <td>
-                                <span class="status-badge {{ servidor.status|lower }}">
-                                    {{ servidor.status }}
-                                </span>
-                            </td>
-                            <td>
-                                <button class="btn-editar"><i class="fa-solid fa-pen"></i> APROVAR</button>
-                                <button class="btn-excluir"><i class="fa-solid fa-trash"></i> Excluir</button>
+                                <button class="btn-editar" title="Editar"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn-excluir" title="Excluir"><i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="5" style="text-align: center; padding: 30px; color: #888;">
-                                Nenhum servidor cadastrado no momento.
+                            <td colspan="6" class="tabela-vazia">
+                                <i class="fa-solid fa-circle-info"></i>
+                                Nenhum motorista cadastrado no sistema.
                             </td>
                         </tr>
                     {% endif %}

@@ -1,0 +1,241 @@
+/* RESET PADRÃO */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #1f1f1f;
+    color: #ffffff;
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR ESTRUTURA */
+.sidebar {
+    width: 260px;
+    background-color: #181818;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    height: 100vh;
+    border-right: 1px solid #2b2b2b;
+}
+
+.sidebar-brand h1 {
+    color: #ffffff;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+
+.search-box {
+    background-color: #2b2b2b;
+    padding: 10px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.search-box i {
+    color: #888;
+}
+
+.search-box input {
+    background: none;
+    border: none;
+    outline: none;
+    color: #fff;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.sidebar-menu {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.sidebar-menu a {
+    color: #b3b3b3;
+    text-decoration: none;
+    padding: 12px 15px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.2s ease;
+}
+
+.sidebar-menu a:hover {
+    background-color: #2b2b2b;
+    color: #ffffff;
+}
+
+.sidebar-menu a.active {
+    background-color: #2ecc71;
+    color: #ffffff;
+}
+
+.sidebar-footer {
+    margin-top: auto;
+    border-top: 1px solid #2b2b2b;
+    padding-top: 15px;
+}
+
+.logout-btn {
+    color: #e74c3c !important;
+    font-weight: bold;
+}
+
+.logout-btn:hover {
+    background-color: rgba(231, 76, 60, 0.1) !important;
+}
+
+/* ÁREA DE CONTEÚDO PRINCIPAL */
+.main-content {
+    margin-left: 260px;
+    padding: 40px;
+    width: calc(100% - 260px);
+}
+
+.titulo h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 5px;
+}
+
+.titulo p {
+    color: #888;
+    font-size: 1rem;
+}
+
+/* TABELA E CONTAINER INTERNO */
+.secao-motoristas {
+    background-color: #2b2b2b;
+    padding: 24px;
+    border-radius: 8px;
+    margin-top: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.topo-secao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.topo-secao h2 {
+    color: #ffffff;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+.tabela-motoristas {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tabela-motoristas th {
+    color: #2ecc71;
+    padding: 14px 12px;
+    border-bottom: 2px solid #3d3d3d;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+}
+
+.tabela-motoristas td {
+    color: #ffffff;
+    padding: 16px 12px;
+    border-bottom: 1px solid #3d3d3d;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+.tabela-motoristas tr:last-child td {
+    border-bottom: none;
+}
+
+/* COMPONENTES SECUNDÁRIOS */
+.badge-categoria {
+    background-color: #1f1f1f;
+    border: 1px solid #2ecc71;
+    color: #2ecc71;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.85rem;
+}
+
+.btn-novo-motorista {
+    background-color: #2ecc71;
+    color: #ffffff;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.btn-novo-motorista:hover {
+    background-color: #27ae60;
+}
+
+.btn-editar {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 6px;
+}
+
+.btn-editar:hover {
+    background-color: #2980b9;
+}
+
+.btn-excluir {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-excluir:hover {
+    background-color: #c0392b;
+}
+
+.tabela-vazia {
+    text-align: center;
+    padding: 40px !important;
+    color: #888;
+}
+
+.tabela-vazia i {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+    display: block;
+    color: #555;
+}
