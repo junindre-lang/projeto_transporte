@@ -1,0 +1,25 @@
+.container-solicitacao {
+    max-width: 500px;
+    margin: 50px auto;
+    background: #2b2b2b;
+    padding: 30px;
+    border-radius: 8px;
+    color: white;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    background: #1e1e1e;
+    border: 1px solid #3d3d3d;
+    color: white;
+}
+.btn-enviar {
+    width: 100%;
+    padding: 12px;
+    background: #2ecc71;
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}

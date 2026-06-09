@@ -1,45 +1,62 @@
 // ==========================================================================
-// CONTROLE DO MODAL DE VEÍCULOS
+// 1. GERENCIAMENTO DE VIAGENS (Admin)
+// ==========================================================================
+function processarViagem(idViagem, acao, nomeMotorista) {
+    const urlRota = acao === 'Deferida' ? '/pag_admin/deferir_viagem' : '/pag_admin/indeferir_viagem';
+
+    fetch(urlRota, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id_viagem: idViagem, motorista: nomeMotorista })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            const linha = document.getElementById(`viagem-${idViagem}`); // Ajustado ID
+            if(linha) {
+                linha.style.transition = '0.3s';
+                linha.style.opacity = '0';
+                setTimeout(() => linha.remove(), 300);
+            }
+            alert(`Viagem do motorista ${data.motorista} foi ${data.status} com sucesso!`);
+        } else {
+            alert('Erro: ' + data.erro);
+        }
+    });
+}
+
+// ==========================================================================
+// 2. GERENCIAMENTO DE SERVIDORES (Admin)
+// ==========================================================================
+function processarServidor(idServidor, acao) {
+    const urlRota = acao === 'aprovar' ? `/lista_servidores/aprovar/${idServidor}` : `/lista_servidores/excluir/${idServidor}`;
+
+    if (acao === 'excluir' && !confirm('Tem certeza que deseja excluir?')) return;
+
+    fetch(urlRota, { method: 'POST' })
+    .then(response => response.json())
+    .then(data => {
+        if (data.sucesso) {
+            const linha = document.getElementById(`servidor-${idServidor}`);
+            if(linha) {
+                linha.style.opacity = '0';
+                setTimeout(() => linha.remove(), 300);
+            }
+        } else {
+            alert(data.erro);
+        }
+    });
+}
+
+// ==========================================================================
+// 3. UTILS DE MODAL
 // ==========================================================================
 function abrirModal(idModal) {
-    document.getElementById(idModal).classList.add('ativo');
+    const m = document.getElementById(idModal);
+    if(m) { m.style.display = 'flex'; m.classList.add('ativo'); }
 }
 
 function fecharModal(idModal) {
-    document.getElementById(idModal).classList.remove('ativo');
-}
-
-// Fecha o modal se o administrador clicar fora da caixinha do formulário
-window.onclick = function(event) {
-    const modal = document.getElementById('modalVeiculo');
-    if (event.target == modal) {
-        modal.classList.remove('ativo');
-    }
-}
-
-// ==========================================================================
-// INTERAÇÃO DA TABELA (DEFERIR / INDEFERIR)
-// ==========================================================================
-function processarViagem(idLinha, acao, nomeMotorista) {
-    // Alerta informativo na tela
-    alert(`A solicitação de ${nomeMotorista} foi ${acao} com sucesso!`);
-
-    // Remove a linha correspondente de forma dinâmica na interface
-    const linha = document.getElementById(idLinha);
-    if (linha) {
-        linha.remove();
-    }
-
-    // Caso todas as solicitações acabem, gera um feedback amigável de sucesso
-    const tabelaCorpo = document.getElementById('corpo-tabela-viagens');
-    if (tabelaCorpo && tabelaCorpo.rows.length === 0) {
-        tabelaCorpo.innerHTML = `
-            <tr>
-                <td colspan="5" style="text-align: center; color: #888; padding: 30px;">
-                    <i class="fa-solid fa-circle-check" style="color: #2ecc71; margin-right: 5px;"></i>
-                    Todas as solicitações pendentes foram processadas!
-                </td>
-            </tr>
-        `;
-    }
+    const m = document.getElementById(idModal);
+    if(m) { m.classList.remove('ativo'); setTimeout(() => m.style.display = 'none', 300); }
 }

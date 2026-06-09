@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -6,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Veículos Cadastrados - Expresso</title>
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}?v=1.1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -15,10 +14,12 @@
         <div class="sidebar-brand">
             <h1>EXPRESSO</h1>
         </div>
+
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Buscar no menu...">
         </div>
+
         <ul class="sidebar-menu">
             <li><a href="/pag_admin"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
             <li><a href="#"><i class="fa-solid fa-route"></i> ROTAS</a></li>
@@ -28,6 +29,7 @@
             <li><a href="/cad_veiculos" class="active"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
             <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
         </ul>
+
         <div class="sidebar-footer">
             <a href="/login_adm" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
         </div>
@@ -36,14 +38,14 @@
     <div class="main-content">
         <div class="titulo">
             <h1>PAINEL DO ADMINISTRADOR</h1>
-            <p style="color: #aaaaaa; font-size: 0.9rem;">Gerenciamento da Frota de Veículos</p>
+            <p style="color: #aaaaaa; font-size: 0.9rem; margin-top: 5px;">Gerenciamento da Frota de Veículos</p>
         </div>
 
         <div class="secao-viagens">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <h2 style="margin: 0; color: white;">Veículos Cadastrados</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                <h2 style="ma   rgin: 0; color: white; font-size: 1.3rem;">Veículos Cadastrados</h2>
 
-                <button class="btn-novo-veiculo" onclick="abrirModal('modalVeiculo')" style="background-color: #2ecc71; color: white; border: none; padding: 10px 18px; border-radius: 6px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 8px;">
+               <button type="button" class="btn-novo-motorista" onclick="abrirModal('modalVeiculo')">
                     <i class="fa-solid fa-plus"></i> Novo Veículo
                 </button>
             </div>
@@ -72,13 +74,13 @@
                             </span>
                         </td>
                         <td>
-                            <button class="btn-indeferir" style="padding: 5px 10px; font-size: 0.8rem;">Excluir</button>
+                            <button class="btn-indeferir" style="padding: 5px 10px; font-size: 0.8rem;">editar</button>
                         </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="6" style="text-align: center; color: #888; padding: 30px;">
-                            <i class="fa-solid fa-circle-info" style="margin-right: 5px;"></i>
+                        <td colspan="6" style="text-align: center; color: #888888; padding: 40px 10px;">
+                            <i class="fa-solid fa-circle-info" style="margin-right: 6px; font-size: 1.1rem;"></i>
                             Nenhum veículo cadastrado na frota.
                         </td>
                     </tr>
@@ -92,7 +94,7 @@
         <div class="modal-conteudo">
             <div class="modal-header">
                 <h2><i class="fa-solid fa-bus"></i> Cadastrar Veículo</h2>
-                <button class="btn-fechar" onclick="fecharModal('modalVeiculo')">&times;</button>
+                <button type="button" class="btn-fechar" onclick="fecharModal('modalVeiculo')">&times;</button>
             </div>
 
             <form action="/cad_veiculos" method="POST" class="modal-form">
@@ -130,6 +132,6 @@
         </div>
     </div>
 
-    <script src="../static/js/cad_veiculos.js"></script>
+    <script src="{{ url_for('static', filename='js/veiculos.js') }}"></script>
 </body>
 </html>

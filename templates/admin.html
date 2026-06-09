@@ -25,7 +25,7 @@
             <li><a href="#"><i class="fa-solid fa-route"></i> ROTAS</a></li>
             <li><a href="#"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
             <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
-            <li><a href="cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
+            <li><a href="/cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
             <li><a href="/cad_veiculos"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
             <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
         </ul>
@@ -88,26 +88,31 @@
                     </tr>
                 </thead>
                 <tbody id="corpo-tabela-viagens">
-                    <tr id="viagem-carlos">
-                        <td>Carlos Silva</td>
-                        <td>Linha Central - Campus</td>
-                        <td>21/05/2026 - 07:30</td>
-                        <td>Ônibus 01</td>
-                        <td>
-                            <button class="btn-deferir" onclick="processarViagem('viagem-carlos', 'Deferida', 'Carlos Silva')">Deferir</button>
-                            <button class="btn-indeferir" onclick="processarViagem('viagem-carlos', 'Indeferida', 'Carlos Silva')">Indeferir</button>
-                        </td>
-                    </tr>
-                    <tr id="viagem-marcos">
-                        <td>Marcos Souza</td>
-                        <td>Expresso Noturno</td>
-                        <td>22/05/2026 - 19:00</td>
-                        <td>Van 04</td>
-                        <td>
-                            <button class="btn-deferir" onclick="processarViagem('viagem-marcos', 'Deferida', 'Marcos Souza')">Deferir</button>
-                            <button class="btn-indeferir" onclick="processarViagem('viagem-marcos', 'Indeferida', 'Marcos Souza')">Indeferir</button>
-                        </td>
-                    </tr>
+                    {% if viagens %}
+                        {% for v in viagens %}
+                        <tr id="viagem-{{ v.id }}">
+                            <td>{{ v.motorista_nome }}</td>
+                            <td>{{ v.rota }}</td>
+                            <td>{{ v.data_horario }}</td>
+                            <td>{{ v.veiculo }}</td>
+                            <td>
+                                <button onclick="processarViagem('{{ v.id }}', 'Deferida', '{{ v.motorista_nome }}')" class="btn-editar">
+                                    <i class="fa-solid fa-check"></i> Deferir
+                                </button>
+                                <button onclick="processarViagem('{{ v.id }}', 'Indeferida', '{{ v.motorista_nome }}')" class="btn-excluir">
+                                    <i class="fa-solid fa-xmark"></i> Indeferir
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #888; padding: 20px;">
+                                <i class="fa-solid fa-circle-check" style="color: #2ecc71; margin-right: 6px;"></i>
+                                Nenhuma solicitação pendente no momento.
+                            </td>
+                        </tr>
+                    {% endif %}
                 </tbody>
             </table>
         </div>

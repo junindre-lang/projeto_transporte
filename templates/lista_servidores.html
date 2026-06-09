@@ -44,7 +44,7 @@
         <div class="secao-servidores">
             <div class="topo-secao">
                 <h2>Servidores Cadastrados</h2>
-                <button class="btn-cadastrar-novo"><i class="fa-solid fa-plus"></i> Novo Servidor</button>
+                <button class="btn-cadastrar-novo" onclick="abrirModal('modalServidor')"><i class="fa-solid fa-plus"></i> Novo Servidor</button>
             </div>
 
             <table class="tabela-servidores">
@@ -57,10 +57,10 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="corpo-tabela-servidores">
                     {% if servidores %}
                         {% for servidor in servidores %}
-                        <tr>
+                        <tr id="servidor-{{ servidor.id }}">
                             <td>{{ servidor.matricula }}</td>
                             <td>{{ servidor.nome }}</td>
                             <td>{{ servidor.cargo }}</td>
@@ -70,14 +70,24 @@
                                 </span>
                             </td>
                             <td>
-                                <button class="btn-editar"><i class="fa-solid fa-pen"></i> APROVAR</button>
-                                <button class="btn-excluir"><i class="fa-solid fa-trash"></i> Excluir</button>
+                                <div style="display: flex; gap: 8px;">
+                                    {% if servidor.status != 'Ativo' %}
+                                    <button onclick="processarServidor('{{ servidor.id }}', 'aprovar')" class="btn-editar">
+                                        <i class="fa-solid fa-check"></i> APROVAR
+                                    </button>
+                                    {% endif %}
+
+                                    <button onclick="processarServidor('{{ servidor.id }}', 'excluir')" class="btn-excluir">
+                                        <i class="fa-solid fa-trash"></i> Excluir
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
                             <td colspan="5" style="text-align: center; padding: 30px; color: #888;">
+                                <i class="fa-solid fa-circle-check" style="color: #2ecc71; margin-right: 6px;"></i>
                                 Nenhum servidor cadastrado no momento.
                             </td>
                         </tr>
@@ -87,5 +97,6 @@
         </div>
     </div>
 
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
 </body>
 </html>

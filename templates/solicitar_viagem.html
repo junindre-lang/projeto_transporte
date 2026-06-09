@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/solicitar_viagem.css') }}">
+</head>
+<body>
+    <div class="container-solicitacao">
+        <h2>Solicitar Nova Viagem</h2>
+        <form action="/cad_viagem   " method="POST">
+            <input type="text" name="motorista" placeholder="Nome do Motorista" required>
+            <input type="text" name="rota" placeholder="Destino / Rota" required>
+            <input type="datetime-local" name="data" required>
+            <input type="text" name="veiculo" placeholder="Modelo do Veículo" required>
+            <button type="submit" class="btn-enviar">Enviar Solicitação</button>
+        </form>
+    </div>
+</body>
+</html>

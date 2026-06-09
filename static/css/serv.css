@@ -1,3 +1,20 @@
+/* ==========================================================================
+   CONTEÚDO PRINCIPAL E ESTRUTURA
+   ========================================================================== */
+.main-content {
+    margin-left: 260px; /* Largura padrão da sidebar */
+    padding: 30px;
+    background-color: #1e1e1e;
+    min-height: 100vh;
+}
+
+.titulo h1 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
 /* Container da seção baseado no estilo das viagens */
 .secao-servidores {
     background-color: #2b2b2b;
@@ -20,7 +37,9 @@
     margin: 0;
 }
 
-/* Reutilização e adaptação da tabela */
+/* ==========================================================================
+   TABELA DE SERVIDORES
+   ========================================================================== */
 .tabela-servidores {
     width: 100%;
     border-collapse: collapse;
@@ -32,6 +51,9 @@
     padding: 12px;
     border-bottom: 2px solid #3d3d3d;
     font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
 }
 
 .tabela-servidores td {
@@ -39,27 +61,50 @@
     padding: 14px 12px;
     border-bottom: 1px solid #3d3d3d;
     vertical-align: middle;
+    font-size: 0.95rem;
 }
 
-/* Badges de Status (Ativo / Inativo) */
+/* Efeito de hover nas linhas da tabela */
+.tabela-servidores tbody tr:hover {
+    background-color: rgba(21, 21, 21, 0.2);
+}
+
+/* ==========================================================================
+   BADGES DE STATUS (Pendente / Ativo / Inativo)
+   ========================================================================== */
 .status-badge {
-    padding: 4px 8px;
+    padding: 6px 12px;
     border-radius: 4px;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     font-weight: bold;
+    display: inline-block;
+    text-transform: uppercase;
 }
 
-.status-badge.ativo {
-    background-color: rgba(46, 204, 113, 0.2);
+/* Status: Pendente (Laranja/Amarelo do print) */
+.status-badge.pendente {
+    background-color: rgba(241, 196, 15, 0.15);
+    color: #f1c40f;
+}
+
+/* Status: Ativo / Aprovado */
+.status-badge.ativo,
+.status-badge.aprovado {
+    background-color: rgba(46, 204, 113, 0.15);
     color: #2ecc71;
 }
 
-.status-badge.inativo {
-    background-color: rgba(231, 76, 60, 0.2);
+/* Status: Inativo / Recusado */
+.status-badge.inativo,
+.status-badge.recusado {
+    background-color: rgba(231, 76, 60, 0.15);
     color: #e74c3c;
 }
 
-/* Botões de Ação da Tabela */
+/* ==========================================================================
+   BOTÕES DE AÇÃO
+   ========================================================================== */
+/* Botão do Topo: Novo Servidor */
 .btn-cadastrar-novo {
     background-color: #2ecc71;
     color: #ffffff;
@@ -68,36 +113,59 @@
     border-radius: 4px;
     cursor: pointer;
     font-weight: bold;
-    transition: background 0.2s;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s ease;
 }
 
 .btn-cadastrar-novo:hover {
     background-color: #27ae60;
 }
 
+/* Botão: Aprovar (Azul) */
 .btn-editar {
     background-color: #3498db;
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: 4px;
     cursor: pointer;
-    margin-right: 5px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
 }
 
 .btn-editar:hover {
     background-color: #2980b9;
 }
 
+/* Botão: Excluir (Vermelho) */
 .btn-excluir {
     background-color: #e74c3c;
-    color: white;
+    color: #ffffff;
     border: none;
-    padding: 6px 12px;
+    padding: 8px 14px;
     border-radius: 4px;
     cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
 }
 
 .btn-excluir:hover {
     background-color: #c0392b;
+}
+
+/* Transição para a animação do JavaScript (Fade-out) */
+tr {
+    opacity: 1;
+    transition: opacity 0.3s ease;
 }

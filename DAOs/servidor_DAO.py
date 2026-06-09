@@ -1,24 +1,43 @@
-from modelosDB.servidoresDB import *
-from modelos.usuario import *
-
+from extensions import db
+from modelosDB.modelos import Servidor
+from sqlalchemy.exc import IntegrityError
 
 class ServidorDAO:
 
     @staticmethod
-    def __init__(self, matricula, nome, email, senha, senha1):
-        login = Usuario(matricula=matricula, nome=nome, email=email, senha=senha, senha1=senha1 )
-        db.session.add(login)
-        db.session.commit()
-
-        return login
+    def salvar(nome, email, matricula, senha):
+        try:
+            # O status padrão ao cadastrar costuma ser 'Pendente'
+            novo_servidor = Servidor(nome=nome, email=email, matricula=matricula, senha=senha, status='Pendente')
+            db.session.add(novo_servidor)
+            db.session.commit()
+            return novo_servidor
+        except IntegrityError:
+            # Faz o rollback se tentar salvar uma matrícula que já existe
+            db.session.rollback()
+            return None
 
     @staticmethod
     def listar():
         return Servidor.query.all()
 
     @staticmethod
-    def excluir(id):
-        return Servidor.query.delete(id=id)
+    def excluir(id_servidor):
+        servidor = Servidor.query.get(id_servidor)
+        if servidor:
+            db.session.delete(servidor)
+            db.session.commit()
+            return True
+        return False
+
+    @staticmethod
+    def aprovar(id_servidor):
+        servidor = Servidor.query.get(id_servidor)
+        if servidor:
+            servidor.status = 'Ativo'  # Atualiza o status para Ativo
+            db.session.commit()
+            return True
+        return False
 
     @staticmethod
     def buscar_por_matricula(matricula):
