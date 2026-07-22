@@ -13,6 +13,7 @@ body{
     justify-content: space-between;
     display:flex;
     align-items: center;
+    text-decoration: none;
 }
 
 .login{
@@ -27,15 +28,17 @@ body{
     margin-left: 40%;
     padding-top: 50px;
     text-align: center;
+    text-decoration: none;
 }
 
 
 .login input{
-    background-color:;
+    background-color: white; /* Ajustado de vazio para "white" para evitar bugs visuais */
     height:8%;
     border: 1px solid black;
     border-radius:6px;
     text-align:center;
+    text-decoration: none;
 }
 
 .login button{
@@ -46,4 +49,17 @@ body{
     width:100%;
     text-align:center;
     color: white;
+    text-decoration: none;
+}
+
+/* ==========================================================================
+   CORREÇÃO: Remove o sublinhado de todos os links dentro do bloco de login
+   ========================================================================== */
+.login a {
+    text-decoration: none; /* Remove o sublinhado de vez */
+}
+
+/* Mantém o cadeado 🔒 com a cor original dele, sem herdar o azul padrão de link */
+.login a[href="/logarlink_adm"] {
+    color: inherit;
 }

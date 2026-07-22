@@ -1,152 +1,253 @@
-/* Reset Geral */
+/* ==========================================================================
+   RESET GLOBAL E CONFIGURAÇÕES BASE
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* O body organiza a sidebar e o conteúdo lado a lado */
 body {
+    background-color: #121212;
+    color: #ffffff;
     display: flex;
-    height: 100vh;
-    background-color: #4a4a4a;
-    overflow: hidden;
+    min-height: 100vh;
+    overflow-x: hidden;
 }
 
-/* --- SIDEBAR CORRIGIDA NO CANTO --- */
+/* ==========================================================================
+   BARRA LATERAL (SIDEBAR)
+   ========================================================================== */
 .sidebar {
     width: 260px;
-    height: 100%;
-    background-color: #222222;
+    background-color: #111111;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
     display: flex;
     flex-direction: column;
-    box-shadow: 2px 0 8px rgba(0,0,0,0.3);
-    flex-shrink: 0; /* Impede a sidebar de espremer */
+    padding: 25px 20px;
+    border-right: 1px solid #1e1e1e;
+    z-index: 100;
 }
 
 .sidebar-brand {
-    padding: 20px;
+    margin-bottom: 30px;
+    padding-left: 10px;
 }
 
 .sidebar-brand h1 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
     color: #ffffff;
-    font-size: 1.6rem;
-    font-weight: bold;
     text-transform: uppercase;
-    letter-spacing: 1px;
 }
 
+/* Caixa de Busca no Menu */
 .search-box {
-    position: relative;
-    margin: 0 15px 15px 15px;
-    border-bottom: 1px solid #444444;
-    padding-bottom: 6px;
+    background-color: #1c1c1c;
+    border-radius: 6px;
+    padding: 12px 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 25px;
+    border: 1px solid #262626;
 }
 
 .search-box i {
-    position: absolute;
-    left: 0;
-    top: 5px;
-    color: #777777;
-    font-size: 0.9rem;
+    color: #666666;
+    font-size: 14px;
 }
 
 .search-box input {
-    width: 100%;
     background: none;
     border: none;
-    padding-left: 22px;
-    color: #ffffff;
-    font-size: 0.85rem;
     outline: none;
+    color: #ffffff;
+    font-size: 14px;
+    width: 100%;
 }
 
+.search-box input::placeholder {
+    color: #555555;
+}
+
+/* Links do Menu */
 .sidebar-menu {
     list-style: none;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     flex-grow: 1;
 }
 
-.sidebar-menu a {
+.sidebar-menu li a {
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: #dddddd;
+    gap: 15px;
+    color: #aaaaaa;
     text-decoration: none;
-    padding: 13px 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    border-bottom: 1px solid #2a2a2a;
-    transition: background 0.2s, color 0.2s;
+    padding: 12px 15px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
-.sidebar-menu a i {
-    font-size: 1rem;
+.sidebar-menu li a i {
+    font-size: 16px;
     width: 20px;
     text-align: center;
+}
+
+/* Hover e Item Ativo (Verde padrão Admin) */
+.sidebar-menu li a:hover {
+    background-color: #1c1c1c;
     color: #ffffff;
 }
 
-.sidebar-menu a:hover {
-    background-color: #2a2a2a;
+.sidebar-menu li a.active {
+    background-color: #2ecc71;
     color: #ffffff;
 }
 
-.sidebar-menu a.active {
-    background-color: #1a1a1a;
-    color: #ffffff;
-    border-left: 4px solid #00ff88;
-}
-
+/* Rodapé da Sidebar (Botão Sair) */
 .sidebar-footer {
-    border-top: 1px solid #2a2a2a;
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid #1e1e1e;
 }
 
-.sidebar-footer a.logout-btn {
+.logout-btn {
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: #ff4d4d;
+    gap: 15px;
+    color: #e74c3c;
     text-decoration: none;
-    padding: 13px 20px;
-    font-size: 0.8rem;
-    font-weight: bold;
+    font-size: 14px;
+    font-weight: 700;
+    padding: 12px 15px;
+    border-radius: 6px;
+    transition: background 0.2s ease;
 }
 
-.sidebar-footer a.logout-btn i {
-    color: #ff4d4d;
+.logout-btn:hover {
+    background-color: rgba(231, 76, 60, 0.1);
 }
 
-.sidebar-footer a.logout-btn:hover {
-    background-color: rgba(255, 77, 77, 0.1);
-}
-
-/* --- ÁREA DO CONTEÚDO PRINCIPAL (Centraliza o Nome no Meio) --- */
+/* ==========================================================================
+   CONTEÚDO PRINCIPAL (PAINEL DO SERVIDOR)
+   ========================================================================== */
 .main-content {
-    flex-grow: 1; /* Ocupa todo o resto da tela */
+    margin-left: 260px; /* Evita que o conteúdo suma atrás da sidebar */
+    padding: 40px;
+    width: calc(100% - 260px);
+    min-height: 100vh;
+    background-color: #161616;
     display: flex;
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center;     /* Centraliza verticalmente */
-    height: 100%;
+    flex-direction: column;
 }
 
-.titulo {
-    background-color: #4a4a4a;
-    color: white;
-    text-align: center;
-    height: 80px;
-    border-radius: 8px;
-    padding-top: 15px;
-    padding-left: 41%;
-    justify-content: space-between;
+/* Cabeçalho do Painel */
+.main-header {
     display: flex;
+    justify-content: space-between;
     align-items: center;
+    margin-bottom: 15px;
+}
 
-    /* Adicione apenas estas 4 linhas abaixo */
-    position: absolute;
-    top: 0;
-    left: 260px; /* Alinha logo após o fim da sua sidebar */
-    right: 0;
+.header-title h2 {
+    font-size: 26px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
+.header-subtitle span {
+    color: #666666;
+    font-size: 14px;
+}
+
+.linha-divisoria {
+    border: 0;
+    height: 1px;
+    background-color: #262626;
+    margin-bottom: 35px;
+}
+
+/* ==========================================================================
+   CARD PADRÃO DO ADMINISTRADOR
+   ========================================================================== */
+.content-card {
+    background-color: #1c1c1c;
+    border-radius: 8px;
+    padding: 30px;
+    border: 1px solid #262626;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+.card-header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.card-header-actions h3 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+/* Botão Verde (+ Nova Solicitação) */
+.btn-principal {
+    background-color: #2ecc71;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s ease, transform 0.1s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-principal:hover {
+    background-color: #27ae60;
+    transform: translateY(-1px);
+}
+
+/* Bloco de Conteúdo / Mensagem Interna */
+.welcome-box {
+    background-color: #121212;
+    border-radius: 6px;
+    padding: 25px;
+    border-left: 4px solid #2ecc71;
+}
+
+.welcome-box h4 {
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+.welcome-box p {
+    color: #aaaaaa;
+    line-height: 1.6;
+    font-size: 15px;
+    margin-bottom: 15px;
+}
+
+.welcome-box small {
+    color: #555555;
+    font-size: 13px;
+    display: block;
 }

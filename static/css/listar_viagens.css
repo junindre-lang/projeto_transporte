@@ -1,0 +1,219 @@
+/* ==========================================================================
+   ELEMENTOS DE COMPOSIÇÃO DA LISTAGEM
+   ========================================================================== */
+.titulo-listagem {
+    margin-bottom: 35px;
+}
+
+.titulo-listagem h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.titulo-listagem p {
+    color: #888888;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* CONTAINER FILTROS */
+.container-filtros {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 25px;
+    background-color: #1a1a1a;
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 1px solid #262626;
+}
+
+.pesquisa-tabela {
+    position: relative;
+    flex-grow: 1;
+    max-width: 450px;
+}
+
+.pesquisa-tabela i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666666;
+}
+
+.pesquisa-tabela input {
+    width: 100%;
+    background-color: #121212;
+    border: 1px solid #262626;
+    border-radius: 6px;
+    padding: 12px 12px 12px 42px;
+    color: #ffffff;
+    outline: none;
+    font-size: 14px;
+    transition: border-color 0.2s;
+}
+
+.pesquisa-tabela input:focus {
+    border-color: #2ecc71;
+}
+
+.botoes-filtro {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-filtro {
+    background-color: #121212;
+    border: 1px solid #262626;
+    color: #aaaaaa;
+    padding: 10px 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s ease;
+}
+
+.btn-filtro:hover {
+    border-color: #2ecc71;
+    color: #ffffff;
+}
+
+.btn-filtro.ativo {
+    background-color: rgba(46, 204, 113, 0.1);
+    border-color: #2ecc71;
+    color: #2ecc71;
+}
+
+/* ESTRUTURA DA TABELA EXPRESSO */
+.tabela-container {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    border: 1px solid #262626;
+    overflow: hidden;
+}
+
+.tabela-expresso {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 14px;
+}
+
+.tabela-expresso th {
+    background-color: #161616;
+    color: #888888;
+    padding: 16px 20px;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #262626;
+}
+
+.tabela-expresso td {
+    padding: 16px 20px;
+    border-bottom: 1px solid #262626;
+    color: #cccccc;
+}
+
+.tabela-expresso tr:last-child td {
+    border-bottom: none;
+}
+
+.tabela-expresso tr:hover td {
+    background-color: rgba(255, 255, 255, 0.01);
+}
+
+.txt-principal {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.tag-veiculo {
+    background-color: #222222;
+    padding: 4px 10px;
+    border-radius: 4px;
+    border: 1px solid #333333;
+    font-size: 13px;
+}
+
+/* BADGES DE ORIGEM (MAPA / MANUAL) */
+.badge-origem {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.badge-origem.manual {
+    background-color: rgba(52, 152, 219, 0.12);
+    color: #3498db;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+.badge-origem.mapa {
+    background-color: rgba(155, 89, 182, 0.12);
+    color: #9b59b6;
+    border: 1px solid rgba(155, 89, 182, 0.2);
+}
+
+/* BADGES DE STATUS */
+.status-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-pendente { background-color: rgba(241, 194, 50, 0.12); color: #f1c40f; }
+.status-deferida { background-color: rgba(46, 204, 113, 0.12); color: #2ecc71; }
+.status-indeferida { background-color: rgba(231, 76, 60, 0.12); color: #e74c3c; }
+.status-ativa, .status-andamento, .status-em\ andamento {
+    background-color: rgba(52, 152, 219, 0.12);
+    color: #3498db;
+}
+
+/* BOTÕES DE AÇÃO */
+.btn-tabela-ver, .btn-tabela-deletar {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+    text-decoration: none;
+}
+
+.btn-tabela-ver { color: #2ecc71; margin-right: 8px; }
+.btn-tabela-ver:hover { background-color: rgba(46, 204, 113, 0.1); }
+
+.btn-tabela-deletar { color: #e74c3c; }
+.btn-tabela-deletar:hover { background-color: rgba(231, 76, 60, 0.1); }
+
+/* CLASSE VAZIA */
+.tabela-vazia {
+    text-align: center;
+    padding: 50px !important;
+    color: #666666;
+}
+
+.tabela-vazia i { font-size: 40px; margin-bottom: 15px; display: block; }

@@ -1,4 +1,3 @@
-# modelosDB/modelos.py
 from extensions import db
 
 class Servidor(db.Model):
@@ -9,18 +8,16 @@ class Servidor(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     matricula = db.Column(db.String(120), unique=True, nullable=False)
     senha = db.Column(db.String(120), nullable=False)  # Removido unique=True
-    cargo = db.Column(db.String(100), default='Servidor')
     status = db.Column(db.String(50), default='Pendente')  # Usado para substituir o '.aprovado'
 
     def __repr__(self):
         return f'<Servidor {self.nome}>'
 
-    def __init__(self, nome, email, matricula, senha, cargo, status):
+    def __init__(self, nome, email, matricula, senha, status):
         self.nome = nome
         self.email = email
         self.matricula = matricula
         self.senha = senha
-        self.cargo = cargo
         self.status = status
 
 
@@ -47,17 +44,27 @@ class Motorista(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     matricula = db.Column(db.String(50), unique=True, nullable=False)
+    senha = db.Column(db.String(15), nullable=True)  # Opcional no cadastro inicial
     nome = db.Column(db.String(100), nullable=False)
-    cnh = db.Column(db.String(20), unique=True, nullable=False)
-    categoria = db.Column(db.String(5), nullable=False)
-    validade_cnh = db.Column(db.String(20), nullable=False)
+    cnh = db.Column(db.String(20), unique=True, nullable=True)  # Opcional no cadastro rápido
+    categoria = db.Column(db.String(5), nullable=True)  # Opcional no cadastro rápido
+    validade_cnh = db.Column(db.String(50), nullable=True)
 
-    def __init__(self, matricula, nome, cnh, categoria, validade_cnh):
+    # NOVAS COLUNAS ADICIONADAS PARA SUPORTAR O CADASTRO DO ADMIN:
+    cpf = db.Column(db.String(20), unique=True, nullable=True)
+    status = db.Column(db.String(50), default='Indisponível')
+
+    # Construtor atualizado e ultra flexível para aceitar todos os formatos de cadastro
+    def __init__(self, matricula, nome, senha=None, cnh=None, categoria=None, validade_cnh=None, cpf=None,
+                 status='Indisponível'):
         self.matricula = matricula
         self.nome = nome
+        self.senha = senha
         self.cnh = cnh
         self.categoria = categoria
         self.validade_cnh = validade_cnh
+        self.cpf = cpf
+        self.status = status
 
 
 class SolicitacaoViagem(db.Model):
@@ -77,3 +84,16 @@ class SolicitacaoViagem(db.Model):
         self.data_horario = data_horario
         self.veiculo = veiculo
         self.status = status
+
+
+class CoordenadaRota(db.Model):
+    __tablename__ = 'coordenadas_rota'
+
+    id = db.Column(db.Integer, primary_key=True)
+    viagem_id = db.Column(db.Integer, db.ForeignKey('solicitacoes_viagem.id'), nullable=False)
+    latitude = db.Column(db.Float, nullable=False)
+    longitude = db.Column(db.Float, nullable=False)
+    ordem = db.Column(db.Integer, nullable=False)  # Garante a sequência correta do trajeto
+
+    # Relacionamento com a tabela de viagens
+    viagem = db.relationship('SolicitacaoViagem', backref=db.backref('pontos_rota', lazy=True))

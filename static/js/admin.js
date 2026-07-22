@@ -1,5 +1,5 @@
 // ==========================================================================
-// 1. GERENCIAMENTO DE VIAGENS (Admin)
+// 1. GERENCIAMENTO DE VIAGENS (Admin) - ORIGINAL INTEGRAL
 // ==========================================================================
 function processarViagem(idViagem, acao, nomeMotorista) {
     const urlRota = acao === 'Deferida' ? '/pag_admin/deferir_viagem' : '/pag_admin/indeferir_viagem';
@@ -26,7 +26,7 @@ function processarViagem(idViagem, acao, nomeMotorista) {
 }
 
 // ==========================================================================
-// 2. GERENCIAMENTO DE SERVIDORES (Admin)
+// 2. GERENCIAMENTO DE SERVIDORES (Admin) - ORIGINAL INTEGRAL
 // ==========================================================================
 function processarServidor(idServidor, acao) {
     const urlRota = acao === 'aprovar' ? `/lista_servidores/aprovar/${idServidor}` : `/lista_servidores/excluir/${idServidor}`;
@@ -49,7 +49,7 @@ function processarServidor(idServidor, acao) {
 }
 
 // ==========================================================================
-// 3. UTILS DE MODAL
+// 3. UTILS DE MODAL - ORIGINAL INTEGRAL
 // ==========================================================================
 function abrirModal(idModal) {
     const m = document.getElementById(idModal);
@@ -60,3 +60,63 @@ function fecharModal(idModal) {
     const m = document.getElementById(idModal);
     if(m) { m.classList.remove('ativo'); setTimeout(() => m.style.display = 'none', 300); }
 }
+
+// ==========================================================================
+// 4. CADASTRO DE MOTORISTA VIA AJAX (ADICIONADO)
+// ==========================================================================
+document.addEventListener('DOMContentLoaded', () => {
+    const formMotorista = document.getElementById('form-cadastrar-motorista');
+    const resultadoBox = document.getElementById('resultado-cadastro-motorista');
+
+    if (formMotorista) {
+        formMotorista.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const dados = {
+                nome: document.getElementById('cad-nome').value,
+                cpf: document.getElementById('cad-cpf').value,
+                senha: document.getElementById('cad-senha').value
+            };
+
+            fetch('/api/motorista/cadastrar', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(dados)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (resultadoBox) {
+                    resultadoBox.style.display = 'block';
+
+                    if (data.sucesso) {
+                        formMotorista.reset();
+
+                        resultadoBox.style.backgroundColor = '#22c55e1a';
+                        resultadoBox.style.border = '1px solid #22c55e';
+                        resultadoBox.style.color = '#22c55e';
+                        resultadoBox.innerHTML = `
+                            <strong>🎉 Motorista Cadastrado!</strong><br><br>
+                            <strong>Matrícula (CPF):</strong> <span style="background:#334155; padding:2px 6px; border-radius:4px; color:#38bdf8; font-family:monospace; font-weight:bold;">${dados.cpf}</span><br>
+                            <p style="margin-top:10px; font-size:0.8rem; color:#94a3b8;">O acesso já está configurado com a senha definida.</p>
+                        `;
+                    } else {
+                        resultadoBox.style.backgroundColor = '#ef44441a';
+                        resultadoBox.style.border = '1px solid #ef4444';
+                        resultadoBox.style.color = '#ef4444';
+                        resultadoBox.innerHTML = `❌ Erro: ${data.erro}`;
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+                if (resultadoBox) {
+                    resultadoBox.style.display = 'block';
+                    resultadoBox.style.backgroundColor = '#ef44441a';
+                    resultadoBox.style.border = '1px solid #ef4444';
+                    resultadoBox.style.color = '#ef4444';
+                    resultadoBox.innerHTML = '❌ Falha de rede ou conexão com o servidor.';
+                }
+            });
+        });
+    }
+});

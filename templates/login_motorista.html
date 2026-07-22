@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Motorista - Sistema de Transporte</title>
+
+    <link rel="stylesheet" href="../static/css1/login_motorista.css">
+</head>
+<body>
+
+    <div class="login-container">
+
+        <a href="javascript:history.back()" class="btn-voltar">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle;">
+                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+            </svg>
+            Voltar
+        </a>
+
+        <div class="login-header">
+            <h2>Acesso do Motorista</h2>
+            <p>Insira suas credenciais para acessar o painel de viagens</p>
+        </div>
+
+        <form action="/login" method="POST" class="login-form">
+
+            <div class="input-group">
+                <label for="cpf">CPF ou Matrícula</label>
+                <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required autocomplete="username">
+            </div>
+
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" placeholder="••••••••" required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="btn-entrar">
+                Entrar no Sistema
+            </button>
+
+        </form>
+
+    </div>
+
+</body>
+</html>

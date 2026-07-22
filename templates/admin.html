@@ -22,8 +22,9 @@
 
         <ul class="sidebar-menu">
             <li><a href="/pag_admin" class="active"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
-            <li><a href="#"><i class="fa-solid fa-route"></i> ROTAS</a></li>
-            <li><a href="#"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
+            <li><a href="/rotas"><i class="fa-solid fa-route"></i> ROTAS</a></li>
+            <li><a href="/transito"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
+            <li><a href="/list_viagem"><i class="fa-solid fa-road"></i> LISTAS DE VIAGENS</a></li>
             <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
             <li><a href="/cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
             <li><a href="/cad_veiculos"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
@@ -49,14 +50,14 @@
                 <i class="fa-solid fa-user-plus icon-card"></i>
                 <h3>Cadastrar Motorista</h3>
                 <p>Adicione novos motoristas ao sistema.</p>
-                <a href="/cad_motor"><button class="btn-acao">Acessar</button></a>
+                <button class="btn-acao" onclick="abrirModal('modalMotorista')">Acessar</button>
             </div>
 
             <div class="card">
                 <i class="fa-solid fa-clock icon-card"></i>
                 <h3>Cadastrar Horários</h3>
                 <p>Gerencie as tabelas de horários das viagens.</p>
-                <button class="btn-acao">Acessar</button>
+                <a href="/cad_hora"><button class="btn-acao">Acessar</button></a>
             </div>
 
             <div class="card">
@@ -157,6 +158,36 @@
                 </div>
 
                 <button type="submit" class="btn-salvar">Salvar Veículo</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="modalMotorista" class="modal-container">
+        <div class="modal-conteudo">
+            <div class="modal-header">
+                <h2><i class="fa-solid fa-user-plus"></i> Cadastrar Motorista</h2>
+                <button class="btn-fechar" onclick="fecharModal('modalMotorista')">&times;</button>
+            </div>
+
+            <div id="resultado-cadastro-motorista" style="display: none; padding: 15px; border-radius: 6px; margin-bottom: 20px; font-size: 0.95rem;"></div>
+
+            <form id="form-cadastrar-motorista" class="modal-form">
+                <div class="form-grupo">
+                    <label for="cad-nome">Nome Completo do Motorista</label>
+                    <input type="text" id="cad-nome" placeholder="Ex: João Silva" required>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="cad-cpf">CPF (Será a matrícula de acesso)</label>
+                    <input type="text" id="cad-cpf" placeholder="000.000.000-00" required>
+                </div>
+
+                <div class="form-grupo">
+                    <label for="cad-senha">Definir Senha de Acesso</label>
+                    <input type="password" id="cad-senha" placeholder="Digite a senha para o motorista" required>
+                </div>
+
+                <button type="submit" class="btn-salvar">Cadastrar Motorista</button>
             </form>
         </div>
     </div>

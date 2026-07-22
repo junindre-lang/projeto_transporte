@@ -1,5 +1,4 @@
-# servidor.py
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, session, jsonify
 from extensions import db
 from DAOs.servidor_DAO import ServidorDAO
 from modelosDB.modelos import Veiculo, Motorista
@@ -7,7 +6,7 @@ from Blueprints.bp_admin import admin_bp
 from Blueprints.bp_servidor import servidor_bp
 
 app = Flask(__name__)
-app.secret_key = "secret_key_expresso_federal"
+app.secret_key = "klnhgcxs65d7fgohivyes3aerty98hgfxze5aws4e5df6g9yitres5df6giyvcxzas4e5r68gigfhdszadddfgfxgdzfxgchgchxgdzl.ko,mijhuggybtrfaludopix"
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///meubanco.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -19,6 +18,7 @@ db.init_app(app)
 app.register_blueprint(admin_bp)
 app.register_blueprint(servidor_bp)
 
+# Cria as tabelas de forma segura dentro do contexto correto
 with app.app_context():
     db.create_all()
 
@@ -43,22 +43,6 @@ def cadastro():
     return render_template('principal.html', msg='Servidor cadastrado com sucesso!')
 
 
-@app.route('/logar', methods=['POST'])
-def login():
-    login_mat = request.form.get('mat')
-    senha = request.form.get('senha')
-
-    servidor = ServidorDAO.autenticar(matricula=login_mat, senha=senha)
-
-    if not servidor:
-        return render_template('principal.html', msg='Matrícula ou senha incorretos.')
-
-    if servidor.status != 'Ativo':
-        return render_template('principal.html', msg='Cadastro aguardando aprovação administrativa.')
-
-    return render_template('homepage.html', servidor=servidor)
-
-
 @app.route('/cadastrolink')
 def cadastrolink():
     return render_template('cadastro.html')
@@ -69,6 +53,31 @@ def logarlink():
     return render_template('principal.html')
 
 
+@app.route('/logar', methods=['POST'])
+def login():
+    login_mat = request.form.get('mat')
+    senha = request.form.get('senha')
+
+    print(f"\n--- DETETIVE DO LOGIN ---")
+    print(f"Recebido do HTML -> Matrícula: '{login_mat}', Senha: '{senha}'")
+
+    servidor = ServidorDAO.autenticar(matricula=login_mat, senha=senha)
+    print(f"Busca no Banco (Servidor encontrado?): {servidor}")
+
+    if not servidor:
+        print("❌ Barrado no Portão 1: Usuário ou senha inválidos.")
+        return render_template('principal.html', msg='Matrícula ou senha incorretos.')
+
+    print(f"Status do usuário no banco: '{servidor.status}'")
+    if servidor.status != 'Ativo':
+        print("❌ Barrado no Portão 2: Usuário encontrado, mas status não é 'Ativo'.")
+        return render_template('principal.html', msg='Cadastro aguardando aprovação administrativa.')
+
+    session['servidor'] = login_mat
+    print("✅ SUCESSO! Indo para a homepage.html")
+    return render_template('homepage.html', servidor=servidor)
+
+
 @app.route('/login_adm', methods=['GET', 'POST'])
 def login_adm():
     if request.method == 'POST':
@@ -76,6 +85,7 @@ def login_adm():
         senha = request.form.get('senha')
 
         if senha == '123' and login_mat == 'sales':
+            session['admin'] = login_mat
             return redirect(url_for('bp_admin.index'))
         else:
             return render_template('login_adm.html', msg='Admin não encontrado ou senha incorreta')
@@ -102,7 +112,14 @@ def listar_motoristas():
         categoria = request.form.get('categoria')
         validade = request.form.get('validade_cnh')
 
-        novo_motorista = Motorista(matricula=matricula, nome=nome, cnh=cnh, categoria=categoria, validade_cnh=validade)
+        # Agora o construtor mapeia os campos opcionais sem falhar por falta de parâmetro
+        novo_motorista = Motorista(
+            matricula=matricula,
+            nome=nome,
+            cnh=cnh,
+            categoria=categoria,
+            validade_cnh=validade
+        )
         db.session.add(novo_motorista)
         db.session.commit()
         return redirect(url_for('listar_motoristas'))
@@ -127,6 +144,13 @@ def cadastrar_vei():
 
     lista_veiculos = Veiculo.query.all()
     return render_template('cad_veiculos.html', lista_veiculos=lista_veiculos)
+
+
+@app.route('/motora', methods=['GET', 'POST'])
+def pagina_motorista():
+    return render_template('login_motorista.html')
+
+
 
 
 if __name__ == '__main__':

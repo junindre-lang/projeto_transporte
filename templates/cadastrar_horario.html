@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Horários - EXPRESSO</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/cadastrar_horario.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h1>EXPRESSO</h1>
+        </div>
+
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar no menu...">
+        </div>
+
+        <ul class="sidebar-menu">
+            <li><a href="/pag_admin"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
+            <li><a href="/rotas" class="active"><i class="fa-solid fa-route"></i> ROTAS</a></li>
+            <li><a href="/transito"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
+            <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
+            <li><a href="/cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
+            <li><a href="/cad_veiculos"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
+            <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="/login_adm" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+
+        <div class="titulo">
+            <h1>PAINEL DO ADMINISTRADOR</h1>
+            <p><a href="/pag_admin" style="color: #2ecc71; text-decoration: none; font-size: 0.9rem;"><i class="fa-solid fa-chevron-left"></i> Voltar ao Painel</a></p>
+        </div>
+
+        <div class="secao-viagens">
+            <h2><i class="fa-solid fa-clock" style="color: #2ecc71; margin-right: 8px;"></i> Cadastrar Viagem Fixa / Horário Semanal</h2>
+
+            <form id="form-cadastro-horario" onsubmit="salvarHorarioFixo(event)" class="modal-form-custom">
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="motorista">Condutor / Motorista</label>
+                        <input type="text" id="motorista" placeholder="Nome completo do motorista" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="veiculo">Veículo / Ônibus</label>
+                        <input type="text" id="veiculo" placeholder="Ex: Ônibus Escolar Pref. 02 / Placa XXX-0000" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="rota-nome">Identificação do Trajeto (Linha)</label>
+                    <input type="text" id="rota-nome" placeholder="Ex: Zona Rural para IFPB (Ida/Volta) - Turno Manhã" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="horario-partida">Horário de Saída</label>
+                        <input type="time" id="horario-partida" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="horario-retorno">Horário de Retorno (Opcional)</label>
+                        <input type="time" id="horario-retorno">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label style="color: #2ecc71;">Dias da Semana recorrentes</label>
+                    <div class="dias-semana-wrapper">
+                        <label class="checkbox-dia">
+                            <input type="checkbox" name="dias" value="Segunda">
+                            <span>Seg</span>
+                        </label>
+                        <label class="checkbox-dia">
+                            <input type="checkbox" name="dias" value="Terça">
+                            <span>Ter</span>
+                        </label>
+                        <label class="checkbox-dia">
+                            <input type="checkbox" name="dias" value="Quarta">
+                            <span>Qua</span>
+                        </label>
+                        <label class="checkbox-dia">
+                            <input type="checkbox" name="dias" value="Quinta">
+                            <span>Qui</span>
+                        </label>
+                        <label class="checkbox-dia">
+                            <input type="checkbox" name="dias" value="Sexta">
+                            <span>Sex</span>
+                        </label>
+                        <label class="checkbox-dia">
+                            <input type="checkbox" name="dias" value="Sábado">
+                            <span>Sáb</span>
+                        </label>
+                        <label class="checkbox-dia">
+                            <input type="checkbox" name="dias" value="Domingo">
+                            <span>Dom</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="itinerario">Descrição das Paradas / Pontos de Encontro</label>
+                    <textarea id="itinerario" rows="4" placeholder="Descreva os principais pontos onde os alunos irão embarcar e desembarcar..." required></textarea>
+                </div>
+
+                <div class="form-botoes">
+                    <button type="submit" class="btn-salvar">Salvar Cadastro</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/cadastrar_horario.js') }}"></script>
+</body>
+</html>

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>transito federa</title>
-    <link rel="stylesheet" href="../static/css/homepage.css">
+    <title>Expresso Federal - Painel do Servidor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <form action="/menu_adm" method="post">
-      <div class="sidebar">
+
+    <div class="sidebar">
         <div class="sidebar-brand">
-            <h1>MENU</h1>
+            <h1>EXPRESSO</h1>
         </div>
+
         <div class="search-box">
             <i class="fa-solid fa-magnifying-glass"></i>
             <input type="text" placeholder="Buscar no menu...">
@@ -18,33 +20,57 @@
 
         <ul class="sidebar-menu">
             <li>
-                <a href="#" class="active"><i class="fa-solid fa-house"></i> INÍCIO</a>
+                <a href="/home" class="active"><i class="fa-solid fa-house"></i> INÍCIO</a>
             </li>
             <li>
-                <a href="#"><i class="fa-solid fa-route"></i> ROTAS</a>
+                <a href="/rotas_servidor"><i class="fa-solid fa-route"></i> ROTAS</a>
             </li>
             <li>
-                <a href="#"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a>
+                <a href="/transito_serv"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a>
             </li>
             <li>
-                <a href="/cad_viagem"><i class="fa-solid fa-users"></i> SOLICITAR VIAGEM</a>
+                <a href="/cad_viagem"><i class="fa-solid fa-paper-plane"></i> SOLICITAR VIAGEM</a>
             </li>
             <li>
-                <a href="#"><i class="fa-solid fa-bus"></i> VEÍCULOS</a>
+                <a href="/cad_veiculo"><i class="fa-solid fa-bus"></i> VEÍCULOS</a>
             </li>
-            <li>
-                <a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a>
-            </li>
+
         </ul>
 
         <div class="sidebar-footer">
             <a href="/logarlink" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
         </div>
-        <div class="titulo">
-            <h1>EXPRESSO FEDERAL</h1>
+    </div>
+
+    <div class="main-content">
+
+        <div class="main-header">
+            <div class="header-title">
+                <h2>PAINEL DO SERVIDOR</h2>
+            </div>
+            <div class="header-subtitle">
+                <span>Gerenciamento de Viagens do Usuário</span>
+            </div>
         </div>
 
+        <hr class="linha-divisoria">
 
-</div>
+        <div class="content-card">
+            <div class="card-header-actions">
+                <h3>Minhas Solicitações de Viagem</h3>
+                <a href="/cad_viagem" class="btn-principal"><i class="fa-solid fa-plus"></i> Nova Solicitação</a>
+            </div>
+
+            <div class="card-body">
+                <div class="welcome-box">
+                    <h4>Olá, {{ servidor.nome }}!</h4>
+                    <p>Utilize o menu lateral para gerenciar suas rotas ou clique no botão acima para solicitar uma nova viagem.</p>
+                    <small>Matrícula vinculada: <strong>{{ servidor.matricula }}</strong></small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="{{ url_for('static', filename='js/homepage.js') }}"></script>
 </body>
 </html>
