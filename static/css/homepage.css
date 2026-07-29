@@ -31,6 +31,12 @@ body {
     padding: 25px 20px;
     border-right: 1px solid #1e1e1e;
     z-index: 100;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Animação suave */
+}
+
+/* Classe aplicada via JS que empurra a sidebar para fora da tela */
+body.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
 }
 
 .sidebar-brand {
@@ -104,7 +110,7 @@ body {
     text-align: center;
 }
 
-/* Hover e Item Ativo (Verde padrão Admin) */
+/* Hover e Item Ativo */
 .sidebar-menu li a:hover {
     background-color: #1c1c1c;
     color: #ffffff;
@@ -143,13 +149,21 @@ body {
    CONTEÚDO PRINCIPAL (PAINEL DO SERVIDOR)
    ========================================================================== */
 .main-content {
-    margin-left: 260px; /* Evita que o conteúdo suma atrás da sidebar */
+    margin-left: 260px;
     padding: 40px;
     width: calc(100% - 260px);
     min-height: 100vh;
     background-color: #161616;
     display: flex;
     flex-direction: column;
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Expande o conteúdo ocupando 100% da tela quando a sidebar está recolhida */
+body.sidebar-collapsed .main-content {
+    margin-left: 0;
+    width: 100%;
 }
 
 /* Cabeçalho do Painel */
@@ -160,11 +174,38 @@ body {
     margin-bottom: 15px;
 }
 
+.header-title {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .header-title h2 {
     font-size: 26px;
     font-weight: 700;
     letter-spacing: 0.5px;
     color: #ffffff;
+}
+
+/* Botão de Alternar (Hamburguer) */
+.sidebar-toggle-btn {
+    background-color: #1c1c1c;
+    border: 1px solid #262626;
+    color: #2ecc71;
+    font-size: 18px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.sidebar-toggle-btn:hover {
+    background-color: #2ecc71;
+    color: #ffffff;
+    border-color: #2ecc71;
 }
 
 .header-subtitle span {
@@ -180,7 +221,7 @@ body {
 }
 
 /* ==========================================================================
-   CARD PADRÃO DO ADMINISTRADOR
+   CARD PADRÃO
    ========================================================================== */
 .content-card {
     background-color: #1c1c1c;

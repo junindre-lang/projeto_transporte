@@ -4,6 +4,7 @@ from DAOs.servidor_DAO import ServidorDAO
 from modelosDB.modelos import Veiculo, Motorista
 from Blueprints.bp_admin import admin_bp
 from Blueprints.bp_servidor import servidor_bp
+from Blueprints.bp_motorista import bp_motorista
 
 app = Flask(__name__)
 app.secret_key = "klnhgcxs65d7fgohivyes3aerty98hgfxze5aws4e5df6g9yitres5df6giyvcxzas4e5r68gigfhdszadddfgfxgdzfxgchgchxgdzl.ko,mijhuggybtrfaludopix"
@@ -17,6 +18,7 @@ db.init_app(app)
 # Registra o Blueprint do Admin de forma limpa
 app.register_blueprint(admin_bp)
 app.register_blueprint(servidor_bp)
+app.register_blueprint(bp_motorista)
 
 # Cria as tabelas de forma segura dentro do contexto correto
 with app.app_context():

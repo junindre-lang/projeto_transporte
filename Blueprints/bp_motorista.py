@@ -7,14 +7,11 @@ bp_motorista = Blueprint('bp_motorista', __name__)
 
 from flask import Blueprint, jsonify, request, render_template
 
-# Inicializa o Blueprint
-bp_motorista = Blueprint('motorista', __name__)
-
 
 # Rota para renderizar a página do motorista (HTML)
 @bp_motorista.route('/motorista')
 def pagina_motorista():
-    return render_template('motorista.html')
+    return render_template('princ_motorista.html')
 
 
 # 1. API: Ficar Livre / Disponível

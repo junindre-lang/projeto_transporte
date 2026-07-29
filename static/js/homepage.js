@@ -1,7 +1,20 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Seleciona o campo de entrada de busca na sidebar
+    // ==================================================================
+    // 1. LÓGICA DE EMPURRAR / PUXAR A SIDEBAR (TOGGLE)
+    // ==================================================================
+    const toggleBtn = document.getElementById("sidebar-toggle");
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener("click", function () {
+            // Adiciona/Remove a classe 'sidebar-collapsed' no elemento body
+            document.body.classList.toggle("sidebar-collapsed");
+        });
+    }
+
+    // ==================================================================
+    // 2. BUSCA DINÂMICA DE OPÇÕES NO MENU LATERAL
+    // ==================================================================
     const searchInput = document.querySelector(".search-box input");
-    // Seleciona todas as linhas de opções do menu lateral
     const menuItems = document.querySelectorAll(".sidebar-menu li");
 
     if (searchInput) {
@@ -9,10 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
             const termoBusca = searchInput.value.toLowerCase().trim();
 
             menuItems.forEach(function (item) {
-                // Obtém o texto do link dentro do li
                 const textoOpcao = item.textContent.toLowerCase();
 
-                // Se o texto corresponder ao que foi digitado, exibe. Se não, oculta.
                 if (textoOpcao.includes(termoBusca)) {
                     item.style.display = "";
                 } else {

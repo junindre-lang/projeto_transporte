@@ -10,7 +10,7 @@ body {
     display: flex;
     height: 100vh;
     background-color: #1f1f1f;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 /* --- SIDEBAR --- */
@@ -23,7 +23,15 @@ body {
     border-right: 1px solid #2b2b2b;
     flex-shrink: 0;
     position: fixed;
+    top: 0;
+    left: 0;
     z-index: 10;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Estado Recolhido da Sidebar */
+body.sidebar-collapsed .sidebar {
+    transform: translateX(-100%);
 }
 
 .sidebar-brand {
@@ -124,6 +132,14 @@ body {
     padding: 40px;
     overflow-y: auto;
     width: calc(100% - 260px);
+    transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+                width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Expansão do conteúdo ao recolher a sidebar */
+body.sidebar-collapsed .main-content {
+    margin-left: 0;
+    width: 100%;
 }
 
 .titulo {
@@ -135,10 +151,37 @@ body {
     padding-bottom: 15px;
 }
 
+.titulo-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
 .titulo h1 {
     color: white;
     font-size: 1.8rem;
     font-weight: 700;
+}
+
+/* Botão Toggle */
+.sidebar-toggle-btn {
+    background-color: #2b2b2b;
+    border: 1px solid #3d3d3d;
+    color: #2ecc71;
+    font-size: 1.1rem;
+    padding: 10px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.sidebar-toggle-btn:hover {
+    background-color: #2ecc71;
+    color: #181818;
+    border-color: #2ecc71;
 }
 
 /* Container de Blocos de Ações */
@@ -229,7 +272,7 @@ body {
 }
 
 /* Botões Deferir / Indeferir */
-.btn-deferir {
+.btn-editar, .btn-deferir {
     background-color: #2e7d32;
     color: white;
     border: none;
@@ -241,11 +284,11 @@ body {
     transition: background 0.2s;
 }
 
-.btn-deferir:hover {
+.btn-editar:hover, .btn-deferir:hover {
     background-color: #4caf50;
 }
 
-.btn-indeferir {
+.btn-excluir, .btn-indeferir {
     background-color: #c62828;
     color: white;
     border: none;
@@ -256,7 +299,7 @@ body {
     transition: background 0.2s;
 }
 
-.btn-indeferir:hover {
+.btn-excluir:hover, .btn-indeferir:hover {
     background-color: #ef5350;
 }
 

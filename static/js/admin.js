@@ -1,5 +1,5 @@
 // ==========================================================================
-// 1. GERENCIAMENTO DE VIAGENS (Admin) - ORIGINAL INTEGRAL
+// 1. GERENCIAMENTO DE VIAGENS (Admin)
 // ==========================================================================
 function processarViagem(idViagem, acao, nomeMotorista) {
     const urlRota = acao === 'Deferida' ? '/pag_admin/deferir_viagem' : '/pag_admin/indeferir_viagem';
@@ -12,7 +12,7 @@ function processarViagem(idViagem, acao, nomeMotorista) {
     .then(response => response.json())
     .then(data => {
         if (data.sucesso) {
-            const linha = document.getElementById(`viagem-${idViagem}`); // Ajustado ID
+            const linha = document.getElementById(`viagem-${idViagem}`);
             if(linha) {
                 linha.style.transition = '0.3s';
                 linha.style.opacity = '0';
@@ -26,7 +26,7 @@ function processarViagem(idViagem, acao, nomeMotorista) {
 }
 
 // ==========================================================================
-// 2. GERENCIAMENTO DE SERVIDORES (Admin) - ORIGINAL INTEGRAL
+// 2. GERENCIAMENTO DE SERVIDORES (Admin)
 // ==========================================================================
 function processarServidor(idServidor, acao) {
     const urlRota = acao === 'aprovar' ? `/lista_servidores/aprovar/${idServidor}` : `/lista_servidores/excluir/${idServidor}`;
@@ -49,7 +49,7 @@ function processarServidor(idServidor, acao) {
 }
 
 // ==========================================================================
-// 3. UTILS DE MODAL - ORIGINAL INTEGRAL
+// 3. UTILS DE MODAL
 // ==========================================================================
 function abrirModal(idModal) {
     const m = document.getElementById(idModal);
@@ -62,9 +62,46 @@ function fecharModal(idModal) {
 }
 
 // ==========================================================================
-// 4. CADASTRO DE MOTORISTA VIA AJAX (ADICIONADO)
+// 4. EVENTOS DOM (TOGGLE SIDEBAR, BUSCA E CADASTRO AJAX)
 // ==========================================================================
 document.addEventListener('DOMContentLoaded', () => {
+
+    // ----------------------------------------------------------------------
+    // A. LÓGICA DE EMPURRAR / PUXAR A SIDEBAR (TOGGLE)
+    // ----------------------------------------------------------------------
+    const toggleBtn = document.getElementById("sidebar-toggle");
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener("click", function () {
+            document.body.classList.toggle("sidebar-collapsed");
+        });
+    }
+
+    // ----------------------------------------------------------------------
+    // B. BUSCA DINÂMICA NO MENU LATERAL
+    // ----------------------------------------------------------------------
+    const searchInput = document.querySelector(".search-box input");
+    const menuItems = document.querySelectorAll(".sidebar-menu li");
+
+    if (searchInput) {
+        searchInput.addEventListener("input", function () {
+            const termoBusca = searchInput.value.toLowerCase().trim();
+
+            menuItems.forEach(function (item) {
+                const textoOpcao = item.textContent.toLowerCase();
+
+                if (textoOpcao.includes(termoBusca)) {
+                    item.style.display = "";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        });
+    }
+
+    // ----------------------------------------------------------------------
+    // C. CADASTRO DE MOTORISTA VIA AJAX
+    // ----------------------------------------------------------------------
     const formMotorista = document.getElementById('form-cadastrar-motorista');
     const resultadoBox = document.getElementById('resultado-cadastro-motorista');
 

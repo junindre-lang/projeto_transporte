@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Motorista - Expresso</title>
+    <link rel="stylesheet" href="/static/css1/princ_motorista">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Header do Motorista -->
+    <header class="header-motorista">
+        <div class="logo-area">
+            <i class="fa-solid fa-bus"></i>
+            <span>EXPRESSO</span>
+        </div>
+        <div class="perfil-area">
+            <span class="nome-motorista"><i class="fa-solid fa-user-circle"></i> Motorista</span>
+            <a href="/login_adm" class="btn-sair"><i class="fa-solid fa-power-off"></i></a>
+        </div>
+    </header>
+
+    <main class="container-principal">
+        <!-- Card de Status do Motorista -->
+        <section class="card-status">
+            <div class="info-status">
+                <p class="rotulo">Seu Status Atual:</p>
+                <div id="badge-status" class="badge disponivel">
+                    <i class="fa-solid fa-circle"></i> <span id="texto-status">Disponível</span>
+                </div>
+            </div>
+            <button id="btn-toggle-livre" onclick="ficarLivre()" class="btn-secundario">
+                <i class="fa-solid fa-signal"></i> Marcar como Livre
+            </button>
+        </section>
+
+        <!-- Seção de Viagens Agendadas -->
+        <section class="secao-viagens">
+            <h2><i class="fa-solid fa-route"></i> Minhas Viagens Agendadas</h2>
+
+            <div id="lista-viagens" class="grid-viagens">
+                <!-- Os cards de viagens serão inseridos via JS -->
+                <div class="carregando">
+                    <i class="fa-solid fa-spinner fa-spin"></i>
+                    <p>Buscando viagens direcionadas...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Arquivo JavaScript isolado -->
+    <script src="{{ url_for('static', filename='js/princ_motorista.js') }}"></script>
+</body>
+</html>

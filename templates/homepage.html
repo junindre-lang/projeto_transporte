@@ -2,13 +2,15 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expresso Federal - Painel do Servidor</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/homepage.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <div class="sidebar">
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <div class="sidebar" id="sidebar">
         <div class="sidebar-brand">
             <h1>EXPRESSO</h1>
         </div>
@@ -34,7 +36,6 @@
             <li>
                 <a href="/cad_veiculo"><i class="fa-solid fa-bus"></i> VEÍCULOS</a>
             </li>
-
         </ul>
 
         <div class="sidebar-footer">
@@ -42,10 +43,15 @@
         </div>
     </div>
 
+    <!-- CONTEÚDO PRINCIPAL -->
     <div class="main-content">
 
         <div class="main-header">
             <div class="header-title">
+                <!-- BOTÃO PARA EMPURRAR / PUXAR A SIDEBAR -->
+                <button id="sidebar-toggle" class="sidebar-toggle-btn" title="Alternar Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
                 <h2>PAINEL DO SERVIDOR</h2>
             </div>
             <div class="header-subtitle">
@@ -71,6 +77,7 @@
         </div>
 
     </div>
+
     <script src="{{ url_for('static', filename='js/homepage.js') }}"></script>
 </body>
 </html>
