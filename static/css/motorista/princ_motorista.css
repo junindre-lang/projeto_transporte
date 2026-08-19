@@ -1,0 +1,230 @@
+:root {
+    --bg-dark: #121418;
+    --card-bg: #1e222b;
+    --card-border: #2a2e39;
+    --text-primary: #f3f4f6;
+    --text-muted: #9ca3af;
+    --accent-green: #2ecc71;
+    --accent-red: #e74c3c;
+    --accent-blue: #3b82f6;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+/* Header */
+.header-motorista {
+    background-color: var(--card-bg);
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--card-border);
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--accent-green);
+}
+
+.perfil-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.nome-motorista {
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+
+.btn-sair {
+    color: var(--accent-red);
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+/* Layout Container */
+.container-principal {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 15px;
+}
+
+/* Status Card */
+.card-status {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.rotulo {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-bottom: 5px;
+}
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+
+.badge.disponivel {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: var(--accent-green);
+    border: 1px solid var(--accent-green);
+}
+
+.badge.indisponivel {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: var(--accent-red);
+    border: 1px solid var(--accent-red);
+}
+
+.btn-secundario {
+    background-color: transparent;
+    border: 1px solid var(--accent-blue);
+    color: var(--accent-blue);
+    padding: 10px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.btn-secundario:hover {
+    background-color: var(--accent-blue);
+    color: white;
+}
+
+/* Grid de Viagens */
+.secao-viagens h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.grid-viagens {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.card-viagem {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.header-card {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+}
+
+.tag-id {
+    background-color: #2b303c;
+    padding: 3px 8px;
+    border-radius: 4px;
+    color: var(--text-muted);
+}
+
+.horario {
+    color: var(--accent-green);
+    font-weight: bold;
+}
+
+.detalhes-viagem h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.detalhes-viagem p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Botões de Ação Dinâmicos */
+.btn-iniciar {
+    width: 100%;
+    background-color: var(--accent-green);
+    color: #121418;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-iniciar:hover {
+    background-color: #27ae60;
+}
+
+.btn-concluir {
+    width: 100%;
+    background-color: var(--accent-red);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-concluir:hover {
+    background-color: #c0392b;
+}
+
+/* Estados Vazio e Carregando */
+.sem-viagens, .carregando {
+    text-align: center;
+    padding: 40px;
+    background-color: var(--card-bg);
+    border-radius: 12px;
+    border: 1px dashed var(--card-border);
+    color: var(--text-muted);
+}
+
+.sem-viagens i, .carregando i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+@import url("../shared/base.css");

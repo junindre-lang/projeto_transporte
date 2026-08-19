@@ -1,7 +1,7 @@
 from flask import *
 from datetime import datetime
 from extensions import db
-from modelosDB.modelos import SolicitacaoViagem, CoordenadaRota
+from modelosDB.modelos import SolicitacaoViagem, CoordenadaRota, Motorista, Veiculo
 # Certifique-se de importar o DAO corretamente dependendo da estrutura das suas pastas
 from DAOs.servidor_DAO import ServidorDAO
 
@@ -11,19 +11,25 @@ servidor_bp = Blueprint('servidor_bp', __name__)
 def solicitar_viagem():
     if request.method == 'POST':
         # Captura os dados enviados pelo formulário
-        motorista = request.form.get('motorista')
+        motorista_id = request.form.get('motorista_id', type=int)
+        motorista_nome_informado = (request.form.get('motorista_nome') or '').strip()
         rota = request.form.get('rota')
-        data = request.form.get('data')
+        data = request.form.get('data_horario')
         veiculo = request.form.get('veiculo')
 
         # Validação básica
+        motorista = (db.session.get(Motorista, motorista_id) if motorista_id
+                     else Motorista.query.filter_by(nome=motorista_nome_informado).first())
         if not motorista or not rota or not data or not veiculo:
             flash("Todos os campos são obrigatórios!", "erro")
-            return render_template('solicitar_viagem.html')
+            return render_template('servidor/solicitar_viagem.html',
+                                   motoristas=Motorista.query.order_by(Motorista.nome).all(),
+                                   veiculos=Veiculo.query.filter_by(status='Disponível').order_by(Veiculo.prefixo).all())
 
         # Cria a nova solicitação
         nova_viagem = SolicitacaoViagem(
-            motorista_nome=motorista,
+            motorista_nome=motorista.nome,
+            motorista_id=motorista.id,
             rota=rota,
             data_horario=data,
             veiculo=veiculo,
@@ -38,16 +44,20 @@ def solicitar_viagem():
         except Exception as e:
             db.session.rollback()
             flash(f"Erro ao salvar solicitação: {str(e)}", "erro")
-            return render_template('solicitar_viagem.html')
+            return render_template('servidor/solicitar_viagem.html',
+                                   motoristas=Motorista.query.order_by(Motorista.nome).all(),
+                                   veiculos=Veiculo.query.filter_by(status='Disponível').order_by(Veiculo.prefixo).all())
 
-    return render_template('solicitar_viagem.html')
+    return render_template('servidor/solicitar_viagem.html',
+                           motoristas=Motorista.query.order_by(Motorista.nome).all(),
+                           veiculos=Veiculo.query.filter_by(status='Disponível').order_by(Veiculo.prefixo).all())
 
 
 @servidor_bp.route('/rotas_servidor')
 def rotas():
     if 'servidor' not in session:
-        return render_template('principal.html')
-    return render_template('definir_rota_serv.html')
+        return render_template('auth/principal.html')
+    return render_template('servidor/definir_rota_serv.html')
 
 @servidor_bp.route('/criar-via-mapa', methods=['POST'])
 def criar_via_mapa():
@@ -103,7 +113,7 @@ def criar_via_mapa():
 @servidor_bp.route('/list_viagem_servidores', methods=['GET'])
 def cad_viagem():
     if 'servidor' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
 
     # 1. Recupera os dados do servidor que estão salvos na sessão
     # (Se você salvou um dicionário na sessão, pode passá-lo diretamente)
@@ -132,10 +142,10 @@ def cad_viagem():
 
 
     # 2. 🔥 Envia a variável 'servidor' para o HTML
-    return render_template('homepage.html', viagens=viagens_processadas, servidor=servidor_logado)
+    return render_template('servidor/homepage.html', viagens=viagens_processadas, servidor=servidor_logado)
 
 @servidor_bp.route('/transito_serv')
 def transito_mapa():
     if 'servidor' not in session:
-        return render_template('homepage.html')
-    return render_template('transito_serv.html')
+        return render_template('servidor/homepage.html')
+    return render_template('servidor/transito_serv.html')

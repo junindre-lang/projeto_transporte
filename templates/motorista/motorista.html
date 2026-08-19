@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Motorista - Sistema de Transporte</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/motorista/princ_motorista.css') }}">
+</head>
+<body>
+
+    <div class="container-motorista">
+        <header>
+            <a href="javascript:history.back()" class="btn-voltar">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle;">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                </svg>
+                Voltar
+            </a>
+            <h1>Painel do Motorista</h1>
+        </header>
+
+        <div class="status-atual-box" id="status-container">
+            <span class="status-label">Seu Status:</span>
+            <span class="status-valor Indisponivel" id="status-texto">Indisponível</span>
+        </div>
+
+        <div class="grid-botoes">
+
+            <button class="btn-acao btn-livre" id="btn-ficar-livre">
+                <span class="icon">🔓</span> Ficar Livre / Disponível
+            </button>
+
+            <button class="btn-acao btn-verificar" id="btn-verificar-viagens">
+                <span class="icon">📅</span> Verificar Viagens Agendadas
+            </button>
+
+            <button class="btn-acao btn-iniciar" id="btn-iniciar-viagem" disabled>
+                <span class="icon">▶️</span> Iniciar Viagem
+            </button>
+
+            <button class="btn-acao btn-concluir" id="btn-concluir-viagem" disabled>
+                <span class="icon">⏹️</span> Concluir Viagem
+            </button>
+
+        </div>
+
+        <div class="notificacao-box" id="notificacao" style="display: none;"></div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/motorista/princ_motorista.js') }}"></script>
+</body>
+</html>

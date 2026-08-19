@@ -1,0 +1,113 @@
+/* ==========================================================================
+   ESTRUTURA DA TELA DE ROTAS (MAPA + SIDEBAR)
+   ========================================================================== */
+body {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+    background-color: #121212;
+}
+
+/* Barra lateral exclusiva do planejador de rotas */
+.sidebar-rotas {
+    width: 320px;
+    background-color: #111111;
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid #262626;
+    z-index: 10;
+}
+
+/* Container que segura o mapa Leaflet */
+.map-container {
+    flex-grow: 1;
+    height: 100vh;
+    position: relative;
+}
+
+#map {
+    height: 100%;
+    width: 100%;
+}
+
+/* ==========================================================================
+   COMPONENTES INTERNOS DA SIDEBAR
+   ========================================================================== */
+
+/* Card de instruções de uso do mapa */
+.instrucoes-card {
+    background-color: #1c1c1c;
+    border-left: 4px solid #2ecc71;
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.instrucoes-card h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #ffffff;
+}
+
+.instrucoes-card ul {
+    padding-left: 20px;
+    color: #aaaaaa;
+    font-size: 13px;
+}
+
+.instrucoes-card li {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+/* Caixa contadora de pontos clicados */
+.contador-box {
+    background-color: #161616;
+    border: 1px solid #262626;
+    padding: 12px;
+    text-align: center;
+    border-radius: 6px;
+    font-weight: bold;
+    margin-bottom: 25px;
+    color: #2ecc71;
+}
+
+/* Grupo vertical de botões (evita sobreposição) */
+.botoes-grupo {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: auto; /* Empurra os botões para a base da sidebar */
+}
+
+/* Botão Vermelho de Limpar/Excluir Trajeto */
+.btn-vermelho {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-vermelho:hover {
+    background-color: #c0392b;
+}
+
+/* ==========================================================================
+   AJUSTES DO LEAFLET ROUTING MACHINE
+   ========================================================================== */
+
+/* Oculta a caixa de texto flutuante com direções escritas (vire à esquerda, etc) */
+.leaflet-routing-container {
+    display: none !important;
+}
+@import url("../shared/base.css");

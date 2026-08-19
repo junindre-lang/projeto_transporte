@@ -1,0 +1,172 @@
+/* ==========================================================================
+   CONTEÚDO PRINCIPAL E ESTRUTURA
+   ========================================================================== */
+.main-content {
+    margin-left: 260px; /* Largura padrão da sidebar */
+    padding: 30px;
+    background-color: #1e1e1e;
+    min-height: 100vh;
+}
+
+.titulo h1 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+/* Container da seção baseado no estilo das viagens */
+.secao-servidores {
+    background-color: #2b2b2b;
+    padding: 24px;
+    border-radius: 8px;
+    margin-top: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.topo-secao {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.topo-secao h2 {
+    color: #ffffff;
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* ==========================================================================
+   TABELA DE SERVIDORES
+   ========================================================================== */
+.tabela-servidores {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.tabela-servidores th {
+    color: #2ecc71; /* Verde idêntico ao print */
+    padding: 12px;
+    border-bottom: 2px solid #3d3d3d;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.tabela-servidores td {
+    color: #ffffff;
+    padding: 14px 12px;
+    border-bottom: 1px solid #3d3d3d;
+    vertical-align: middle;
+    font-size: 0.95rem;
+}
+
+/* Efeito de hover nas linhas da tabela */
+.tabela-servidores tbody tr:hover {
+    background-color: rgba(21, 21, 21, 0.2);
+}
+
+/* ==========================================================================
+   BADGES DE STATUS (Pendente / Ativo / Inativo)
+   ========================================================================== */
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    display: inline-block;
+    text-transform: uppercase;
+}
+
+/* Status: Pendente (Laranja/Amarelo do print) */
+.status-badge.pendente {
+    background-color: rgba(241, 196, 15, 0.15);
+    color: #f1c40f;
+}
+
+/* Status: Ativo / Aprovado */
+.status-badge.ativo,
+.status-badge.aprovado {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #2ecc71;
+}
+
+/* Status: Inativo / Recusado */
+.status-badge.inativo,
+.status-badge.recusado {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #e74c3c;
+}
+
+/* ==========================================================================
+   BOTÕES DE AÇÃO
+   ========================================================================== */
+/* Botão do Topo: Novo Servidor */
+.btn-cadastrar-novo {
+    background-color: #2ecc71;
+    color: #ffffff;
+    border: none;
+    padding: 10px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background 0.2s ease;
+}
+
+.btn-cadastrar-novo:hover {
+    background-color: #27ae60;
+}
+
+/* Botão: Aprovar (Azul) */
+.btn-editar {
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
+}
+
+.btn-editar:hover {
+    background-color: #2980b9;
+}
+
+/* Botão: Excluir (Vermelho) */
+.btn-excluir {
+    background-color: #e74c3c;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
+}
+
+.btn-excluir:hover {
+    background-color: #c0392b;
+}
+
+/* Transição para a animação do JavaScript (Fade-out) */
+tr {
+    opacity: 1;
+    transition: opacity 0.3s ease;
+}
+@import url("../shared/base.css");

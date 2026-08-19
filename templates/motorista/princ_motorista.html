@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do Motorista — Expresso Federal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/motorista/princ_motorista.css') }}">
+</head>
+<body>
+    <header class="header-motorista">
+        <div class="logo-area">Expresso Federal</div>
+        <div class="perfil-area">
+            <span class="nome-motorista">{{ motorista.nome }}</span>
+            <form action="{{ url_for('bp_motorista.sair') }}" method="post"><button class="btn-sair" type="submit">Sair</button></form>
+        </div>
+    </header>
+    <main class="container-principal">
+        <section class="card-status">
+            <div>
+                <p class="rotulo">Status atual</p>
+                <span id="badge-status" class="badge">{{ motorista.status }}</span>
+            </div>
+            <button id="btn-status" class="btn-secundario" type="button">Alterar disponibilidade</button>
+        </section>
+        <section class="secao-viagens">
+            <h2>Viagens atribuídas <button id="btn-atualizar" class="btn-secundario" type="button">Atualizar</button></h2>
+            <div id="lista-viagens" class="grid-viagens" aria-live="polite"></div>
+        </section>
+    </main>
+    <script src="{{ url_for('static', filename='js/motorista/princ_motorista.js') }}"></script>
+</body>
+</html>

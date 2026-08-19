@@ -18,31 +18,31 @@ admin_bp = Blueprint('bp_admin', __name__)
 @admin_bp.route('/pag_admin')
 def index():
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     else:
         lista_viagens = SolicitacaoViagem.query.filter_by(status='Pendente').all()
-        return render_template('admin.html', viagens=lista_viagens)
+        return render_template('admin/admin.html', viagens=lista_viagens)
 
 @admin_bp.route('/lista_servidores')
 def lista_servidores():
     # Busca a lista completa de servidores no banco de dados usando o DAO
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
 
     servidores = ServidorDAO.listar()
-    return render_template('lista_servidores.html', servidores=servidores)
+    return render_template('admin/lista_servidores.html', servidores=servidores)
 
 @admin_bp.route('/transito')
 def transito():
     if 'admin' not in session:
-        return render_template('principal.html')
-    return render_template('transito.html')
+        return render_template('auth/principal.html')
+    return render_template('admin/transito.html')
 
 @admin_bp.route('/rotas')
 def rotas():
     if 'admin' not in session:
-        return render_template('principal.html')
-    return render_template('definir_rota.html')
+        return render_template('auth/principal.html')
+    return render_template('admin/definir_rota.html')
 
 
 # ==============================================================================
@@ -52,7 +52,7 @@ def rotas():
 @admin_bp.route('/lista_servidores/aprovar/<int:id_servidor>', methods=['POST'])
 def aprovar_servidor(id_servidor):
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     if ServidorDAO.aprovar(id_servidor):
         return jsonify({'sucesso': True, 'mensagem': 'Servidor aprovado com sucesso!'})
     return jsonify({'sucesso': False, 'erro': 'Servidor não encontrado no sistema.'}), 404
@@ -60,7 +60,7 @@ def aprovar_servidor(id_servidor):
 @admin_bp.route('/lista_servidores/excluir/<int:id_servidor>', methods=['POST'])
 def excluir_servidor(id_servidor):
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     if ServidorDAO.excluir(id_servidor):
         return jsonify({'sucesso': True, 'mensagem': 'Servidor excluído com sucesso!'})
     return jsonify({'sucesso': False, 'erro': 'Servidor não encontrado no sistema.'}), 404
@@ -73,7 +73,7 @@ def excluir_servidor(id_servidor):
 @admin_bp.route('/pag_admin/deferir_viagem', methods=['POST'])
 def deferir_viagem():
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     dados = request.get_json()
     if not dados:
         return jsonify({'sucesso': False, 'erro': 'Dados não fornecidos'}), 400
@@ -92,7 +92,7 @@ def deferir_viagem():
 @admin_bp.route('/pag_admin/indeferir_viagem', methods=['POST'])
 def indeferir_viagem():
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     dados = request.get_json()
     if not dados:
         return jsonify({'sucesso': False, 'erro': 'Dados não fornecidos'}), 400
@@ -119,7 +119,7 @@ def transito_tempo_real():
     as coordenadas e dados mais recentes de todas as viagens em andamento.
     """
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     viagens_ativas = SolicitacaoViagem.query.filter_by(status='Em Andamento').all()
 
     lista_viagens = []
@@ -148,7 +148,7 @@ def definir_rota(viagem_id):
     Format esperado do JSON: { "pontos": [{"lat": -6.75, "lon": -38.23}, ...] }
     """
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     dados = request.get_json()
     # Correção do erro de digitação/sintaxe aqui:
     if not dados or 'pontos' not in dados:
@@ -188,7 +188,7 @@ def atualizar_posicao(viagem_id):
     Endpoint que o dispositivo IoT vai disparar via POST enquanto se movimenta.
     """
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     dados = request.get_json()
     viagem = db.session.get(SolicitacaoViagem, viagem_id)
 
@@ -217,7 +217,7 @@ def atualizar_posicao(viagem_id):
 @admin_bp.route('/api/viagem/<int:viagem_id>/posicao-atual', methods=['GET'])
 def posicao_atual(viagem_id):
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
     viagem = db.session.get(SolicitacaoViagem, viagem_id)
     if not viagem:
         return jsonify({"erro": "Viagem não encontrada"}), 404
@@ -240,14 +240,14 @@ def posicao_atual(viagem_id):
 @admin_bp.route('/cad_hora', methods=['GET'])
 def cad_hora():
     if 'admin' not in session:
-        return render_template('principal.html')
-    return render_template('cadastrar_horario.html')
+        return render_template('auth/principal.html')
+    return render_template('admin/cadastrar_horario.html')
 
 
 @admin_bp.route('/list_viagem', methods=['GET'])
 def cad_viagem():
     if 'admin' not in session:
-        return render_template('principal.html')
+        return render_template('auth/principal.html')
 
     viagens_banco = SolicitacaoViagem.query.all()
     viagens_processadas = []
@@ -270,7 +270,7 @@ def cad_viagem():
             "status": viagem.status
         })
 
-    return render_template('listar_viagens.html', viagens=viagens_processadas)
+    return render_template('admin/listar_viagens.html', viagens=viagens_processadas)
 
 
 @admin_bp.route('/api/viagem/excluir/<int:id_viagem>', methods=['POST'])
@@ -356,7 +356,12 @@ def cadastrar_motorista():
         return jsonify({"sucesso": False, "erro": "O nome do motorista é obrigatório"}), 400
 
     nome = dados.get('nome')
-    cpf = dados.get('cpf', '')
+    cpf = dados.get('cpf', '').strip()
+    senha = dados.get('senha', '')
+    if not cpf or not senha:
+        return jsonify({"sucesso": False, "erro": "CPF e senha são obrigatórios"}), 400
+    if Motorista.query.filter_by(cpf=cpf).first():
+        return jsonify({"sucesso": False, "erro": "Já existe motorista cadastrado com este CPF"}), 409
 
     try:
         # 3. Geração Automática e Única da Matrícula (Ex: 20268439)
@@ -380,7 +385,7 @@ def cadastrar_motorista():
             nome=nome,
             cpf=cpf,
             matricula=matricula_gerada,
-            senha=senha_gerada,  # Nota: Se usar criptografia, aplique o hash aqui (ex: generate_password_hash)
+        senha=senha,
             status="Indisponível"  # Inicia como indisponível até ele clicar em "Ficar Livre" no painel dele
         )
 
@@ -394,7 +399,7 @@ def cadastrar_motorista():
             "credenciais": {
                 "nome": nome,
                 "matricula": matricula_gerada,
-                "senha_provisoria": senha_gerada
+                "senha_provisoria": senha
             }
         }), 201
 

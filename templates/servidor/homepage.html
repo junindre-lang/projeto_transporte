@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expresso Federal - Painel do Servidor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/servidor/homepage.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- BARRA LATERAL (SIDEBAR) -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h1>EXPRESSO</h1>
+        </div>
+
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Buscar no menu...">
+        </div>
+
+        <ul class="sidebar-menu">
+            <li>
+                <a href="/list_viagem_servidores" class="active"><i class="fa-solid fa-house"></i> INÍCIO</a>
+            </li>
+            <li>
+                <a href="/rotas_servidor"><i class="fa-solid fa-route"></i> ROTAS</a>
+            </li>
+            <li>
+                <a href="/transito_serv"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a>
+            </li>
+            <li>
+                <a href="/cad_viagem"><i class="fa-solid fa-paper-plane"></i> SOLICITAR VIAGEM</a>
+            </li>
+            <li>
+                <a href="/cad_viagem"><i class="fa-solid fa-bus"></i> SOLICITAÇÕES</a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <a href="/logarlink" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
+        </div>
+    </div>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="main-content">
+
+        <div class="main-header">
+            <div class="header-title">
+                <!-- BOTÃO PARA EMPURRAR / PUXAR A SIDEBAR -->
+                <button id="sidebar-toggle" class="sidebar-toggle-btn" title="Alternar Menu">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+                <h2>PAINEL DO SERVIDOR</h2>
+            </div>
+            <div class="header-subtitle">
+                <span>Gerenciamento de Viagens do Usuário</span>
+            </div>
+        </div>
+
+        <hr class="linha-divisoria">
+
+        <div class="content-card">
+            <div class="card-header-actions">
+                <h3>Minhas Solicitações de Viagem</h3>
+                <a href="/cad_viagem" class="btn-principal"><i class="fa-solid fa-plus"></i> Nova Solicitação</a>
+            </div>
+
+            <div class="card-body">
+                <div class="welcome-box">
+                    <h4>Olá, {{ servidor.nome }}!</h4>
+                    <p>Utilize o menu lateral para gerenciar suas rotas ou clique no botão acima para solicitar uma nova viagem.</p>
+                    <small>Matrícula vinculada: <strong>{{ servidor.matricula }}</strong></small>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="{{ url_for('static', filename='js/servidor/homepage.js') }}"></script>
+</body>
+</html>

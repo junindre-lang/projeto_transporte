@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Viagens - Expresso Federal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/listar_viagens.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <h1>EXPRESSO</h1>
+        </div>
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" id="input-busca-menu" placeholder="Buscar no menu...">
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="/pag_admin"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
+            <li><a href="/rotas"><i class="fa-solid fa-route"></i> ROTAS</a></li>
+            <li><a href="/transito"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
+            <li><a href="/list_viagem" class="active"><i class="fa-solid fa-road"></i> LISTAS DE VIAGENS</a></li>
+            <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
+            <li><a href="/cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
+            <li><a href="/cad_veiculos"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
+            <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <a href="/login_adm" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="titulo-listagem">
+            <h1><i class="fa-solid fa-list-ul"></i> Registro Geral de Viagens</h1>
+            <p>Gerencie, filtre e visualize todas as rotas manuais e via mapa geradas no sistema.</p>
+        </div>
+
+        <div class="container-filtros">
+            <div class="pesquisa-tabela">
+                <i class="fa-solid fa-filter"></i>
+                <input type="text" id="busca-viagem" placeholder="Filtrar por motorista, rota ou veículo...">
+            </div>
+            <div class="botoes-filtro">
+                <button class="btn-filtro ativo" data-filtro="todos">Todas</button>
+                <button class="btn-filtro" data-filtro="manual"><i class="fa-solid fa-keyboard"></i> Manuais</button>
+                <button class="btn-filtro" data-filtro="mapa"><i class="fa-solid fa-map-location-dot"></i> Via Mapa</button>
+            </div>
+        </div>
+
+        <div class="tabela-container">
+            <table class="tabela-expresso">
+                <thead>
+                    <tr>
+                        <th>Origem</th>
+                        <th>Motorista</th>
+                        <th>Rota Operada</th>
+                        <th>Data / Horário</th>
+                        <th>Veículo</th>
+                        <th>Status</th>
+                        <th style="text-align: center;">Ações</th>
+                    </tr>
+                </thead>
+                <tbody id="corpo-tabela-viagens">
+                    {% if viagens %}
+                        {% for v in viagens %}
+                        <tr class="linha-viagem" data-tipo="{{ v.tipo_cadastro }}" id="viagem-{{ v.id }}">
+                            <td>
+                                {% if v.tipo_cadastro == 'mapa' %}
+                                    <span class="badge-origem mapa"><i class="fa-solid fa-map"></i> Mapa</span>
+                                {% else %}
+                                    <span class="badge-origem manual"><i class="fa-solid fa-pen"></i> Manual</span>
+                                {% endif %}
+                            </td>
+                            <td class="txt-principal">{{ v.motorista_nome }}</td>
+                            <td>{{ v.rota }}</td>
+                            <td><i class="fa-regular fa-clock"></i> {{ v.data_horario }}</td>
+                            <td><span class="tag-veiculo">{{ v.veiculo }}</span></td>
+                            <td>
+                                <span class="status-tag status-{{ v.status | lower }}">
+                                    {{ v.status }}
+                                </span>
+                            </td>
+                            <td style="text-align: center;">
+                                {% if v.tipo_cadastro == 'mapa' %}
+                                    <a href="/transito" class="btn-tabela-ver" title="Visualizar Trajeto no Mapa">
+                                        <i class="fa-solid fa-location-dot"></i>
+                                    </a>
+                                {% endif %}
+                                <button onclick="deletarViagem('{{ v.id }}')" class="btn-tabela-deletar" title="Excluir Registro">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr id="sem-dados">
+                            <td colspan="7" class="tabela-vazia">
+                                <i class="fa-solid fa-folder-open"></i>
+                                <p>Nenhuma viagem localizada no banco de dados.</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/admin/listar_viagens.js') }}"></script>
+</body>
+</html>

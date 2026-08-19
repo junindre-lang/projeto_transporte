@@ -72,13 +72,17 @@ class SolicitacaoViagem(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     servidor_id = db.Column(db.Integer, db.ForeignKey('servidor.id')) # Relacionamento
+    # A viagem pertence a um motorista cadastrado. O nome é mantido para
+    # compatibilidade com os registros e telas já existentes.
+    motorista_id = db.Column(db.Integer, db.ForeignKey('motoristas.id'), nullable=True)
     motorista_nome = db.Column(db.String(100), nullable=False)
     rota = db.Column(db.String(200), nullable=False)
     data_horario = db.Column(db.String(50), nullable=False)
     veiculo = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(50), default='Pendente')
 
-    def __init__(self, motorista_nome, rota, data_horario, veiculo, status):
+    def __init__(self, motorista_nome, rota, data_horario, veiculo, status, motorista_id=None):
+        self.motorista_id = motorista_id
         self.motorista_nome = motorista_nome
         self.rota = rota
         self.data_horario = data_horario

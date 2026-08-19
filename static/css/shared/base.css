@@ -1,0 +1,39 @@
+:root {
+    --verde: #168a45;
+    --verde-escuro: #0f6d36;
+    --verde-claro: #eaf7ef;
+    --branco: #ffffff;
+    --fundo: #f5f8f6;
+    --texto: #1f2933;
+    --borda: #d7e5dc;
+    --erro: #b42318;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--fundo) !important; color: var(--texto) !important; font-family: Arial, Helvetica, sans-serif; }
+a { color: var(--verde-escuro); }
+button, .btn-acao, .btn-salvar, .btn-principal, .btn-entrar {
+    background: var(--verde) !important; color: var(--branco) !important;
+    border: 1px solid var(--verde) !important; border-radius: 5px !important;
+    box-shadow: none !important;
+}
+button:hover, .btn-acao:hover, .btn-salvar:hover, .btn-principal:hover, .btn-entrar:hover {
+    background: var(--verde-escuro) !important; border-color: var(--verde-escuro) !important;
+}
+input, select, textarea { background: var(--branco) !important; color: var(--texto) !important; border: 1px solid var(--borda) !important; border-radius: 5px !important; }
+input:focus, select:focus, textarea:focus { outline: 2px solid #94cfa9; border-color: var(--verde) !important; box-shadow: none !important; }
+.sidebar, .header-motorista { background: var(--verde-escuro) !important; border-color: var(--verde-escuro) !important; }
+.sidebar-menu a.active, .sidebar-menu a:hover { background: var(--verde) !important; color: var(--branco) !important; }
+.main-content, .container-principal { background: var(--fundo); }
+.card, .content-card, .card-status, .card-viagem, .tabela-container, .secao-viagens, .secao-motoristas { background: var(--branco) !important; border-color: var(--borda) !important; box-shadow: none !important; }
+th { background: var(--verde-escuro) !important; color: var(--branco) !important; }
+.badge.disponivel, .status-deferida, .status-concluída { background: var(--verde-claro) !important; color: var(--verde-escuro) !important; border-color: var(--verde) !important; }
+.btn-secundario, .btn-voltar { background: var(--branco) !important; color: var(--verde-escuro) !important; border-color: var(--verde) !important; }
+.topo, .login, .login-container, .modal-conteudo { background: var(--branco) !important; color: var(--texto) !important; border-color: var(--borda) !important; box-shadow: none !important; }
+.topo { background: var(--verde-escuro) !important; color: var(--branco) !important; }
+.login-header h2, .logo-area, .titulo h1, .titulo-listagem h1 { color: var(--verde-escuro) !important; }
+.login-header p, .input-group label { color: var(--texto) !important; }
+.login-form input { background: var(--branco) !important; color: var(--texto) !important; }
+.sidebar-brand h1, .header-motorista, .header-motorista * { color: var(--branco) !important; }
+.tabela-expresso td, .tabela-viagens td, .tabela-motoristas td { background: var(--branco) !important; color: var(--texto) !important; border-color: var(--borda) !important; }
+@media (max-width: 768px) { .main-content { margin-left: 0 !important; width: 100% !important; padding: 20px !important; } .sidebar { position: static !important; width: 100% !important; height: auto !important; } }
