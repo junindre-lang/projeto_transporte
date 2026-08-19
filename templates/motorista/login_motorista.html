@@ -6,43 +6,23 @@
     <title>Login Motorista - Sistema de Transporte</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/motorista/login_motorista.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/shared/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/acesso.css') }}">
 </head>
 <body>
 
-    <div class="login-container">
-
-        <a href="javascript:history.back()" class="btn-voltar">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="vertical-align: middle;">
-                <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-            </svg>
-            Voltar
-        </a>
-
-        <div class="login-header">
-            <h2>Acesso do Motorista</h2>
-            <p>Insira suas credenciais para acessar o painel de viagens</p>
-        </div>
-
-        <form action="/motorista" method="POST" class="login-form">
-
-            <div class="input-group">
-                <label for="identificador">CPF ou Matrícula</label>
-                <input type="text" id="identificador" name="identificador" placeholder="000.000.000-00" required autocomplete="username">
-            </div>
-
-            <div class="input-group">
-                <label for="senha">Senha</label>
-                <input type="password" id="senha" name="senha" placeholder="••••••••" required autocomplete="current-password">
-            </div>
-
-            <button type="submit" class="btn-entrar">
-                Entrar no Sistema
-            </button>
-            {% if msg %}<p role="alert">{{ msg }}</p>{% endif %}
-
-        </form>
-
-    </div>
-
+    <main class="auth-page">
+        <section class="auth-card" aria-labelledby="titulo-login-motorista">
+            <a class="auth-brand" href="{{ url_for('inicial') }}">EXPRESSO FEDERAL</a>
+            <header class="auth-header"><h1 id="titulo-login-motorista">Acesso do motorista</h1><p>Entre para acessar o painel de viagens.</p></header>
+            <form action="/motorista" method="POST" class="auth-form">
+                <div class="auth-field"><label for="identificador">CPF ou matrícula</label><input type="text" id="identificador" name="identificador" placeholder="000.000.000-00" required autocomplete="username"></div>
+                <div class="auth-field"><label for="senha">Senha</label><input type="password" id="senha" name="senha" placeholder="Digite sua senha" required autocomplete="current-password"></div>
+                <button type="submit" class="auth-submit">Entrar</button>
+                {% if msg %}<p class="auth-alert" role="alert">{{ msg }}</p>{% endif %}
+            </form>
+            <a class="auth-back" href="{{ url_for('inicial') }}">← Voltar para a página principal</a>
+        </section>
+    </main>
 </body>
 </html>

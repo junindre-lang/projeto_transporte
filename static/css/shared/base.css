@@ -4,9 +4,9 @@
     --verde-claro: #eaf7ef;
     --branco: #ffffff;
     --fundo: #f5f8f6;
-    --texto: #1f2933;
+    --texto: #0f6d36;
     --borda: #d7e5dc;
-    --erro: #b42318;
+    --erro: #0f6d36;
 }
 
 * { box-sizing: border-box; }
@@ -37,3 +37,82 @@ th { background: var(--verde-escuro) !important; color: var(--branco) !important
 .sidebar-brand h1, .header-motorista, .header-motorista * { color: var(--branco) !important; }
 .tabela-expresso td, .tabela-viagens td, .tabela-motoristas td { background: var(--branco) !important; color: var(--texto) !important; border-color: var(--borda) !important; }
 @media (max-width: 768px) { .main-content { margin-left: 0 !important; width: 100% !important; padding: 20px !important; } .sidebar { position: static !important; width: 100% !important; height: auto !important; } }
+
+/* Tema único: verde e branco para os componentes presentes nas páginas. */
+.sidebar, #sidebar, .header-motorista, .topo, .tabela-expresso th,
+.tabela-viagens th, .tabela-motoristas th, .tabela-servidores th,
+.btn-filtro.ativo, .sidebar-toggle-btn, .leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+    background-color: var(--verde-escuro) !important;
+    border-color: var(--verde-escuro) !important;
+    color: var(--branco) !important;
+}
+
+.sidebar *, #sidebar *, .header-motorista *, .topo *,
+.tabela-expresso th *, .tabela-viagens th *, .tabela-motoristas th *,
+.tabela-servidores th *, .btn-filtro.ativo *, .sidebar-toggle-btn * {
+    color: var(--branco) !important;
+}
+
+.main-content, .container-principal, .map-container, .modal-form-custom,
+.container-filtros, .tabela-container, .secao-servidores, .secao-viagens,
+.secao-motoristas, .content-card, .card, .card-status, .card-viagem,
+.login, .login-container, .dados, .modal-conteudo, .instrucoes-card,
+.contador-box, .welcome-box, .form-expresso, .tag-veiculo, .tag-id,
+.badge-origem, .status-card, .leaflet-routing-container {
+    background-color: var(--branco) !important;
+    border-color: var(--borda) !important;
+    color: var(--texto) !important;
+    box-shadow: none !important;
+}
+
+h1, h2, h3, h4, p, span, small, label, li, td, .rotulo, .horario,
+.status-value, .txt-principal, .titulo p, .titulo-listagem p,
+.header-subtitle span, .welcome-box p, .welcome-box small,
+.tabela-vazia, .tabela-vazia i, .btn-fechar, .btn-tabela-ver,
+.btn-tabela-deletar {
+    color: var(--verde-escuro) !important;
+}
+
+button, .botao, .btn-acao, .btn-salvar, .btn-principal, .btn-entrar,
+.btn-novo-motorista, .btn-novo-veiculo, .btn-cadastrar-novo, .btn-editar,
+.btn-excluir, .btn-deferir, .btn-indeferir, .btn-vermelho, .btn-iniciar,
+.btn-concluir, .logout-btn, .btn-sair {
+    background-color: var(--verde) !important;
+    border-color: var(--verde) !important;
+    color: var(--branco) !important;
+}
+
+button *, .botao *, .btn-acao *, .btn-salvar *, .btn-principal *,
+.btn-entrar *, .btn-novo-motorista *, .btn-novo-veiculo *,
+.btn-cadastrar-novo *, .btn-editar *, .btn-excluir *, .btn-deferir *,
+.btn-indeferir *, .btn-vermelho *, .btn-iniciar *, .btn-concluir *,
+.logout-btn *, .btn-sair * {
+    color: var(--branco) !important;
+}
+
+.btn-secundario, .btn-voltar, .btn-filtro, .badge, .status-badge,
+.status-tag, .badge-origem, .checkbox-dia span {
+    background-color: var(--verde-claro) !important;
+    border-color: var(--verde) !important;
+    color: var(--verde-escuro) !important;
+}
+
+.status-pendente, .status-deferida, .status-indeferida, .status-ativa,
+.status-andamento, .status-em\ andamento, .badge.disponivel,
+.badge.indisponivel, .status-badge.pendente, .status-badge.aprovado,
+.status-badge.recusado, .status-card.connected {
+    background-color: var(--verde-claro) !important;
+    border-color: var(--verde) !important;
+    color: var(--verde-escuro) !important;
+}
+
+.status-pendente *, .status-deferida *, .status-indeferida *,
+.status-ativa *, .status-andamento *, .status-em\ andamento *,
+.badge *, .status-badge *, .status-tag *, .badge-origem *,
+.status-card *, .checkbox-dia span * {
+    color: var(--verde-escuro) !important;
+}
+
+[style*="color"] { color: var(--verde-escuro) !important; }
+[style*="background"] { background-color: var(--branco) !important; }

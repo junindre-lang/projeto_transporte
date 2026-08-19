@@ -1,25 +1,30 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>logar</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/principal.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/shared/base.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/acesso.css') }}">
 </head>
 <body>
-    <div class="topo">
-        <h1>EXPRESSO FEDERAL</h1>
-    </div>
-    <div class="login">
-        <form action="/logar" method="post">
-          <h2>LOGIN</h2><br><br>
-          <input type="text" name="mat" placeholder="Matrícula"><br><br>
-          <input type="password" name="senha" placeholder="Senha"><br><br><br>
-          <button type="submit"> logar </button><br><br>
-          <a>você já tem conta?</a><br>
-          <a href="/cadastrolink">crie sua conta</a><br>
-          <a href="/logarlink_adm">🔒</a><br>
-          <a href="/motora">login motorista</a>
-        </form>
-    </div>
+    <main class="auth-page">
+        <section class="auth-card" aria-labelledby="titulo-login">
+            <a class="auth-brand" href="{{ url_for('inicial') }}">EXPRESSO FEDERAL</a>
+            <header class="auth-header"><h1 id="titulo-login">Acessar conta</h1><p>Entre com suas credenciais para acessar o sistema.</p></header>
+            <form action="/logar" method="post" class="auth-form">
+                <div class="auth-field"><label for="mat">Matrícula</label><input type="text" id="mat" name="mat" placeholder="Digite sua matrícula" required autocomplete="username"></div>
+                <div class="auth-field"><label for="senha">Senha</label><input type="password" id="senha" name="senha" placeholder="Digite sua senha" required autocomplete="current-password"></div>
+                <button type="submit" class="auth-submit">Entrar</button>
+                {% if msg %}<p class="auth-alert" role="alert">{{ msg }}</p>{% endif %}
+            </form>
+            <nav class="auth-links" aria-label="Opções de acesso">
+                <p>Não tem uma conta? <a href="/cadastrolink">Crie sua conta</a></p>
+                <a class="auth-admin-link" href="/logarlink_adm"><svg class="auth-lock" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1a3 3 0 0 0-3 3v3H4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-1V4a3 3 0 0 0-3-3Zm-2 6V4a2 2 0 1 1 4 0v3H6Z"/></svg>Acesso administrativo</a>
+                <a href="/motora">Acesso do motorista</a>
+            </nav>
+        </section>
+    </main>
 </body>
 </html>
