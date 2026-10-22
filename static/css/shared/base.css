@@ -511,6 +511,10 @@ body:not(.login-map-page) :where(button:disabled, [aria-disabled="true"]) {
     transform: none;
 }
 
+body:not(.login-map-page) :where(.mobile-sidebar-toggle, .mobile-sidebar-overlay) {
+    display: none;
+}
+
 @media (max-width: 768px) {
     body:not(.login-map-page):not(.pagina-transito) {
         display: block;
@@ -522,47 +526,61 @@ body:not(.login-map-page) :where(button:disabled, [aria-disabled="true"]) {
         overflow-y: auto;
     }
 
-    body:not(.login-map-page):not(.pagina-transito) :where(.sidebar) {
-        position: relative;
-        top: auto;
-        left: auto;
-        width: 100%;
-        height: auto;
+    body:not(.login-map-page) :where(.sidebar, .sidebar-rotas, .transito-sidebar) {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1100;
+        width: min(86vw, 320px);
+        height: 100vh;
+        height: 100dvh;
         max-height: none;
-        padding: 14px 16px;
-        overflow: visible;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
+        padding: 20px 16px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border-right: 1px solid var(--line);
+        border-bottom: 0;
+        box-shadow: var(--shadow-md);
+        transform: translateX(-105%);
+        transition: transform 220ms ease;
+        overscroll-behavior: contain;
     }
 
-    body:not(.login-map-page):not(.pagina-transito) .sidebar-brand {
-        margin-bottom: 12px;
+    body:not(.login-map-page).mobile-sidebar-open :where(.sidebar, .sidebar-rotas, .transito-sidebar) {
+        transform: translateX(0);
+    }
+
+    body:not(.login-map-page) .sidebar-brand {
+        margin-bottom: 16px;
         padding: 0;
     }
 
-    body:not(.login-map-page):not(.pagina-transito) .search-box {
-        margin: 0 0 12px;
+    body:not(.login-map-page) .search-box {
+        margin-right: 0;
+        margin-bottom: 14px;
+        margin-left: 0;
     }
 
-    body:not(.login-map-page):not(.pagina-transito) .sidebar-menu {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+    body:not(.login-map-page) .sidebar-menu {
+        display: flex;
+        flex-direction: column;
         flex: 0 0 auto;
         gap: 4px;
         padding: 0;
         overflow: visible;
     }
 
-    body:not(.login-map-page):not(.pagina-transito) .sidebar-menu a {
-        min-height: 40px;
-        padding: 8px 10px;
-        font-size: 0.84rem;
+    body:not(.login-map-page) .sidebar-menu a {
+        min-height: 42px;
+        padding: 10px 12px;
+        font-size: 0.88rem;
         overflow-wrap: anywhere;
     }
 
-    body:not(.login-map-page):not(.pagina-transito) .sidebar-footer {
-        margin-top: 10px;
-        padding: 10px 0 0;
+    body:not(.login-map-page) .sidebar-footer {
+        margin-top: auto;
+        padding: 12px 0 0;
     }
 
     body:not(.login-map-page):not(.pagina-transito) .main-content {
@@ -572,6 +590,74 @@ body:not(.login-map-page) :where(button:disabled, [aria-disabled="true"]) {
         margin: 0;
         padding: 22px 18px;
         overflow: visible;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar-toggle-btn {
+        display: none;
+    }
+
+    body:not(.login-map-page).mobile-route-page {
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        min-height: 0;
+        overflow: hidden;
+    }
+
+    body:not(.login-map-page).mobile-route-page .map-container {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        min-height: 0;
+    }
+
+    body:not(.login-map-page).mobile-route-page #map {
+        width: 100%;
+        height: 100%;
+        min-height: 0;
+    }
+
+    body:not(.login-map-page) :where(.mobile-sidebar-toggle) {
+        position: fixed;
+        top: 14px;
+        left: 14px;
+        z-index: 1200;
+        display: inline-grid;
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        place-items: center;
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        box-shadow: var(--shadow-md);
+        color: var(--brand-700);
+        font-size: 1.25rem;
+    }
+
+    body:not(.login-map-page) .mobile-sidebar-toggle:hover {
+        background: var(--brand-100);
+    }
+
+    body:not(.login-map-page) .mobile-sidebar-overlay {
+        position: fixed;
+        inset: 0;
+        z-index: 1090;
+        display: block;
+        padding: 0;
+        background: rgba(16, 34, 25, 0.48);
+        border: 0;
+    }
+
+    body:not(.login-map-page) .mobile-sidebar-overlay[hidden] {
+        display: none;
+    }
+
+    body:not(.login-map-page).mobile-sidebar-open {
+        overflow: hidden;
     }
 
     body:not(.login-map-page):not(.pagina-transito) :where(.titulo, .titulo-listagem,
@@ -681,41 +767,6 @@ body:not(.login-map-page) :where(button:disabled, [aria-disabled="true"]) {
         overflow-y: auto;
     }
 
-    body:not(.login-map-page):not(.pagina-transito) :where(.sidebar-rotas) {
-        flex: 0 0 auto;
-        width: 100%;
-        max-height: 48vh;
-        max-height: 48dvh;
-        padding: 16px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-    }
-
-    body:not(.login-map-page):not(.pagina-transito) :where(.map-container) {
-        width: 100%;
-        height: 52vh;
-        height: 52dvh;
-        min-height: 320px;
-        flex: 1 0 320px;
-    }
-
-    body:not(.login-map-page):not(.pagina-transito) #map {
-        width: 100%;
-        height: 100%;
-        min-height: 320px;
-    }
-
-    body:not(.login-map-page):not(.pagina-transito) .sidebar-rotas .sidebar-menu {
-        display: flex;
-        flex-direction: column;
-    }
-
-    body:not(.login-map-page):not(.pagina-transito) .sidebar-rotas .botoes-grupo {
-        margin-top: 16px;
-    }
-
     body:not(.login-map-page):not(.pagina-transito) .container-principal {
         width: 100%;
         padding-right: 16px;
@@ -786,22 +837,6 @@ body:not(.login-map-page) :where(button:disabled, [aria-disabled="true"]) {
 
     body:not(.login-map-page):not(.pagina-transito) :where(.form-botoes, .form-actions) button {
         width: 100%;
-    }
-
-    body:not(.login-map-page):not(.pagina-transito) .sidebar-rotas {
-        max-height: 52vh;
-        max-height: 52dvh;
-    }
-
-    body:not(.login-map-page):not(.pagina-transito) .map-container {
-        height: 48vh;
-        height: 48dvh;
-        min-height: 280px;
-        flex-basis: 280px;
-    }
-
-    body:not(.login-map-page):not(.pagina-transito) #map {
-        min-height: 280px;
     }
 
     body:not(.login-map-page):not(.pagina-transito) .header-motorista {
