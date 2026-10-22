@@ -16,32 +16,7 @@
             <h1>EXPRESSO</h1>
         </div>
 
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Buscar no menu...">
-        </div>
-
-        <ul class="sidebar-menu">
-            <li>
-                <a href="/list_viagem_servidores" class="active"><i class="fa-solid fa-house"></i> INÍCIO</a>
-            </li>
-            <li>
-                <a href="/rotas_servidor"><i class="fa-solid fa-route"></i> ROTAS</a>
-            </li>
-            <li>
-                <a href="/transito_serv"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a>
-            </li>
-            <li>
-                <a href="/cad_viagem"><i class="fa-solid fa-paper-plane"></i> SOLICITAR VIAGEM</a>
-            </li>
-            <li>
-                <a href="/cad_viagem"><i class="fa-solid fa-bus"></i> SOLICITAÇÕES</a>
-            </li>
-        </ul>
-
-        <div class="sidebar-footer">
-            <a href="/logarlink" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
-        </div>
+        {% include 'includes/servidor_nav.html' %}
     </div>
 
     <!-- CONTEÚDO PRINCIPAL -->
@@ -70,9 +45,26 @@
 
             <div class="card-body">
                 <div class="welcome-box">
+                    {% if servidor and servidor.nome is defined %}
                     <h4>Olá, {{ servidor.nome }}!</h4>
-                    <p>Utilize o menu lateral para gerenciar suas rotas ou clique no botão acima para solicitar uma nova viagem.</p>
                     <small>Matrícula vinculada: <strong>{{ servidor.matricula }}</strong></small>
+                    {% endif %}
+                    <p>Consulte suas viagens ou solicite uma nova viagem.</p>
+                </div>
+                <div class="lista-minhas-viagens" aria-live="polite">
+                    {% if viagens %}
+                        {% for viagem in viagens %}
+                        <article class="viagem-servidor">
+                            <h4>{{ viagem.rota }}</h4>
+                            <p><strong>Motorista:</strong> {{ viagem.motorista_nome }}</p>
+                            <p><strong>Data e horário:</strong> {{ viagem.data_horario }}</p>
+                            <p><strong>Veículo:</strong> {{ viagem.veiculo }}</p>
+                            <p><strong>Status:</strong> {{ viagem.status }}</p>
+                        </article>
+                        {% endfor %}
+                    {% else %}
+                        <p>Você ainda não possui viagens solicitadas.</p>
+                    {% endif %}
                 </div>
             </div>
         </div>

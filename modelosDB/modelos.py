@@ -8,16 +8,18 @@ class Servidor(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     matricula = db.Column(db.String(120), unique=True, nullable=False)
     senha = db.Column(db.String(120), nullable=False)  # Removido unique=True
+    cargo = db.Column(db.String(100), nullable=False, default='')
     status = db.Column(db.String(50), default='Pendente')  # Usado para substituir o '.aprovado'
 
     def __repr__(self):
         return f'<Servidor {self.nome}>'
 
-    def __init__(self, nome, email, matricula, senha, status):
+    def __init__(self, nome, email, matricula, senha, status='Pendente', cargo=''):
         self.nome = nome
         self.email = email
         self.matricula = matricula
         self.senha = senha
+        self.cargo = cargo
         self.status = status
 
 
@@ -75,19 +77,43 @@ class SolicitacaoViagem(db.Model):
     # A viagem pertence a um motorista cadastrado. O nome é mantido para
     # compatibilidade com os registros e telas já existentes.
     motorista_id = db.Column(db.Integer, db.ForeignKey('motoristas.id'), nullable=True)
+    rota_fixa_id = db.Column(db.Integer, db.ForeignKey('rotas_fixas.id'), nullable=True)
+    data_agendada = db.Column(db.Date, nullable=True)
     motorista_nome = db.Column(db.String(100), nullable=False)
     rota = db.Column(db.String(200), nullable=False)
     data_horario = db.Column(db.String(50), nullable=False)
     veiculo = db.Column(db.String(50), nullable=False)
     status = db.Column(db.String(50), default='Pendente')
 
-    def __init__(self, motorista_nome, rota, data_horario, veiculo, status, motorista_id=None):
+    def __init__(self, motorista_nome, rota, data_horario, veiculo, status, motorista_id=None,
+                 rota_fixa_id=None, data_agendada=None):
         self.motorista_id = motorista_id
+        self.rota_fixa_id = rota_fixa_id
+        self.data_agendada = data_agendada
         self.motorista_nome = motorista_nome
         self.rota = rota
         self.data_horario = data_horario
         self.veiculo = veiculo
         self.status = status
+
+
+class RotaFixa(db.Model):
+    __tablename__ = 'rotas_fixas'
+
+    id = db.Column(db.Integer, primary_key=True)
+    motorista_id = db.Column(db.Integer, db.ForeignKey('motoristas.id'), nullable=False)
+    rota = db.Column(db.String(200), nullable=False)
+    veiculo = db.Column(db.String(50), nullable=False)
+    horario_partida = db.Column(db.String(5), nullable=False)
+    horario_retorno = db.Column(db.String(5), nullable=True)
+    dias_semana = db.Column(db.String(100), nullable=False)
+    data_inicio = db.Column(db.Date, nullable=False)
+    data_fim = db.Column(db.Date, nullable=False)
+    itinerario = db.Column(db.Text, nullable=True)
+    ativa = db.Column(db.Boolean, nullable=False, default=True)
+
+    motorista = db.relationship('Motorista', backref=db.backref('rotas_fixas', lazy=True))
+    viagens = db.relationship('SolicitacaoViagem', backref='rota_fixa', lazy=True)
 
 
 class CoordenadaRota(db.Model):

@@ -1,94 +1,287 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body {
+.pagina-transito {
     display: flex;
+    width: 100%;
     height: 100vh;
-    background-color: #f4f6f9;
+    min-height: 0;
+    overflow: hidden;
 }
 
-/* Painel Lateral */
-#sidebar {
-    width: 350px;
-    background-color: #1e293b;
-    color: #fff;
-    padding: 20px;
+.pagina-transito #sidebar {
     display: flex;
+    flex: 0 0 340px;
     flex-direction: column;
-    gap: 20px;
-    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    gap: 16px;
+    width: 340px;
+    height: 100vh;
+    min-height: 0;
+    padding: 24px 20px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--branco) !important;
+    border-right: 1px solid var(--borda);
+    box-shadow: 4px 0 16px rgba(24, 48, 39, 0.08);
+    color: var(--texto) !important;
     z-index: 1000;
 }
 
-#sidebar h2 {
-    font-size: 1.5rem;
-    color: #38bdf8;
-    border-bottom: 2px solid #334155;
-    padding-bottom: 10px;
+.pagina-transito #sidebar .sidebar-brand {
+    flex: 0 0 auto;
+    padding: 0;
 }
 
-.status-card {
-    background-color: #334155;
-    padding: 15px;
+.pagina-transito #sidebar .sidebar-brand h1 {
+    margin: 0;
+    color: var(--verde-escuro) !important;
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+}
+
+.pagina-transito #sidebar h2 {
+    flex: 0 0 auto;
+    margin: 4px 0 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--borda);
+    color: var(--verde-escuro) !important;
+    font-size: 1.2rem;
+}
+
+.pagina-transito #sidebar .search-box {
+    display: flex;
+    flex: 0 0 auto;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+    padding: 9px 12px;
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    background-color: var(--fundo);
+}
+
+.pagina-transito #sidebar .search-box i {
+    color: var(--verde-escuro);
+}
+
+.pagina-transito #sidebar .search-box input {
+    min-width: 0;
+    padding: 0;
+    border: 0 !important;
+    outline: 0;
+    background: transparent !important;
+    color: var(--texto) !important;
+}
+
+.pagina-transito #sidebar .search-box input::placeholder {
+    color: #6d8076 !important;
+}
+
+.pagina-transito #sidebar .sidebar-menu {
+    display: flex;
+    flex-direction: column;
+    flex: 0 0 auto;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow: visible;
+}
+
+.pagina-transito #sidebar .sidebar-menu li {
+    min-width: 0;
+}
+
+.pagina-transito #sidebar .sidebar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    padding: 12px 15px;
+    border-radius: 6px;
+    color: var(--texto) !important;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: normal;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    overflow-wrap: anywhere;
+}
+
+.pagina-transito #sidebar .sidebar-menu a:hover,
+.pagina-transito #sidebar .sidebar-menu a.active {
+    background-color: var(--verde-claro) !important;
+    color: var(--verde-escuro) !important;
+}
+
+.pagina-transito #sidebar .sidebar-menu a.active {
+    background-color: var(--verde) !important;
+    color: var(--branco) !important;
+}
+
+.pagina-transito #sidebar .status-card {
+    flex: 0 0 auto;
+    padding: 14px 15px;
+    border: 1px solid var(--borda) !important;
+    border-left: 4px solid var(--verde) !important;
     border-radius: 8px;
-    border-left: 4px solid #ef4444;
-    transition: all 0.3s ease;
+    background-color: var(--branco) !important;
+    color: var(--texto) !important;
+    box-shadow: 0 2px 8px rgba(24, 48, 39, 0.06);
 }
 
-.status-card.connected {
-    border-left-color: #22c55e;
+.pagina-transito #sidebar #status-conexao {
+    border-left-color: #d69b36 !important;
 }
 
-.status-card h3 {
-    font-size: 1rem;
-    margin-bottom: 5px;
-    color: #94a3b8;
+.pagina-transito #sidebar #status-conexao.connected {
+    border-left-color: var(--verde) !important;
 }
 
-.status-value {
-    font-size: 1.1rem;
-    font-weight: bold;
+.pagina-transito #sidebar .status-card h3 {
+    margin: 0 0 6px;
+    color: var(--verde-escuro) !important;
+    font-size: 0.9rem;
 }
 
-/* Container do Mapa */
-#map {
-    flex-grow: 1;
-    height: 100%;
+.pagina-transito #sidebar .status-value {
+    margin: 0;
+    color: var(--texto) !important;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
 }
 
-.leaflet-popup-content-wrapper {
-    background-color: #1e293b;
-    color: #fff;
-    border-radius: 8px;
+.pagina-transito #sidebar .vehicle-details {
+    display: grid;
+    gap: 6px;
 }
 
-.leaflet-popup-tip {
-    background-color: #1e293b;
+.pagina-transito #sidebar .vehicle-details p {
+    margin: 0;
+    color: var(--texto) !important;
+    font-size: 0.88rem;
+    line-height: 1.45;
+    overflow-wrap: anywhere;
 }
 
-.botao {
+.pagina-transito #sidebar .vehicle-details strong {
+    color: var(--verde-escuro) !important;
+}
+
+.pagina-transito #sidebar .vehicle-details span {
+    color: var(--texto) !important;
+}
+
+.pagina-transito #sidebar .transito-back {
     display: inline-flex;
     align-items: center;
     gap: 8px;
     width: fit-content;
-    color: #94a3b8;
+    padding: 8px 12px;
+    border: 1px solid var(--borda) !important;
+    background-color: transparent !important;
+    color: var(--verde-escuro) !important;
     text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    padding: 6px 12px;
-    border-radius: 6px;
-    background-color: #334155;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
 }
 
-.botao:hover {
-    color: #fff;
-    background-color: #475569;
-    transform: translateX(-2px);
+.pagina-transito #sidebar .transito-back:hover {
+    background-color: var(--verde-claro) !important;
+    border-color: var(--verde) !important;
+    color: var(--verde-escuro) !important;
 }
-@import url("base.css");
+
+.pagina-transito #sidebar .sidebar-footer {
+    flex: 0 0 auto;
+    margin-top: auto;
+    padding: 14px 0 0;
+    border-top: 1px solid var(--borda);
+}
+
+.pagina-transito #sidebar .logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    border-radius: 6px;
+    color: var(--danger) !important;
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+.pagina-transito #sidebar .logout-btn:hover {
+    background-color: #fceeee;
+}
+
+.pagina-transito #map {
+    flex: 1 1 auto;
+    width: 0;
+    height: 100vh;
+    min-width: 0;
+    background-color: var(--fundo);
+    z-index: 1;
+}
+
+.pagina-transito .leaflet-popup-content-wrapper,
+.pagina-transito .leaflet-popup-tip {
+    background-color: var(--branco) !important;
+    color: var(--texto) !important;
+}
+
+.pagina-transito .leaflet-popup-content {
+    color: var(--texto) !important;
+    font-family: "Segoe UI", Tahoma, Arial, sans-serif;
+    line-height: 1.5;
+}
+
+.pagina-transito .leaflet-popup-content b {
+    color: var(--verde-escuro);
+}
+
+@media (max-width: 820px) {
+    .pagina-transito {
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+    }
+
+    .pagina-transito #sidebar {
+        flex: 0 0 auto;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+        max-height: 52vh;
+        padding: 16px;
+        border-right: 0;
+        border-bottom: 1px solid var(--borda);
+    }
+
+    .pagina-transito #sidebar .sidebar-menu {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .pagina-transito #map {
+        flex: 1 1 auto;
+        width: 100%;
+        height: auto;
+        min-height: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .pagina-transito #sidebar {
+        max-height: 58vh;
+        gap: 12px;
+        padding: 12px;
+    }
+
+    .pagina-transito #sidebar .sidebar-menu {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .pagina-transito #sidebar h2 {
+        font-size: 1.05rem;
+    }
+}

@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acesso administrativo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/principal.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/shared/base.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth/acesso.css') }}">
 </head>
-<body>
-    <main class="auth-page">
+<body class="login-map-page">
+    <main class="auth-page auth-page-map">
+        <div id="auth-map" class="auth-map-background" aria-hidden="true"></div>
         <section class="auth-card" aria-labelledby="titulo-login-adm">
             <a class="auth-brand" href="{{ url_for('inicial') }}">EXPRESSO FEDERAL</a>
             <header class="auth-header"><h1 id="titulo-login-adm">Acesso administrativo</h1><p>Use suas credenciais de administrador.</p></header>
@@ -21,5 +24,7 @@
             <a class="auth-back" href="{{ url_for('inicial') }}">← Voltar para a página principal</a>
         </section>
     </main>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="{{ url_for('static', filename='js/auth/login_map.js') }}"></script>
 </body>
 </html>

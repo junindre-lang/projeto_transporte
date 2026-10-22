@@ -1,0 +1,99 @@
+.titulo-listagem {
+    margin-bottom: 28px;
+}
+
+.titulo-listagem h1 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #fff;
+    font-size: 24px;
+}
+
+.titulo-listagem h1 i {
+    color: #2ecc71;
+}
+
+.titulo-listagem p {
+    color: #888;
+    margin-top: 7px;
+}
+
+.filtro-periodo {
+    display: flex;
+    align-items: end;
+    gap: 18px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background: #1a1a1a;
+    border: 1px solid #262626;
+    border-radius: 8px;
+}
+
+.campo-periodo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 210px;
+}
+
+.campo-periodo label {
+    color: #aaa;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.campo-periodo input {
+    padding: 11px 12px;
+    color: #fff;
+    background: #121212;
+    border: 1px solid #333;
+    border-radius: 6px;
+    outline: none;
+}
+
+.campo-periodo input:focus {
+    border-color: #2ecc71;
+}
+
+.btn-consultar {
+    padding: 11px 20px;
+    color: #121212;
+    background: #2ecc71;
+    border: 0;
+    border-radius: 6px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.btn-consultar:hover {
+    background: #27ae60;
+}
+
+.mensagem-erro {
+    padding: 15px 18px;
+    color: #ffb4ab;
+    background: rgba(231, 76, 60, 0.12);
+    border: 1px solid rgba(231, 76, 60, 0.4);
+    border-radius: 8px;
+}
+
+.tabela-expresso .status-tag {
+    color: #2ecc71;
+    background: rgba(46, 204, 113, 0.12);
+}
+
+@media (max-width: 700px) {
+    .filtro-periodo {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .campo-periodo {
+        min-width: 0;
+    }
+
+    .tabela-container {
+        overflow-x: auto;
+    }
+}

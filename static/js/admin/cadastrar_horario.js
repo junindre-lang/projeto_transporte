@@ -19,13 +19,15 @@ function salvarHorarioFixo(event) {
 
     // 2. Mapeamento perfeito dos IDs do HTML
     const dadosFormulario = {
-        motorista: document.getElementById('motorista').value,
+        motorista_id: Number(document.getElementById('motorista').value),
         veiculo: document.getElementById('veiculo').value,
         rota_nome: document.getElementById('rota-nome').value,
         horario_partida: document.getElementById('horario-partida').value,
         horario_retorno: document.getElementById('horario-retorno').value || null,
         dias_semana: diasSelecionados,
-        itinerario: document.getElementById('itinerario').value
+        itinerario: document.getElementById('itinerario').value,
+        data_inicio: document.getElementById('data-inicio').value,
+        data_fim: document.getElementById('data-fim').value
     };
 
     // 3. Envio dos dados para a API Flask

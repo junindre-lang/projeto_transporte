@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consultar Rotas - Expresso Federal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/admin.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin/consultar_rotas.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/shared/base.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="sidebar-brand"><h1>EXPRESSO</h1></div>
+        {% include 'includes/admin_nav.html' %}
+    </div>
+
+    <main class="main-content">
+        <div class="titulo-listagem">
+            <h1><i class="fa-solid fa-magnifying-glass-location"></i> Consultar Rotas</h1>
+            <p>Consulte as viagens programadas para um intervalo de datas.</p>
+        </div>
+
+        <form class="filtro-periodo" method="get" action="{{ url_for('bp_admin.consultar_rotas') }}">
+            <div class="campo-periodo">
+                <label for="data-inicial">Data Inicial</label>
+                <input type="date" id="data-inicial" name="data_inicial" value="{{ data_inicial }}" required>
+            </div>
+            <div class="campo-periodo">
+                <label for="data-final">Data Final</label>
+                <input type="date" id="data-final" name="data_final" value="{{ data_final }}" required>
+            </div>
+            <button class="btn-consultar" type="submit"><i class="fa-solid fa-filter"></i> Consultar</button>
+        </form>
+
+        {% if erro %}
+        <div class="mensagem-erro" role="alert">{{ erro }}</div>
+        {% elif data_inicial and data_final and not viagens %}
+        <div class="tabela-vazia"><i class="fa-solid fa-calendar-xmark"></i><p>Nenhuma viagem programada no período selecionado.</p></div>
+        {% elif viagens %}
+        <div class="tabela-container">
+            <table class="tabela-expresso">
+                <thead>
+                    <tr>
+                        <th>Data</th>
+                        <th>Horário</th>
+                        <th>Motorista</th>
+                        <th>Rota</th>
+                        <th>Veículo</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for viagem in viagens %}
+                    <tr>
+                        <td>{{ viagem.data }}</td>
+                        <td>{{ viagem.horario }}</td>
+                        <td class="txt-principal">{{ viagem.motorista }}</td>
+                        <td>{{ viagem.rota }}</td>
+                        <td><span class="tag-veiculo">{{ viagem.veiculo }}</span></td>
+                        <td><span class="status-tag">{{ viagem.status }}</span></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% endif %}
+    </main>
+</body>
+</html>

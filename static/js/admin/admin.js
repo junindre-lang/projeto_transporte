@@ -29,16 +29,30 @@ function processarViagem(idViagem, acao, nomeMotorista) {
 // 2. GERENCIAMENTO DE SERVIDORES (Admin)
 // ==========================================================================
 function processarServidor(idServidor, acao) {
-    const urlRota = acao === 'aprovar' ? `/lista_servidores/aprovar/${idServidor}` : `/lista_servidores/excluir/${idServidor}`;
+    const rotas = {
+        aprovar: `/lista_servidores/aprovar/${idServidor}`,
+        inativar: `/lista_servidores/inativar/${idServidor}`,
+        excluir: `/lista_servidores/excluir/${idServidor}`
+    };
+    const urlRota = rotas[acao];
 
     if (acao === 'excluir' && !confirm('Tem certeza que deseja excluir?')) return;
+    if (acao === 'inativar' && !confirm('Tem certeza que deseja inativar este servidor?')) return;
 
     fetch(urlRota, { method: 'POST' })
     .then(response => response.json())
     .then(data => {
         if (data.sucesso) {
             const linha = document.getElementById(`servidor-${idServidor}`);
-            if(linha) {
+            if (acao === 'inativar' && linha) {
+                const status = linha.querySelector('.status-badge');
+                if (status) {
+                    status.textContent = 'Inativo';
+                    status.className = 'status-badge inativo';
+                }
+                const botao = linha.querySelector('[data-acao="inativar"]');
+                if (botao) botao.remove();
+            } else if (linha) {
                 linha.style.opacity = '0';
                 setTimeout(() => linha.remove(), 300);
             }

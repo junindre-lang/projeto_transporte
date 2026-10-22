@@ -2,6 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Expresso Federal - Solicitar Viagem</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/servidor/solicitar_viagem.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -14,33 +15,7 @@
             <h1>EXPRESSO</h1>
         </div>
 
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Buscar no menu...">
-        </div>
-
-        <ul class="sidebar-menu">
-            <li>
-                <a href="/list_viagem_servidores"><i class="fa-solid fa-house"></i> INÍCIO</a>
-            </li>
-            <li>
-                <a href="/rotas_servidor"><i class="fa-solid fa-route"></i> ROTAS</a>
-            </li>
-            <li>
-                <a href="/transito_serv"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a>
-            </li>
-            <li>
-                <a href="/cad_viagem" class="active"><i class="fa-solid fa-paper-plane"></i> SOLICITAR VIAGEM</a>
-            </li>
-            <li>
-                <a href="/list_viagem_servidores"><i class="fa-solid fa-bus"></i> MINHAS VIAGENS</a>
-            </li>
-
-        </ul>
-
-        <div class="sidebar-footer">
-            <a href="/logarlink" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
-        </div>
+        {% include 'includes/servidor_nav.html' %}
     </div>
 
     <div class="main-content">
@@ -57,11 +32,21 @@
         <hr class="linha-divisoria">
 
         <div class="content-card">
+            {% with mensagens = get_flashed_messages(with_categories=true) %}
+                {% for categoria, mensagem in mensagens %}
+                <p class="mensagem-{{ categoria }}" role="alert">{{ mensagem }}</p>
+                {% endfor %}
+            {% endwith %}
             <form action="/cad_viagem" method="POST" class="form-expresso">
 
                 <div class="form-group">
-                    <label for="motorista_nome"><i class="fa-solid fa-user-tie"></i> Nome do Motorista</label>
-                    <input type="text" id="motorista_nome" name="motorista_nome" placeholder="Ex: João Silva" required>
+                    <label for="motorista_id"><i class="fa-solid fa-user-tie"></i> Motorista</label>
+                    <select id="motorista_id" name="motorista_id" required>
+                        <option value="" selected disabled>Selecione um motorista</option>
+                        {% for motorista in motoristas %}
+                            <option value="{{ motorista.id }}">{{ motorista.nome }} — {{ motorista.status }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <div class="form-group">
@@ -75,8 +60,15 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="veiculo"><i class="fa-solid fa-car"></i> Modelo do Veículo</label>
-                    <input type="text" id="veiculo" name="veiculo" placeholder="Ex: Van Oficial - Placa ABC-1234" required>
+                    <label for="veiculo"><i class="fa-solid fa-car"></i> Veículo disponível</label>
+                    <select id="veiculo" name="veiculo" required>
+                        <option value="" selected disabled>Selecione um veículo</option>
+                        {% for veiculo in veiculos %}
+                            <option value="{{ veiculo.prefixo }}">{{ veiculo.prefixo }} — {{ veiculo.modelo }}</option>
+                        {% else %}
+                            <option value="" disabled>Nenhum veículo disponível</option>
+                        {% endfor %}
+                    </select>
                 </div>
 
                 <div class="form-actions">

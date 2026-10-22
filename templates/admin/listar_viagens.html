@@ -15,23 +15,7 @@
         <div class="sidebar-brand">
             <h1>EXPRESSO</h1>
         </div>
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" id="input-busca-menu" placeholder="Buscar no menu...">
-        </div>
-        <ul class="sidebar-menu">
-            <li><a href="/pag_admin"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
-            <li><a href="/rotas"><i class="fa-solid fa-route"></i> ROTAS</a></li>
-            <li><a href="/transito"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
-            <li><a href="/list_viagem" class="active"><i class="fa-solid fa-road"></i> LISTAS DE VIAGENS</a></li>
-            <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
-            <li><a href="/cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
-            <li><a href="/cad_veiculos"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
-            <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
-        </ul>
-        <div class="sidebar-footer">
-            <a href="/login_adm" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
-        </div>
+        {% include 'includes/admin_nav.html' %}
     </div>
 
     <div class="main-content">

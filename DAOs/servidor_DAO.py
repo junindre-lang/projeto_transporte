@@ -5,10 +5,11 @@ from sqlalchemy.exc import IntegrityError
 class ServidorDAO:
 
     @staticmethod
-    def salvar(nome, email, matricula, senha):
+    def salvar(nome, email, matricula, senha, cargo):
         try:
             # O status padrão ao cadastrar costuma ser 'Pendente'
-            novo_servidor = Servidor(nome=nome, email=email, matricula=matricula, senha=senha, status='Pendente')
+            novo_servidor = Servidor(nome=nome, email=email, matricula=matricula, senha=senha,
+                                     cargo=cargo, status='Pendente')
             db.session.add(novo_servidor)
             db.session.commit()
             return novo_servidor
@@ -35,6 +36,15 @@ class ServidorDAO:
         servidor = Servidor.query.get(id_servidor)
         if servidor:
             servidor.status = 'Ativo'  # Atualiza o status para Ativo
+            db.session.commit()
+            return True
+        return False
+
+    @staticmethod
+    def inativar(id_servidor):
+        servidor = Servidor.query.get(id_servidor)
+        if servidor:
+            servidor.status = 'Inativo'
             db.session.commit()
             return True
         return False

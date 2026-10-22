@@ -17,24 +17,7 @@
             <h1>EXPRESSO</h1>
         </div>
 
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Buscar no menu...">
-        </div>
-
-        <ul class="sidebar-menu">
-            <li><a href="/pag_admin"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
-            <li><a href="#"><i class="fa-solid fa-route"></i> ROTAS</a></li>
-            <li><a href="#"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
-            <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
-            <li><a href="/cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
-            <li><a href="/cad_veiculos" class="active"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
-            <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
-        </ul>
-
-        <div class="sidebar-footer">
-            <a href="/login_adm" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
-        </div>
+        {% include 'includes/admin_nav.html' %}
     </div>
 
     <div class="main-content">
@@ -45,7 +28,7 @@
 
         <div class="secao-viagens">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
-                <h2 style="ma   rgin: 0; color: white; font-size: 1.3rem;">Veículos Cadastrados</h2>
+                <h2 style="margin: 0; color: white; font-size: 1.3rem;">Veículos Cadastrados</h2>
 
                <button type="button" class="btn-novo-motorista" onclick="abrirModal('modalVeiculo')">
                     <i class="fa-solid fa-plus"></i> Novo Veículo
@@ -60,7 +43,6 @@
                         <th>Placa</th>
                         <th>Capacidade</th>
                         <th>Status</th>
-                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,13 +57,10 @@
                                 {{ veiculo.status }}
                             </span>
                         </td>
-                        <td>
-                            <button class="btn-indeferir" style="padding: 5px 10px; font-size: 0.8rem;">editar</button>
-                        </td>
                     </tr>
                     {% else %}
                     <tr>
-                        <td colspan="6" style="text-align: center; color: #888888; padding: 40px 10px;">
+                        <td colspan="5" style="text-align: center; color: #888888; padding: 40px 10px;">
                             <i class="fa-solid fa-circle-info" style="margin-right: 6px; font-size: 1.1rem;"></i>
                             Nenhum veículo cadastrado na frota.
                         </td>

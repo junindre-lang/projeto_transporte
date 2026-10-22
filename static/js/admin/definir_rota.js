@@ -105,6 +105,12 @@ function enviarRota() {
         return;
     }
 
+    const motoristaId = document.getElementById('motorista-mapa').value;
+    if (!motoristaId) {
+        alert('Selecione um motorista antes de salvar a rota.');
+        return;
+    }
+
     const nomeDaRota = prompt("Digite um nome de identificação para esta rota:", "Sousa - Centro");
     if (!nomeDaRota) {
         alert("A rota precisa de um nome descritivo para ser salva!");
@@ -116,7 +122,8 @@ function enviarRota() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
             rota: nomeDaRota,
-            pontos: arrayPontosEnvio
+            pontos: arrayPontosEnvio,
+            motorista_id: Number(motoristaId)
         })
     })
     .then(response => response.json())

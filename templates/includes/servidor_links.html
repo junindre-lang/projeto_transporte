@@ -1,0 +1,11 @@
+<div class="search-box">
+    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+    <input type="search" placeholder="Buscar no menu..." aria-label="Buscar no menu">
+</div>
+<ul class="sidebar-menu">
+    <li><a href="/list_viagem_servidores" class="{% if request.path == '/list_viagem_servidores' %}active{% endif %}"><i class="fa-solid fa-bus"></i> MINHAS VIAGENS</a></li>
+    <li><a href="/rotas_servidor" class="{% if request.path == '/rotas_servidor' %}active{% endif %}"><i class="fa-solid fa-route"></i> ROTAS</a></li>
+    <li><a href="/transito_serv" class="{% if request.path == '/transito_serv' %}active{% endif %}"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
+    <li><a href="/cad_viagem" class="{% if request.path == '/cad_viagem' %}active{% endif %}"><i class="fa-solid fa-paper-plane"></i> SOLICITAR VIAGEM</a></li>
+</ul>
+<script src="{{ url_for('static', filename='js/shared/sidebar.js') }}"></script>

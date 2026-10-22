@@ -16,25 +16,7 @@
             <h1>EXPRESSO</h1>
         </div>
 
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Buscar no menu...">
-        </div>
-
-        <ul class="sidebar-menu">
-            <li><a href="/pag_admin" class="active"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
-            <li><a href="/rotas"><i class="fa-solid fa-route"></i> ROTAS</a></li>
-            <li><a href="/transito"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
-            <li><a href="/list_viagem"><i class="fa-solid fa-road"></i> LISTAS DE VIAGENS</a></li>
-            <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
-            <li><a href="/cad_motor"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
-            <li><a href="/cad_veiculos"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
-            <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
-        </ul>
-
-        <div class="sidebar-footer">
-            <a href="/login_adm" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
-        </div>
+        {% include 'includes/admin_nav.html' %}
     </div>
 
     <div class="main-content">
@@ -64,14 +46,14 @@
                 <i class="fa-solid fa-clock icon-card"></i>
                 <h3>Cadastrar Horários</h3>
                 <p>Gerencie as tabelas de horários das viagens.</p>
-                <a href="/cad_hora"><button class="btn-acao">Acessar</button></a>
+                <a href="/cad_hora" class="btn-acao">Acessar</a>
             </div>
 
             <div class="card">
                 <i class="fa-solid fa-magnifying-glass-location icon-card"></i>
                 <h3>Consultar Rotas</h3>
-                <p>Visualize e edite as rotas de transporte.</p>
-                <button class="btn-acao">Acessar</button>
+                <p>Consulte as viagens programadas para um período.</p>
+                <a href="/consultar_rotas" class="btn-acao">Acessar</a>
             </div>
 
             <div class="card">
@@ -118,6 +100,48 @@
                             <td colspan="5" style="text-align: center; color: #888; padding: 20px;">
                                 <i class="fa-solid fa-circle-check" style="color: #2ecc71; margin-right: 6px;"></i>
                                 Nenhuma solicitação pendente no momento.
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="secao-viagens">
+            <h2>Solicitações de Cadastro de Servidores</h2>
+
+            <table class="tabela-viagens">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Matrícula</th>
+                        <th>Cargo / Função</th>
+                        <th>E-mail</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if servidores_pendentes %}
+                        {% for servidor in servidores_pendentes %}
+                        <tr id="servidor-{{ servidor.id }}">
+                            <td>{{ servidor.nome }}</td>
+                            <td>{{ servidor.matricula }}</td>
+                            <td>{{ servidor.cargo }}</td>
+                            <td>{{ servidor.email }}</td>
+                            <td>
+                                <button onclick="processarServidor('{{ servidor.id }}', 'aprovar')" class="btn-editar">
+                                    <i class="fa-solid fa-check"></i> Aprovar
+                                </button>
+                                <button onclick="processarServidor('{{ servidor.id }}', 'excluir')" class="btn-excluir">
+                                    <i class="fa-solid fa-trash"></i> Excluir
+                                </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="5" style="text-align: center; color: #888; padding: 20px;">
+                                Nenhuma solicitação de servidor pendente.
                             </td>
                         </tr>
                     {% endif %}

@@ -164,9 +164,27 @@
     background-color: #c0392b;
 }
 
+.btn-inativar {
+    background-color: #f39c12;
+    color: #ffffff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.2s ease;
+}
+
+.btn-inativar:hover {
+    background-color: #d68910;
+}
+
 /* Transição para a animação do JavaScript (Fade-out) */
 tr {
     opacity: 1;
     transition: opacity 0.3s ease;
 }
-@import url("../shared/base.css");

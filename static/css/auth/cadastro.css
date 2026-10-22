@@ -28,7 +28,7 @@ body{
 }
 
 .dados input{
-    background-color:;
+    background-color: white;
     height:8%;
     border: 1px solid black;
     border-radius:6px;
@@ -44,4 +44,34 @@ body{
     text-align:center;
     color: white;
 }
-@import url("../shared/base.css");
+
+.cadastro-map-page {
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.cadastro-map-page .cadastro-auth-page {
+    align-items: flex-start;
+    height: auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow: visible;
+    padding-top: 32px;
+    padding-bottom: 32px;
+}
+
+.cadastro-map-page .auth-map-background {
+    position: fixed;
+    height: 100vh;
+    height: 100dvh;
+}
+
+@media (max-width: 480px) {
+    .cadastro-map-page .cadastro-auth-page {
+        padding-top: 16px;
+        padding-bottom: 16px;
+    }
+}

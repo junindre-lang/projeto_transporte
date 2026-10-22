@@ -292,4 +292,26 @@ body.sidebar-collapsed .main-content {
     font-size: 13px;
     display: block;
 }
-@import url("../shared/base.css");
+
+.lista-minhas-viagens {
+    display: grid;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.viagem-servidor {
+    background-color: #121212;
+    border: 1px solid #262626;
+    border-radius: 6px;
+    padding: 18px;
+}
+
+.viagem-servidor h4 {
+    color: #2ecc71;
+    margin-bottom: 10px;
+}
+
+.viagem-servidor p {
+    color: #aaaaaa;
+    line-height: 1.6;
+}

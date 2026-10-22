@@ -46,6 +46,8 @@
 /* Correção crucial: Garante largura total e impede inputs espremidos */
 .modal-form-custom input[type="text"],
 .modal-form-custom input[type="time"],
+.modal-form-custom input[type="date"],
+.modal-form-custom select,
 .modal-form-custom textarea {
     width: 100%;
     box-sizing: border-box; /* Evita que o padding "estoure" a largura */
@@ -67,6 +69,7 @@
 
 /* Efeito de foco com o verde padrão do Expresso */
 .modal-form-custom input:focus,
+.modal-form-custom select:focus,
 .modal-form-custom textarea:focus {
     border-color: #2ecc71;
     box-shadow: 0 0 5px rgba(46, 204, 113, 0.2);
@@ -138,4 +141,3 @@
         gap: 0;
     }
 }
-@import url("../shared/base.css");

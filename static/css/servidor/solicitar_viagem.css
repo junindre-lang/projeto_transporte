@@ -296,7 +296,8 @@ body {
     gap: 8px;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
     background-color: #121212;
     border: 1px solid #262626;
     border-radius: 6px;
@@ -312,7 +313,8 @@ body {
 }
 
 /* Foco Ativo Verde Neon */
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
     border-color: #2ecc71;
     box-shadow: 0 0 8px rgba(46, 204, 113, 0.2);
 }
@@ -329,4 +331,3 @@ body {
     gap: 15px;
     margin-top: 10px;
 }
-@import url("../shared/base.css");

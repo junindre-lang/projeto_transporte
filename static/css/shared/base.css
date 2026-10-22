@@ -1,4 +1,19 @@
+/* Shared visual foundation for authenticated application pages. */
 :root {
+    --brand-700: #0f6d36;
+    --brand-600: #168a45;
+    --brand-500: #2ecc71;
+    --brand-100: #eaf7ef;
+    --ink-900: #183027;
+    --ink-700: #3e554a;
+    --ink-500: #6d8076;
+    --line: #d7e5dc;
+    --surface: #ffffff;
+    --surface-muted: #f5f9f6;
+    --page: #f5f8f6;
+    --danger: #bd4545;
+    --warning: #a36a14;
+    --info: #34739a;
     --verde: #168a45;
     --verde-escuro: #0f6d36;
     --verde-claro: #eaf7ef;
@@ -7,112 +22,806 @@
     --texto: #0f6d36;
     --borda: #d7e5dc;
     --erro: #0f6d36;
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 2px 8px rgba(24, 48, 39, 0.06);
+    --shadow-md: 0 10px 28px rgba(24, 48, 39, 0.09);
+    --focus-ring: 0 0 0 3px rgba(22, 138, 69, 0.18);
 }
 
-* { box-sizing: border-box; }
-body { background: var(--fundo) !important; color: var(--texto) !important; font-family: Arial, Helvetica, sans-serif; }
-a { color: var(--verde-escuro); }
-button, .btn-acao, .btn-salvar, .btn-principal, .btn-entrar {
-    background: var(--verde) !important; color: var(--branco) !important;
-    border: 1px solid var(--verde) !important; border-radius: 5px !important;
-    box-shadow: none !important;
-}
-button:hover, .btn-acao:hover, .btn-salvar:hover, .btn-principal:hover, .btn-entrar:hover {
-    background: var(--verde-escuro) !important; border-color: var(--verde-escuro) !important;
-}
-input, select, textarea { background: var(--branco) !important; color: var(--texto) !important; border: 1px solid var(--borda) !important; border-radius: 5px !important; }
-input:focus, select:focus, textarea:focus { outline: 2px solid #94cfa9; border-color: var(--verde) !important; box-shadow: none !important; }
-.sidebar, .header-motorista { background: var(--verde-escuro) !important; border-color: var(--verde-escuro) !important; }
-.sidebar-menu a.active, .sidebar-menu a:hover { background: var(--verde) !important; color: var(--branco) !important; }
-.main-content, .container-principal { background: var(--fundo); }
-.card, .content-card, .card-status, .card-viagem, .tabela-container, .secao-viagens, .secao-motoristas { background: var(--branco) !important; border-color: var(--borda) !important; box-shadow: none !important; }
-th { background: var(--verde-escuro) !important; color: var(--branco) !important; }
-.badge.disponivel, .status-deferida, .status-concluída { background: var(--verde-claro) !important; color: var(--verde-escuro) !important; border-color: var(--verde) !important; }
-.btn-secundario, .btn-voltar { background: var(--branco) !important; color: var(--verde-escuro) !important; border-color: var(--verde) !important; }
-.topo, .login, .login-container, .modal-conteudo { background: var(--branco) !important; color: var(--texto) !important; border-color: var(--borda) !important; box-shadow: none !important; }
-.topo { background: var(--verde-escuro) !important; color: var(--branco) !important; }
-.login-header h2, .logo-area, .titulo h1, .titulo-listagem h1 { color: var(--verde-escuro) !important; }
-.login-header p, .input-group label { color: var(--texto) !important; }
-.login-form input { background: var(--branco) !important; color: var(--texto) !important; }
-.sidebar-brand h1, .header-motorista, .header-motorista * { color: var(--branco) !important; }
-.tabela-expresso td, .tabela-viagens td, .tabela-motoristas td { background: var(--branco) !important; color: var(--texto) !important; border-color: var(--borda) !important; }
-@media (max-width: 768px) { .main-content { margin-left: 0 !important; width: 100% !important; padding: 20px !important; } .sidebar { position: static !important; width: 100% !important; height: auto !important; } }
-
-/* Tema único: verde e branco para os componentes presentes nas páginas. */
-.sidebar, #sidebar, .header-motorista, .topo, .tabela-expresso th,
-.tabela-viagens th, .tabela-motoristas th, .tabela-servidores th,
-.btn-filtro.ativo, .sidebar-toggle-btn, .leaflet-popup-content-wrapper,
-.leaflet-popup-tip {
-    background-color: var(--verde-escuro) !important;
-    border-color: var(--verde-escuro) !important;
-    color: var(--branco) !important;
+body:not(.login-map-page) {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--page);
+    color: var(--ink-900);
+    font-family: "Segoe UI", Arial, sans-serif;
+    line-height: 1.5;
 }
 
-.sidebar *, #sidebar *, .header-motorista *, .topo *,
-.tabela-expresso th *, .tabela-viagens th *, .tabela-motoristas th *,
-.tabela-servidores th *, .btn-filtro.ativo *, .sidebar-toggle-btn * {
-    color: var(--branco) !important;
+body:not(.login-map-page) *,
+body:not(.login-map-page) *::before,
+body:not(.login-map-page) *::after {
+    box-sizing: border-box;
 }
 
-.main-content, .container-principal, .map-container, .modal-form-custom,
-.container-filtros, .tabela-container, .secao-servidores, .secao-viagens,
-.secao-motoristas, .content-card, .card, .card-status, .card-viagem,
-.login, .login-container, .dados, .modal-conteudo, .instrucoes-card,
-.contador-box, .welcome-box, .form-expresso, .tag-veiculo, .tag-id,
-.badge-origem, .status-card, .leaflet-routing-container {
-    background-color: var(--branco) !important;
-    border-color: var(--borda) !important;
-    color: var(--texto) !important;
-    box-shadow: none !important;
+body:not(.login-map-page) :where(h1, h2, h3, h4, p) {
+    margin-top: 0;
 }
 
-h1, h2, h3, h4, p, span, small, label, li, td, .rotulo, .horario,
-.status-value, .txt-principal, .titulo p, .titulo-listagem p,
-.header-subtitle span, .welcome-box p, .welcome-box small,
-.tabela-vazia, .tabela-vazia i, .btn-fechar, .btn-tabela-ver,
-.btn-tabela-deletar {
-    color: var(--verde-escuro) !important;
+body:not(.login-map-page) :where(h1, h2, h3, h4) {
+    color: var(--ink-900);
+    line-height: 1.25;
 }
 
-button, .botao, .btn-acao, .btn-salvar, .btn-principal, .btn-entrar,
-.btn-novo-motorista, .btn-novo-veiculo, .btn-cadastrar-novo, .btn-editar,
-.btn-excluir, .btn-deferir, .btn-indeferir, .btn-vermelho, .btn-iniciar,
-.btn-concluir, .logout-btn, .btn-sair {
-    background-color: var(--verde) !important;
-    border-color: var(--verde) !important;
-    color: var(--branco) !important;
+body:not(.login-map-page) :where(a) {
+    color: var(--brand-700);
+    transition: color 160ms ease;
 }
 
-button *, .botao *, .btn-acao *, .btn-salvar *, .btn-principal *,
-.btn-entrar *, .btn-novo-motorista *, .btn-novo-veiculo *,
-.btn-cadastrar-novo *, .btn-editar *, .btn-excluir *, .btn-deferir *,
-.btn-indeferir *, .btn-vermelho *, .btn-iniciar *, .btn-concluir *,
-.logout-btn *, .btn-sair * {
-    color: var(--branco) !important;
+body:not(.login-map-page) :where(a:hover) {
+    color: var(--brand-600);
 }
 
-.btn-secundario, .btn-voltar, .btn-filtro, .badge, .status-badge,
-.status-tag, .badge-origem, .checkbox-dia span {
-    background-color: var(--verde-claro) !important;
-    border-color: var(--verde) !important;
-    color: var(--verde-escuro) !important;
+body:not(.login-map-page) :where(button, input, select, textarea) {
+    font: inherit;
 }
 
-.status-pendente, .status-deferida, .status-indeferida, .status-ativa,
-.status-andamento, .status-em\ andamento, .badge.disponivel,
-.badge.indisponivel, .status-badge.pendente, .status-badge.aprovado,
-.status-badge.recusado, .status-card.connected {
-    background-color: var(--verde-claro) !important;
-    border-color: var(--verde) !important;
-    color: var(--verde-escuro) !important;
+body:not(.login-map-page) :where(button) {
+    color: inherit;
+    cursor: pointer;
+    transition: background-color 160ms ease, border-color 160ms ease,
+        box-shadow 160ms ease, color 160ms ease, transform 160ms ease;
 }
 
-.status-pendente *, .status-deferida *, .status-indeferida *,
-.status-ativa *, .status-andamento *, .status-em\ andamento *,
-.badge *, .status-badge *, .status-tag *, .badge-origem *,
-.status-card *, .checkbox-dia span * {
-    color: var(--verde-escuro) !important;
+body:not(.login-map-page) :where(button:focus-visible, a:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible) {
+    outline: none;
+    box-shadow: var(--focus-ring);
 }
 
-[style*="color"] { color: var(--verde-escuro) !important; }
-[style*="background"] { background-color: var(--branco) !important; }
+/* Navigation */
+body:not(.login-map-page) :where(.sidebar, .sidebar-rotas) {
+    background: var(--surface);
+    border-right: 1px solid var(--line);
+    box-shadow: 4px 0 18px rgba(24, 48, 39, 0.035);
+}
+
+body:not(.login-map-page) :where(.sidebar-brand, .sidebar-brand h1, .sidebar-rotas .sidebar-brand h1) {
+    color: var(--brand-700);
+}
+
+body:not(.login-map-page) .sidebar-brand h1 {
+    font-size: 1.22rem;
+    font-weight: 750;
+    letter-spacing: 0.035em;
+}
+
+body:not(.login-map-page) .search-box {
+    background: var(--surface-muted);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink-500);
+}
+
+body:not(.login-map-page) .search-box input {
+    min-width: 0;
+    color: var(--ink-900);
+}
+
+body:not(.login-map-page) .sidebar-menu a {
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--ink-700);
+    font-weight: 600;
+    text-decoration: none;
+    transition: background-color 160ms ease, border-color 160ms ease,
+        color 160ms ease, transform 160ms ease;
+}
+
+body:not(.login-map-page) .sidebar-menu a:hover {
+    background: var(--brand-100);
+    color: var(--brand-700);
+    transform: translateX(2px);
+}
+
+body:not(.login-map-page) .sidebar-menu a.active,
+body:not(.login-map-page) .sidebar-menu a[aria-current="page"] {
+    background: var(--brand-700);
+    border-color: var(--brand-700);
+    color: #fff;
+}
+
+body:not(.login-map-page) .sidebar-footer {
+    border-top: 1px solid var(--line);
+}
+
+body:not(.login-map-page) .sidebar-footer a.logout-btn {
+    color: var(--danger);
+}
+
+body:not(.login-map-page) .sidebar-footer a.logout-btn:hover {
+    color: #963434;
+}
+
+body:not(.login-map-page) .header-motorista {
+    background: var(--brand-700);
+    border-color: var(--brand-700);
+    color: #fff;
+}
+
+body:not(.login-map-page) .header-motorista * {
+    color: #fff;
+}
+
+body:not(.login-map-page) .sidebar-toggle-btn {
+    display: inline-grid;
+    width: 42px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0;
+    place-items: center;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--brand-700);
+}
+
+body:not(.login-map-page) .sidebar-toggle-btn:hover {
+    background: var(--brand-100);
+}
+
+/* Page headings and surfaces */
+body:not(.login-map-page) .main-content {
+    background: var(--page);
+    color: var(--ink-900);
+}
+
+body:not(.login-map-page) :where(.titulo, .titulo-listagem) {
+    margin-bottom: 24px;
+}
+
+body:not(.login-map-page) :where(.titulo h1, .titulo-listagem h1) {
+    margin-bottom: 6px;
+    color: var(--ink-900);
+    font-size: clamp(1.45rem, 2vw, 1.9rem);
+    font-weight: 750;
+    letter-spacing: -0.025em;
+}
+
+body:not(.login-map-page) :where(.titulo p, .titulo-listagem p) {
+    margin-bottom: 0;
+    color: var(--ink-500);
+}
+
+body:not(.login-map-page) :where(.secao-viagens, .secao-servidores, .secao-motoristas,
+.modal-form-custom, .tabela-container, .container-filtros, .form-expresso,
+.content-card, .welcome-box, .instrucoes-card, .contador-box, .status-card) {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+}
+
+body:not(.login-map-page) .instrucoes-card {
+    border-left: 4px solid var(--brand-600);
+}
+
+body:not(.login-map-page) .welcome-box {
+    background: var(--surface-muted);
+    border-left: 4px solid var(--brand-600);
+}
+
+body:not(.login-map-page) .contador-box {
+    color: var(--brand-700);
+    font-weight: 700;
+}
+
+body:not(.login-map-page) .sidebar-rotas label {
+    color: var(--ink-700) !important;
+}
+
+body:not(.login-map-page) :where(.cards-container .card, .card-viagem, .card-status) {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    color: var(--ink-900);
+}
+
+body:not(.login-map-page) :where(.card-header, .card-header-actions) {
+    color: var(--ink-900);
+}
+
+body:not(.login-map-page) :where(.welcome-box p, .welcome-box small, .instrucoes-card li,
+.header-subtitle span) {
+    color: var(--ink-500);
+}
+
+/* Buttons use consistent sizing while preserving compact icon actions. */
+body:not(.login-map-page) :where(.btn-principal, .btn-consultar, .btn-salvar,
+.btn-novo-veiculo, .btn-novo-motorista, .btn-cadastrar-novo, .btn-iniciar,
+.btn-deferir, .btn-editar, .btn-acao) {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 9px 16px;
+    background: var(--brand-600);
+    border: 1px solid var(--brand-600);
+    border-radius: var(--radius-sm);
+    color: #fff;
+    font-size: 0.92rem;
+    font-weight: 650;
+    line-height: 1.25;
+    text-decoration: none;
+}
+
+body:not(.login-map-page) :where(.btn-principal, .btn-consultar, .btn-salvar,
+.btn-novo-veiculo, .btn-novo-motorista, .btn-cadastrar-novo, .btn-iniciar,
+.btn-deferir, .btn-editar, .btn-acao):hover {
+    background: var(--brand-700);
+    border-color: var(--brand-700);
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(23, 107, 69, 0.18);
+    transform: translateY(-1px);
+}
+
+body:not(.login-map-page) :where(.btn-secundario, .btn-voltar, .btn-filtro) {
+    display: inline-flex;
+    min-height: 40px;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 14px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    color: var(--ink-700);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+body:not(.login-map-page) :where(.btn-secundario, .btn-voltar, .btn-filtro):hover {
+    background: var(--surface-muted);
+    border-color: #b9d5c3;
+    color: var(--brand-700);
+}
+
+body:not(.login-map-page) :where(.btn-excluir, .btn-indeferir, .btn-inativar,
+.btn-concluir, .btn-vermelho, .btn-sair) {
+    background: var(--danger);
+    border-color: var(--danger);
+    color: #fff;
+}
+
+body:not(.login-map-page) :where(.btn-excluir, .btn-indeferir, .btn-inativar,
+.btn-concluir, .btn-vermelho, .btn-sair):hover {
+    background: #a83c3c;
+    border-color: #a83c3c;
+    color: #fff;
+}
+
+body:not(.login-map-page) .btn-fechar {
+    display: inline-grid;
+    width: 36px;
+    height: 36px;
+    min-height: 36px;
+    padding: 0;
+    place-items: center;
+    background: var(--surface-muted);
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    color: var(--ink-700);
+    font-size: 1.35rem;
+    line-height: 1;
+}
+
+body:not(.login-map-page) .btn-fechar:hover {
+    background: #fceeee;
+    border-color: #f0caca;
+    color: var(--danger);
+}
+
+body:not(.login-map-page) :where(.btn-tabela-ver, .btn-tabela-deletar) {
+    display: inline-grid;
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    place-items: center;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+}
+
+body:not(.login-map-page) .btn-tabela-ver {
+    background: var(--brand-100);
+    color: var(--brand-700);
+}
+
+body:not(.login-map-page) .btn-tabela-deletar {
+    background: #fceeee;
+    color: var(--danger);
+}
+
+body:not(.login-map-page) :where(.btn-tabela-ver, .btn-tabela-deletar):hover {
+    filter: brightness(0.96);
+}
+
+/* Forms */
+body:not(.login-map-page) :where(.form-grupo, .form-group) label {
+    color: var(--ink-700);
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+
+body:not(.login-map-page) :where(input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]):not([type="submit"]):not([type="button"]),
+select, textarea) {
+    color: var(--ink-900);
+}
+
+body:not(.login-map-page) :where(.form-grupo input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+.form-grupo select, .form-grupo textarea, .form-group input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]),
+.form-group select, .form-group textarea, .form-expresso input, .form-expresso select, .form-expresso textarea,
+.search-box input, .pesquisa-tabela input) {
+    min-height: 42px;
+    background: var(--surface);
+    border: 1px solid #cbdcd0;
+    border-radius: var(--radius-sm);
+    color: var(--ink-900);
+}
+
+body:not(.login-map-page) .search-box input {
+    min-height: 0;
+    padding: 0;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+}
+
+body:not(.login-map-page) :where(.form-grupo input, .form-grupo select, .form-grupo textarea,
+.form-group input, .form-group select, .form-group textarea, .form-expresso input,
+.form-expresso select, .form-expresso textarea):focus,
+body:not(.login-map-page) :where(.pesquisa-tabela input:focus) {
+    border-color: var(--brand-500);
+    box-shadow: var(--focus-ring);
+    outline: none;
+}
+
+body:not(.login-map-page) :where(input, textarea)::placeholder {
+    color: #84958b;
+    opacity: 1;
+}
+
+body:not(.login-map-page) .checkbox-dia input:checked + span {
+    background: var(--brand-700);
+    border-color: var(--brand-700);
+    color: #fff;
+}
+
+body:not(.login-map-page) .checkbox-dia input:focus-visible + span {
+    box-shadow: var(--focus-ring);
+}
+
+/* Data tables and status indicators */
+body:not(.login-map-page) :where(.tabela-viagens, .tabela-motoristas, .tabela-servidores, .tabela-expresso) {
+    color: var(--ink-700);
+}
+
+body:not(.login-map-page) :where(.tabela-viagens, .tabela-motoristas, .tabela-servidores, .tabela-expresso) th {
+    background: var(--surface-muted);
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-700);
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.045em;
+}
+
+body:not(.login-map-page) :where(.tabela-viagens, .tabela-motoristas, .tabela-servidores, .tabela-expresso) td {
+    border-bottom: 1px solid #e9f0eb;
+    color: var(--ink-700);
+}
+
+body:not(.login-map-page) :where(.tabela-viagens, .tabela-motoristas, .tabela-servidores, .tabela-expresso) tbody tr:hover {
+    background: #f7fbf8;
+}
+
+body:not(.login-map-page) :where(.status-tag, .status-badge, .badge, .badge-categoria, .badge-origem) {
+    border-radius: 999px;
+    font-weight: 650;
+}
+
+body:not(.login-map-page) .status-pendente {
+    background: #fff5df;
+    color: var(--warning);
+}
+
+body:not(.login-map-page) :where(.status-deferida, .status-ativa) {
+    background: var(--brand-100);
+    color: var(--brand-700);
+}
+
+body:not(.login-map-page) :where(.status-badge.aprovado, .status-badge.ativo) {
+    background: var(--brand-100);
+    color: var(--brand-700);
+}
+
+body:not(.login-map-page) .badge.disponivel {
+    background: var(--brand-100);
+    color: var(--brand-700);
+}
+
+body:not(.login-map-page) :where(.status-indeferida, .status-inativa) {
+    background: #fceeee;
+    color: var(--danger);
+}
+
+body:not(.login-map-page) :where(.status-badge.recusado, .status-badge.inativo) {
+    background: #fceeee;
+    color: var(--danger);
+}
+
+body:not(.login-map-page) .badge.indisponivel {
+    background: #fceeee;
+    color: var(--danger);
+}
+
+body:not(.login-map-page) .status-badge.pendente {
+    background: #fff5df;
+    color: var(--warning);
+}
+
+body:not(.login-map-page) :where(.status-andamento, .status-em.andamento, .status-concluída) {
+    background: #eaf3f9;
+    color: var(--info);
+}
+
+body:not(.login-map-page) .tabela-vazia {
+    color: var(--ink-500);
+}
+
+/* Dialogs */
+body:not(.login-map-page) .modal-container {
+    background: rgba(18, 37, 29, 0.48);
+    backdrop-filter: blur(5px);
+}
+
+body:not(.login-map-page) :where(.modal-conteudo, .modal-form-custom) {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    color: var(--ink-900);
+}
+
+body:not(.login-map-page) :where(.modal-conteudo, .modal-form-custom) :where(h2, h3, label) {
+    color: var(--ink-900);
+}
+
+body:not(.login-map-page) :where(.sem-viagens, .carregando) {
+    background: var(--surface);
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-md);
+    color: var(--ink-500);
+}
+
+body:not(.login-map-page) :where(button:disabled, [aria-disabled="true"]) {
+    cursor: not-allowed;
+    opacity: 0.58;
+    transform: none;
+}
+
+@media (max-width: 768px) {
+    body:not(.login-map-page):not(.pagina-transito) {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 100vh;
+        min-height: 100dvh;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.sidebar) {
+        position: relative;
+        top: auto;
+        left: auto;
+        width: 100%;
+        height: auto;
+        max-height: none;
+        padding: 14px 16px;
+        overflow: visible;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar-brand {
+        margin-bottom: 12px;
+        padding: 0;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .search-box {
+        margin: 0 0 12px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar-menu {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        flex: 0 0 auto;
+        gap: 4px;
+        padding: 0;
+        overflow: visible;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar-menu a {
+        min-height: 40px;
+        padding: 8px 10px;
+        font-size: 0.84rem;
+        overflow-wrap: anywhere;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar-footer {
+        margin-top: 10px;
+        padding: 10px 0 0;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .main-content {
+        width: 100%;
+        min-width: 0;
+        min-height: 0;
+        margin: 0;
+        padding: 22px 18px;
+        overflow: visible;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.titulo, .titulo-listagem,
+    .main-header, .header-title, .card-header-actions, .topo-secao) {
+        flex-wrap: wrap;
+        gap: 12px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.titulo h1, .titulo-listagem h1,
+    .header-title h2) {
+        min-width: 0;
+        overflow-wrap: anywhere;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.cards-container) {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+        margin-bottom: 22px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .cards-container .card p {
+        height: auto;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.secao-viagens, .secao-servidores,
+    .secao-motoristas, .content-card, .modal-form-custom, .form-expresso) {
+        min-width: 0;
+        padding: 16px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.secao-viagens, .secao-servidores,
+    .secao-motoristas) {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.container-filtros, .filtro-periodo,
+    .form-row, .botoes-filtro, .form-actions) {
+        flex-wrap: wrap;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .container-filtros {
+        align-items: stretch;
+        flex-direction: column;
+        gap: 12px;
+        padding: 14px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .pesquisa-tabela {
+        width: 100%;
+        max-width: none;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .botoes-filtro {
+        display: flex;
+        width: 100%;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .botoes-filtro .btn-filtro {
+        flex: 1 1 auto;
+        justify-content: center;
+        padding: 8px 10px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.tabela-container, .secao-viagens,
+    .secao-servidores, .secao-motoristas) {
+        max-width: 100%;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .tabela-container {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.tabela-viagens, .tabela-motoristas,
+    .tabela-servidores, .tabela-expresso) {
+        min-width: 620px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.tabela-viagens, .tabela-motoristas,
+    .tabela-servidores, .tabela-expresso) th,
+    body:not(.login-map-page):not(.pagina-transito) :where(.tabela-viagens, .tabela-motoristas,
+    .tabela-servidores, .tabela-expresso) td {
+        padding: 10px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .form-row > * {
+        min-width: 0;
+        width: 100%;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .modal-container {
+        padding: 16px;
+        overflow-y: auto;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .modal-conteudo {
+        width: 100%;
+        max-width: 450px;
+        max-height: calc(100vh - 32px);
+        max-height: calc(100dvh - 32px);
+        overflow-y: auto;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.sidebar-rotas) {
+        flex: 0 0 auto;
+        width: 100%;
+        max-height: 48vh;
+        max-height: 48dvh;
+        padding: 16px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.map-container) {
+        width: 100%;
+        height: 52vh;
+        height: 52dvh;
+        min-height: 320px;
+        flex: 1 0 320px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) #map {
+        width: 100%;
+        height: 100%;
+        min-height: 320px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar-rotas .sidebar-menu {
+        display: flex;
+        flex-direction: column;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar-rotas .botoes-grupo {
+        margin-top: 16px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .container-principal {
+        width: 100%;
+        padding-right: 16px;
+        padding-left: 16px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .header-motorista {
+        flex-wrap: wrap;
+        gap: 12px;
+        padding: 12px 16px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .perfil-area {
+        flex-wrap: wrap;
+        gap: 8px 12px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .card-status {
+        align-items: flex-start;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(button, .btn-principal, .btn-secundario,
+    .btn-novo-motorista, .btn-novo-veiculo, .btn-cadastrar-novo, .btn-salvar) {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    body:not(.login-map-page):not(.pagina-transito) .main-content {
+        padding: 16px 12px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar {
+        padding: 12px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.titulo h1, .titulo-listagem h1,
+    .header-title h2) {
+        font-size: 1.3rem;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.secao-viagens, .secao-servidores,
+    .secao-motoristas, .content-card, .modal-form-custom, .form-expresso) {
+        padding: 14px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .topo-secao {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .topo-secao :where(a, button) {
+        width: 100%;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .botoes-filtro {
+        flex-direction: column;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .botoes-filtro .btn-filtro {
+        width: 100%;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.form-botoes, .form-actions) {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) :where(.form-botoes, .form-actions) button {
+        width: 100%;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .sidebar-rotas {
+        max-height: 52vh;
+        max-height: 52dvh;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .map-container {
+        height: 48vh;
+        height: 48dvh;
+        min-height: 280px;
+        flex-basis: 280px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) #map {
+        min-height: 280px;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .header-motorista {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    body:not(.login-map-page):not(.pagina-transito) .perfil-area {
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body:not(.login-map-page) *,
+    body:not(.login-map-page) *::before,
+    body:not(.login-map-page) *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+    }
+}

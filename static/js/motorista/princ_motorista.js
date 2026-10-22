@@ -28,7 +28,7 @@ async function carregarViagensAgendadas() {
         <article class="card-viagem">
             <div class="header-card"><span class="tag-id">Viagem #${v.id}</span><span class="horario">${escapeHtml(v.horario)}</span></div>
             <div class="detalhes-viagem"><h3>${escapeHtml(v.rota)}</h3><p>Veículo: ${escapeHtml(v.veiculo)}</p><p>Status: ${escapeHtml(v.status)}</p></div>
-            <button class="${v.status === 'Em Andamento' ? 'btn-concluir' : 'btn-iniciar'}" data-viagem="${v.id}" data-acao="${v.status === 'Em Andamento' ? 'concluir' : 'iniciar'}">${v.status === 'Em Andamento' ? 'Concluir viagem' : 'Iniciar viagem'}</button>
+            ${v.status === 'Pendente' ? '' : `<button class="${v.status === 'Em Andamento' ? 'btn-concluir' : 'btn-iniciar'}" data-viagem="${v.id}" data-acao="${v.status === 'Em Andamento' ? 'concluir' : 'iniciar'}">${v.status === 'Em Andamento' ? 'Concluir viagem' : 'Iniciar viagem'}</button>`}
         </article>`).join('');
 }
 

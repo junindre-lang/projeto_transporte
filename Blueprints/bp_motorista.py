@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request, session, redirect, url_for
+from datetime import date
 from extensions import db
-from modelosDB.modelos import Motorista, SolicitacaoViagem, Veiculo
+from modelosDB.modelos import Motorista, SolicitacaoViagem, Veiculo, RotaFixa
 from sqlalchemy import or_
 
 bp_motorista = Blueprint('bp_motorista', __name__)
@@ -23,6 +24,31 @@ def viagem_do_motorista(viagem_id, motorista):
             (SolicitacaoViagem.motorista_id.is_(None) &
              (SolicitacaoViagem.motorista_nome == motorista.nome)))
     ).first()
+
+
+def garantir_viagens_de_hoje(motorista):
+    hoje = date.today()
+    dia = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo'][hoje.weekday()]
+    rotas = RotaFixa.query.filter(
+        RotaFixa.motorista_id == motorista.id,
+        RotaFixa.ativa.is_(True),
+        RotaFixa.data_inicio <= hoje,
+        RotaFixa.data_fim >= hoje
+    ).all()
+    for rota in rotas:
+        if dia not in rota.dias_semana.split(','):
+            continue
+        existente = SolicitacaoViagem.query.filter_by(
+            rota_fixa_id=rota.id, data_agendada=hoje
+        ).first()
+        if not existente:
+            db.session.add(SolicitacaoViagem(
+                motorista_nome=motorista.nome, motorista_id=motorista.id,
+                rota_fixa_id=rota.id, data_agendada=hoje, rota=rota.rota,
+                data_horario=f'{hoje.isoformat()} {rota.horario_partida}',
+                veiculo=rota.veiculo, status='Deferida'
+            ))
+    db.session.commit()
 
 
 @bp_motorista.route('/motorista', methods=['GET', 'POST'])
@@ -78,11 +104,12 @@ def viagens_agendadas():
     motorista = motorista_logado()
     if not motorista:
         return resposta_nao_autorizada()
+    garantir_viagens_de_hoje(motorista)
     viagens = SolicitacaoViagem.query.filter(
         or_(SolicitacaoViagem.motorista_id == motorista.id,
             (SolicitacaoViagem.motorista_id.is_(None) &
              (SolicitacaoViagem.motorista_nome == motorista.nome)))
-    ).filter(SolicitacaoViagem.status.in_(['Deferida', 'Em Andamento'])).order_by(
+    ).filter(SolicitacaoViagem.status.in_(['Pendente', 'Deferida', 'Em Andamento'])).order_by(
         SolicitacaoViagem.data_horario.asc()).all()
     return jsonify([{'id': v.id, 'rota': v.rota, 'horario': v.data_horario,
                      'veiculo': v.veiculo, 'status': v.status} for v in viagens])
@@ -104,7 +131,7 @@ def iniciar_viagem():
     if SolicitacaoViagem.query.filter_by(motorista_id=motorista.id, status='Em Andamento').first():
         return jsonify({'sucesso': False, 'erro': 'Já existe uma viagem em andamento para este motorista.'}), 409
 
-    viagem.status, motorista.status = 'Em Andamento', 'Em Viagem'
+    viagem.status, motorista.status = 'Em Andamento', 'Indisponível'
     veiculo = Veiculo.query.filter_by(prefixo=viagem.veiculo).first()
     if veiculo:
         veiculo.status = 'Em uso'

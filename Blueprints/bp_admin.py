@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, jsonify, request,session
-from datetime import datetime
+from datetime import date, datetime, timedelta
 from extensions import db
-from modelosDB.modelos import SolicitacaoViagem, CoordenadaRota, Motorista
+from modelosDB.modelos import SolicitacaoViagem, CoordenadaRota, Motorista, Veiculo, RotaFixa, Servidor
 # Certifique-se de importar o DAO corretamente dependendo da estrutura das suas pastas
 from DAOs.servidor_DAO import ServidorDAO
 import string
@@ -21,7 +21,9 @@ def index():
         return render_template('auth/principal.html')
     else:
         lista_viagens = SolicitacaoViagem.query.filter_by(status='Pendente').all()
-        return render_template('admin/admin.html', viagens=lista_viagens)
+        servidores_pendentes = Servidor.query.filter_by(status='Pendente').order_by(Servidor.nome).all()
+        return render_template('admin/admin.html', viagens=lista_viagens,
+                               servidores_pendentes=servidores_pendentes)
 
 @admin_bp.route('/lista_servidores')
 def lista_servidores():
@@ -42,7 +44,90 @@ def transito():
 def rotas():
     if 'admin' not in session:
         return render_template('auth/principal.html')
-    return render_template('admin/definir_rota.html')
+    return render_template('admin/definir_rota.html', motoristas=Motorista.query.order_by(Motorista.nome).all())
+
+
+@admin_bp.route('/consultar_rotas')
+def consultar_rotas():
+    if 'admin' not in session:
+        return render_template('auth/principal.html')
+
+    inicio_texto = request.args.get('data_inicial', '').strip()
+    fim_texto = request.args.get('data_final', '').strip()
+    viagens = []
+    erro = None
+    data_inicial = data_final = None
+
+    if inicio_texto or fim_texto:
+        try:
+            data_inicial = datetime.strptime(inicio_texto, '%Y-%m-%d').date()
+            data_final = datetime.strptime(fim_texto, '%Y-%m-%d').date()
+            if data_final < data_inicial:
+                raise ValueError
+        except ValueError:
+            erro = 'Informe um intervalo válido: a data inicial deve ser anterior ou igual à data final.'
+        else:
+            _materializar_viagens_fixas(data_inicial, data_final)
+            registros = SolicitacaoViagem.query.filter(
+                SolicitacaoViagem.data_agendada.isnot(None),
+                SolicitacaoViagem.data_agendada >= data_inicial,
+                SolicitacaoViagem.data_agendada <= data_final
+            ).order_by(SolicitacaoViagem.data_agendada, SolicitacaoViagem.data_horario).all()
+            viagens = [{
+                'id': viagem.id,
+                'data': viagem.data_agendada.strftime('%d/%m/%Y'),
+                'horario': viagem.data_horario.rsplit(' ', 1)[-1],
+                'motorista': viagem.motorista_nome,
+                'rota': viagem.rota,
+                'veiculo': viagem.veiculo,
+                'status': viagem.status
+            } for viagem in registros]
+
+    return render_template(
+        'admin/consultar_rotas.html',
+        viagens=viagens,
+        erro=erro,
+        data_inicial=inicio_texto,
+        data_final=fim_texto
+    )
+
+
+def _materializar_viagens_fixas(data_inicial, data_final):
+    """Cria uma ocorrência por dia para cada rota fixa ativa no intervalo."""
+    dias = ['Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado', 'Domingo']
+    rotas = RotaFixa.query.filter(
+        RotaFixa.ativa.is_(True),
+        RotaFixa.data_inicio <= data_final,
+        RotaFixa.data_fim >= data_inicial
+    ).all()
+    alterado = False
+
+    for rota in rotas:
+        primeiro_dia = max(data_inicial, rota.data_inicio)
+        ultimo_dia = min(data_final, rota.data_fim)
+        dias_configurados = set(rota.dias_semana.split(','))
+        atual = primeiro_dia
+        while atual <= ultimo_dia:
+            if dias[atual.weekday()] in dias_configurados:
+                existente = SolicitacaoViagem.query.filter_by(
+                    rota_fixa_id=rota.id, data_agendada=atual
+                ).first()
+                if not existente:
+                    db.session.add(SolicitacaoViagem(
+                        motorista_nome=rota.motorista.nome,
+                        motorista_id=rota.motorista_id,
+                        rota_fixa_id=rota.id,
+                        data_agendada=atual,
+                        rota=rota.rota,
+                        data_horario=f'{atual.isoformat()} {rota.horario_partida}',
+                        veiculo=rota.veiculo,
+                        status='Deferida'
+                    ))
+                    alterado = True
+            atual += timedelta(days=1)
+
+    if alterado:
+        db.session.commit()
 
 
 # ==============================================================================
@@ -63,6 +148,14 @@ def excluir_servidor(id_servidor):
         return render_template('auth/principal.html')
     if ServidorDAO.excluir(id_servidor):
         return jsonify({'sucesso': True, 'mensagem': 'Servidor excluído com sucesso!'})
+    return jsonify({'sucesso': False, 'erro': 'Servidor não encontrado no sistema.'}), 404
+
+@admin_bp.route('/lista_servidores/inativar/<int:id_servidor>', methods=['POST'])
+def inativar_servidor(id_servidor):
+    if 'admin' not in session:
+        return render_template('auth/principal.html')
+    if ServidorDAO.inativar(id_servidor):
+        return jsonify({'sucesso': True, 'mensagem': 'Servidor inativado com sucesso!'})
     return jsonify({'sucesso': False, 'erro': 'Servidor não encontrado no sistema.'}), 404
 
 
@@ -118,9 +211,14 @@ def transito_tempo_real():
     API que o JavaScript vai consultar via Fetch para pegar
     as coordenadas e dados mais recentes de todas as viagens em andamento.
     """
+    consulta = SolicitacaoViagem.query.filter_by(status='Em Andamento')
     if 'admin' not in session:
-        return render_template('auth/principal.html')
-    viagens_ativas = SolicitacaoViagem.query.filter_by(status='Em Andamento').all()
+        matricula_servidor = session.get('servidor')
+        servidor = Servidor.query.filter_by(matricula=matricula_servidor).first() if matricula_servidor else None
+        if not servidor:
+            return jsonify({'erro': 'Não autorizado'}), 401
+        consulta = consulta.filter_by(servidor_id=servidor.id)
+    viagens_ativas = consulta.all()
 
     lista_viagens = []
     for viagem in viagens_ativas:
@@ -241,7 +339,59 @@ def posicao_atual(viagem_id):
 def cad_hora():
     if 'admin' not in session:
         return render_template('auth/principal.html')
-    return render_template('admin/cadastrar_horario.html')
+    return render_template('admin/cadastrar_horario.html',
+                           motoristas=Motorista.query.order_by(Motorista.nome).all(),
+                           veiculos=Veiculo.query.order_by(Veiculo.prefixo).all())
+
+
+@admin_bp.route('/api/horarios/cadastrar', methods=['POST'])
+def cadastrar_horario():
+    """Cadastra o horário enviado pela tela de viagens fixas."""
+    if 'admin' not in session:
+        return jsonify({'sucesso': False, 'erro': 'Não autorizado'}), 401
+
+    dados = request.get_json(silent=True) or {}
+    motorista_id = dados.get('motorista_id')
+    try:
+        motorista_id = int(motorista_id) if motorista_id else None
+    except (TypeError, ValueError):
+        motorista_id = None
+    motorista = db.session.get(Motorista, motorista_id) if motorista_id else None
+    if not motorista:
+        nome_motorista = (dados.get('motorista') or '').strip()
+        motorista = Motorista.query.filter_by(nome=nome_motorista).first() if nome_motorista else None
+    rota = (dados.get('rota_nome') or '').strip()
+    horario = (dados.get('horario_partida') or '').strip()
+    horario_retorno = (dados.get('horario_retorno') or '').strip() or None
+    dias = dados.get('dias_semana') or []
+    veiculo_registro = (dados.get('veiculo') or '').strip()
+    inicio = (dados.get('data_inicio') or '').strip()
+    fim = (dados.get('data_fim') or '').strip()
+
+    try:
+        data_inicio = datetime.strptime(inicio, '%Y-%m-%d').date()
+        data_fim = datetime.strptime(fim, '%Y-%m-%d').date()
+    except ValueError:
+        return jsonify({'sucesso': False, 'erro': 'Informe um período válido.'}), 400
+    if data_fim < data_inicio:
+        return jsonify({'sucesso': False, 'erro': 'A data final não pode ser anterior à inicial.'}), 400
+    if not motorista or not rota or not veiculo_registro or not horario or not dias:
+        return jsonify({'sucesso': False, 'erro': 'Informe motorista, rota, veículo, horário, período e pelo menos um dia.'}), 400
+
+    rota_fixa = RotaFixa(
+        motorista_id=motorista.id,
+        rota=rota,
+        veiculo=veiculo_registro,
+        horario_partida=horario,
+        horario_retorno=horario_retorno,
+        dias_semana=','.join(dias),
+        data_inicio=data_inicio,
+        data_fim=data_fim,
+        itinerario=(dados.get('itinerario') or '').strip()
+    )
+    db.session.add(rota_fixa)
+    db.session.commit()
+    return jsonify({'sucesso': True, 'id_rota_fixa': rota_fixa.id}), 201
 
 
 @admin_bp.route('/list_viagem', methods=['GET'])
@@ -310,8 +460,14 @@ def criar_via_mapa():
     try:
         # 1. Cria o registro principal na tabela SolicitacaoViagem
         # Usamos o formato de data 'YYYY-MM-DDTHH:MM' para combinar com o padrão do seu print
+        motorista_id = dados.get('motorista_id')
+        motorista = db.session.get(Motorista, motorista_id) if motorista_id else None
+        if not motorista:
+            return jsonify({"erro": "Selecione um motorista para a viagem"}), 400
+
         nova_viagem = SolicitacaoViagem(
-            motorista_nome="A Definir",
+            motorista_nome=motorista.nome,
+            motorista_id=motorista.id,
             rota=dados.get('rota', 'Rota Gerada via Mapa'),
             data_horario=datetime.now().strftime('%Y-%m-%dT%H:%M'),
             veiculo="A Definir",

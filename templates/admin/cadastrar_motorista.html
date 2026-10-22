@@ -17,24 +17,7 @@
             <h1>EXPRESSO</h1>
         </div>
 
-        <div class="search-box">
-            <i class="fa-solid fa-magnifying-glass"></i>
-            <input type="text" placeholder="Buscar no menu...">
-        </div>
-
-        <ul class="sidebar-menu">
-            <li><a href="/pag_admin"><i class="fa-solid fa-house"></i> INÍCIO</a></li>
-            <li><a href="#"><i class="fa-solid fa-route"></i> ROTAS</a></li>
-            <li><a href="#"><i class="fa-solid fa-car-side"></i> TRÂNSITO</a></li>
-            <li><a href="/lista_servidores"><i class="fa-solid fa-user-shield"></i> SERVIDORES</a></li>
-            <li><a href="/lista_motoristas" class="active"><i class="fa-solid fa-users"></i> MOTORISTAS</a></li>
-            <li><a href="cad_veiculos"><i class="fa-solid fa-bus"></i> VEÍCULOS</a></li>
-            <li><a href="#"><i class="fa-solid fa-gear"></i> CONFIGURAÇÕES</a></li>
-        </ul>
-
-        <div class="sidebar-footer">
-            <a href="/login_adm" class="logout-btn"><i class="fa-solid fa-power-off"></i> SAIR</a>
-        </div>
+        {% include 'includes/admin_nav.html' %}
     </div>
 
     <div class="main-content">
@@ -46,7 +29,7 @@
         <div class="secao-motoristas">
             <div class="topo-secao">
                 <h2>Motoristas Cadastrados</h2>
-                <button class="btn-novo-motorista"><i class="fa-solid fa-user-plus"></i> Novo Motorista</button>
+                <a href="/pag_admin" class="btn-novo-motorista" title="Acesse o painel para cadastrar um motorista"><i class="fa-solid fa-user-plus"></i> Cadastrar no painel</a>
             </div>
 
             <table class="tabela-motoristas">
@@ -57,7 +40,6 @@
                         <th>Nº CNH</th>
                         <th>Categoria</th>
                         <th>Validade CNH</th>
-                        <th>Ações</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -69,15 +51,11 @@
                             <td>{{ motorista.cnh }}</td>
                             <td><span class="badge-categoria">{{ motorista.categoria }}</span></td>
                             <td>{{ motorista.validade_cnh }}</td>
-                            <td>
-                                <button class="btn-editar" title="Editar"><i class="fa-solid fa-pen"></i></button>
-                                <button class="btn-excluir" title="Excluir"><i class="fa-solid fa-trash"></i></button>
-                            </td>
                         </tr>
                         {% endfor %}
                     {% else %}
                         <tr>
-                            <td colspan="6" class="tabela-vazia">
+                            <td colspan="5" class="tabela-vazia">
                                 <i class="fa-solid fa-circle-info"></i>
                                 Nenhum motorista cadastrado no sistema.
                             </td>

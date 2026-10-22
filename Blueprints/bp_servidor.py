@@ -1,7 +1,7 @@
 from flask import *
 from datetime import datetime
 from extensions import db
-from modelosDB.modelos import SolicitacaoViagem, CoordenadaRota, Motorista, Veiculo
+from modelosDB.modelos import SolicitacaoViagem, CoordenadaRota, Motorista, Veiculo, Servidor
 # Certifique-se de importar o DAO corretamente dependendo da estrutura das suas pastas
 from DAOs.servidor_DAO import ServidorDAO
 
@@ -16,11 +16,12 @@ def solicitar_viagem():
         rota = request.form.get('rota')
         data = request.form.get('data_horario')
         veiculo = request.form.get('veiculo')
+        servidor = Servidor.query.filter_by(matricula=session.get('servidor')).first()
 
         # Validação básica
         motorista = (db.session.get(Motorista, motorista_id) if motorista_id
                      else Motorista.query.filter_by(nome=motorista_nome_informado).first())
-        if not motorista or not rota or not data or not veiculo:
+        if not servidor or not motorista or not rota or not data or not veiculo:
             flash("Todos os campos são obrigatórios!", "erro")
             return render_template('servidor/solicitar_viagem.html',
                                    motoristas=Motorista.query.order_by(Motorista.nome).all(),
@@ -57,7 +58,7 @@ def solicitar_viagem():
 def rotas():
     if 'servidor' not in session:
         return render_template('auth/principal.html')
-    return render_template('servidor/definir_rota_serv.html')
+    return render_template('servidor/definir_rota_serv.html', motoristas=Motorista.query.order_by(Motorista.nome).all())
 
 @servidor_bp.route('/criar-via-mapa', methods=['POST'])
 def criar_via_mapa():
@@ -72,11 +73,22 @@ def criar_via_mapa():
     if not dados or 'pontos' not in dados:
         return jsonify({"erro": "Dados ou pontos do mapa não fornecidos"}), 400
 
+    servidor = Servidor.query.filter_by(matricula=session.get('servidor')).first()
+    if not servidor:
+        return jsonify({"erro": "Servidor não encontrado na sessão"}), 401
+
     try:
         # 1. Cria o registro principal na tabela SolicitacaoViagem
         # Usamos o formato de data 'YYYY-MM-DDTHH:MM' para combinar com o padrão do seu print
+        motorista_id = dados.get('motorista_id')
+        motorista = db.session.get(Motorista, motorista_id) if motorista_id else None
+        if not motorista:
+            return jsonify({"erro": "Selecione um motorista para a viagem"}), 400
+
         nova_viagem = SolicitacaoViagem(
-            motorista_nome="A Definir",
+            servidor_id=servidor.id,
+            motorista_nome=motorista.nome,
+            motorista_id=motorista.id,
             rota=dados.get('rota', 'Rota Gerada via Mapa'),
             data_horario=datetime.now().strftime('%Y-%m-%dT%H:%M'),
             veiculo="A Definir",
@@ -119,7 +131,9 @@ def cad_viagem():
     # (Se você salvou um dicionário na sessão, pode passá-lo diretamente)
     servidor_logado = session.get('servidor')
 
-    viagens_banco = SolicitacaoViagem.query.all()
+    servidor_atual = Servidor.query.filter_by(matricula=servidor_logado).first()
+    viagens_banco = (SolicitacaoViagem.query.filter_by(servidor_id=servidor_atual.id).all()
+                     if servidor_atual else [])
     viagens_processadas = []
 
     for viagem in viagens_banco:
@@ -142,7 +156,7 @@ def cad_viagem():
 
 
     # 2. 🔥 Envia a variável 'servidor' para o HTML
-    return render_template('servidor/homepage.html', viagens=viagens_processadas, servidor=servidor_logado)
+    return render_template('servidor/homepage.html', viagens=viagens_processadas, servidor=servidor_atual)
 
 @servidor_bp.route('/transito_serv')
 def transito_mapa():

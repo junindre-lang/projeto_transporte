@@ -24,12 +24,19 @@ app.register_blueprint(bp_motorista)
 # Cria as tabelas de forma segura dentro do contexto correto
 with app.app_context():
     db.create_all()
-    # create_all não altera tabelas SQLite já existentes. Esta migração pequena
-    # preserva o banco atual e permite vincular cada viagem ao seu motorista.
+    # Esta migração mantém instalações existentes compatíveis com os campos
+    # adicionados ao modelo.
     colunas = {col['name'] for col in inspect(db.engine).get_columns('solicitacoes_viagem')}
     if 'motorista_id' not in colunas:
         db.session.execute(text('ALTER TABLE solicitacoes_viagem ADD COLUMN motorista_id INTEGER'))
-        db.session.commit()
+    if 'rota_fixa_id' not in colunas:
+        db.session.execute(text('ALTER TABLE solicitacoes_viagem ADD COLUMN rota_fixa_id INTEGER'))
+    if 'data_agendada' not in colunas:
+        db.session.execute(text('ALTER TABLE solicitacoes_viagem ADD COLUMN data_agendada DATE'))
+    colunas_servidor = {col['name'] for col in inspect(db.engine).get_columns('servidor')}
+    if 'cargo' not in colunas_servidor:
+        db.session.execute(text("ALTER TABLE servidor ADD COLUMN cargo VARCHAR(100) NOT NULL DEFAULT ''"))
+    db.session.commit()
 
 
 @app.route('/')
@@ -42,13 +49,14 @@ def cadastro():
     nome = request.form.get('nome')
     email = request.form.get('email')
     matri = request.form.get('matri')
+    cargo = (request.form.get('cargo') or '').strip()
     senha = request.form.get('sen')
     senha1 = request.form.get('sen1')
 
     if senha != senha1:
         return render_template('auth/cadastro.html', msg='As senhas não coincidem!')
 
-    ServidorDAO.salvar(nome=nome, email=email, matricula=matri, senha=senha)
+    ServidorDAO.salvar(nome=nome, email=email, matricula=matri, senha=senha, cargo=cargo)
     return render_template('auth/principal.html', msg='Servidor cadastrado com sucesso!')
 
 
@@ -83,8 +91,8 @@ def login():
         return render_template('auth/principal.html', msg='Cadastro aguardando aprovação administrativa.')
 
     session['servidor'] = login_mat
-    print("✅ SUCESSO! Indo para a homepage.html")
-    return render_template('servidor/homepage.html', servidor=servidor)
+    print("✅ SUCESSO! Indo para as viagens do servidor")
+    return redirect(url_for('servidor_bp.cad_viagem'))
 
 
 @app.route('/login_adm', methods=['GET', 'POST'])
@@ -106,13 +114,8 @@ def logarlink_adm():
     return render_template('auth/login_adm.html')
 
 
-@app.route('/lista_servidores')
-def listar_servidores():
-    lista = ServidorDAO.listar()
-    return render_template('admin/lista_servidores.html', servidores=lista)
-
-
 @app.route('/cad_motor', methods=['GET', 'POST'])
+@app.route('/lista_motoristas', methods=['GET', 'POST'])
 def listar_motoristas():
     if request.method == 'POST':
         matricula = request.form.get('matricula')
